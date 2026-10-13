@@ -3,8 +3,10 @@ import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar, Button, Checkbox, Dialog, Divider, Portal, Surface, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { ExecutionStep, RecipeEvaluation, Requirement, RequirementMatch, Step } from '../../../packages/engine/src/types';
+import { EquipmentDialog } from '../components/EquipmentDialog';
 import { addIngredient, markUnavailable } from '../model/inventory-actions';
 import { equipmentLabels, formatQuantity, importanceLabels, nameOf, textOf, tierLabels } from '../model/presentation';
+import { orderRequirements } from '../model/requirement-presentation';
 import { safeSourceUrl, sourceLinks } from '../model/source-presentation';
 import type { AppCatalog, AppRecipe, AppRequirement, AppSource, KitchenState, UpdateKitchen } from '../model/types';
 
@@ -17,7 +19,6 @@ type Props = Readonly<{
   onBack: () => void;
   onConfirmRule: (key: string) => void;
   onConsumed: (removed: readonly ConsumedItem[]) => void;
-  onOpenSettings: () => void;
 }>;
 
 function matchLabel(match: RequirementMatch): string {
@@ -25,7 +26,7 @@ function matchLabel(match: RequirementMatch): string {
   if (match.presence === 'uncertain') return '需确认';
   if (match.presence === 'missing') return '缺少';
   if (match.match_kind === 'substitution') return '使用替代';
-  if (match.match_kind === 'implicit') return '常备默认';
+  if (match.match_kind === 'implicit') return '默认已有';
   return '已有';
 }
 
@@ -43,14 +44,12 @@ function uncertainIdentity(match: RequirementMatch): string | undefined {
 }
 
 function matchExplanation(catalog: AppCatalog, match: RequirementMatch): string {
-  if (match.match_kind === 'implicit') return '按常备油盐水计算，缺少时请点“我没有”。';
   if (match.presence !== 'uncertain') return '';
   const identity = uncertainIdentity(match);
   if (identity && match.used_ingredient_id) {
-    return `已选${nameOf(catalog, match.used_ingredient_id)}，请确认是否为${nameOf(catalog, identity)}。`;
+    return `已选${nameOf(catalog, match.used_ingredient_id)}，需要${nameOf(catalog, identity)}`;
   }
-  if (match.reason_code === 'substitution_condition_uncertain') return '使用这项替代前，请确认下方所需原料。';
-  return '请阅读下方替代说明，确认用量与处理方法。';
+  return '';
 }
 
 function RequirementActions({ catalog, requirement, match, update, onConfirmRule }: Readonly<{
@@ -80,7 +79,7 @@ function RequirementActions({ catalog, requirement, match, update, onConfirmRule
       确认有{nameOf(catalog, id)}
     </Button>)}
     {match.confirmation_key && <Button compact mode="outlined" onPress={() => onConfirmRule(match.confirmation_key!)}>
-      确认按说明替代
+      使用此替代
     </Button>}
     {!match.omitted && match.presence === 'present' && <Button compact onPress={remove}>我没有</Button>}
   </View>;
@@ -104,32 +103,31 @@ function RequirementRow({ catalog, requirement, match, update, onConfirmRule }: 
     </Text>
     {requirement.preparation && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(requirement.preparation)}</Text>}
     {substitution && used && <Text style={{ color: theme.colors.primary }}>
-      改用{nameOf(catalog, used)}，{match.quantity ? `整菜用量 ${formatQuantity(match.quantity)}` : '用量见下方替代说明'}
+      改用{nameOf(catalog, used)}{match.quantity ? ` · ${formatQuantity(match.quantity)}` : ''}
     </Text>}
-    {match.match_kind === 'approved_descendant' && used && <Text>使用已选的{nameOf(catalog, used)}</Text>}
+    {match.match_kind === 'approved_descendant' && used && <Text>使用{nameOf(catalog, used)}</Text>}
     {explanation.length > 0 && <Text>{explanation}</Text>}
     {match.note && <Text style={styles.note}>{textOf(match.note)}</Text>}
     <RequirementActions catalog={catalog} requirement={requirement} match={match} update={update} onConfirmRule={onConfirmRule} />
   </View>;
 }
 
-function RecipeStatus({ catalog, evaluation, onOpenSettings }: Pick<Props, 'catalog' | 'evaluation' | 'onOpenSettings'>) {
+function RecipeStatus({ catalog, evaluation, onOpenEquipment }: Pick<Props, 'catalog' | 'evaluation'> & Readonly<{ onOpenEquipment: () => void }>) {
   const theme = useTheme();
   return <Surface elevation={0} style={[styles.status, { backgroundColor: theme.colors.secondaryContainer }]}>
     <Text variant="titleMedium">{tierLabels[evaluation.tier]}</Text>
-    <Text>按已选原料种类匹配，用量请在下厨前核对。</Text>
     {evaluation.missing_required_ingredient_ids.length > 0 && <Text>
-      还缺{evaluation.missing_required_ingredient_ids.map(id => nameOf(catalog, id)).join('、')}。
+      缺少{evaluation.missing_required_ingredient_ids.map(id => nameOf(catalog, id)).join('、')}
     </Text>}
     {evaluation.missing_equipment.length > 0 && <Text>
-      缺少{evaluation.missing_equipment.map(id => equipmentLabels[id]).join('、')}。
+      缺少{evaluation.missing_equipment.map(id => equipmentLabels[id]).join('、')}
     </Text>}
     {evaluation.uncertain_equipment.length > 0 && <Text>
-      请确认家里有{evaluation.uncertain_equipment.map(id => equipmentLabels[id]).join('、')}。
+      确认厨具 {evaluation.uncertain_equipment.map(id => equipmentLabels[id]).join('、')}
     </Text>}
     {(evaluation.missing_equipment.length > 0 || evaluation.uncertain_equipment.length > 0) &&
-      <Button mode="outlined" onPress={onOpenSettings} style={styles.selfStart}>设置厨具</Button>}
-    {!evaluation.plan_valid && <Text>用料调整存在冲突，请补齐原料后重新匹配。</Text>}
+      <Button mode="outlined" onPress={onOpenEquipment} style={styles.selfStart}>设置厨具</Button>}
+    {!evaluation.plan_valid && <Text>用料调整冲突，请补齐原料</Text>}
   </Surface>;
 }
 
@@ -141,11 +139,10 @@ function StepRow({ catalog, step, index }: Readonly<{ catalog: AppCatalog; step:
     <View style={styles.grow}>
       {substitutions.map(substitution => <Surface key={substitution.requirement_id} elevation={0}
         style={[styles.substitution, { backgroundColor: theme.colors.tertiaryContainer }]}>
-        <Text variant="labelLarge">此步使用{nameOf(catalog, substitution.used_ingredient_id)}</Text>
+        <Text variant="labelLarge">{nameOf(catalog, substitution.used_ingredient_id)}替代{nameOf(catalog, substitution.original_ingredient_id)}</Text>
         <Text>{textOf(substitution.usage_note)}</Text>
-        <Text>原文中的{nameOf(catalog, substitution.original_ingredient_id)}按此替代说明处理。</Text>
         {substitution.recipe_quantity && <Text variant="bodySmall">
-          整菜参考用量 {formatQuantity(substitution.recipe_quantity)}，按步骤分配。
+          总用量 {formatQuantity(substitution.recipe_quantity)}
         </Text>}
       </Surface>)}
       <Text variant="bodyLarge" style={styles.stepText}>{textOf(step.text)}</Text>
@@ -172,20 +169,19 @@ function ConsumedDialog({ catalog, items, onDismiss, onConfirm }: Readonly<{
     return next;
   });
   return <Portal><Dialog visible onDismiss={onDismiss} style={styles.dialog}>
-    <Dialog.Title>哪些食材已经用完？</Dialog.Title>
-    <Dialog.Content><Text>勾选用完的食材，将它们从清单移除。还有剩余的可以保留。</Text></Dialog.Content>
+    <Dialog.Title>用完了哪些食材？</Dialog.Title>
     <Dialog.ScrollArea style={styles.dialogScroll}><ScrollView>
       {items.map(item => {
         const key = `${item.location}_${item.ingredientId}`;
         return <Checkbox.Item key={key} label={`${nameOf(catalog, item.ingredientId)} · ${item.location === 'current' ? '本次食材' : '调料柜'}`}
           status={selected.has(key) ? 'checked' : 'unchecked'} onPress={() => toggle(key)} />;
       })}
-      {items.length === 0 && <Text style={styles.empty}>这道菜没有需要移除的食材。</Text>}
+      {items.length === 0 && <Text style={styles.empty}>没有需要移除的食材</Text>}
     </ScrollView></Dialog.ScrollArea>
     <Dialog.Actions><Button onPress={onDismiss}>取消</Button><Button onPress={() => {
       onDismiss();
       onConfirm(items.filter(item => selected.has(`${item.location}_${item.ingredientId}`)));
-    }}>确认</Button></Dialog.Actions>
+    }}>移除所选</Button></Dialog.Actions>
   </Dialog></Portal>;
 }
 
@@ -209,7 +205,7 @@ function RecipeSource({ source }: Readonly<{ source: AppSource }>) {
   return <View style={styles.source}>
     <Text variant="titleSmall">{source.provenance.origin}</Text>
     <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>版本 {source.revision.identifier}</Text>
-    <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>许可 {source.license.identifier ?? '待核对'}</Text>
+    {source.license.identifier && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>许可 {source.license.identifier}</Text>}
     <View style={styles.actions}>
       {links.original && <Button compact onPress={() => void open(links.original!, '菜谱原文')}>查看原文</Button>}
       {links.license && <Button compact onPress={() => void open(links.license!, '许可原文')}>查看许可</Button>}
@@ -222,6 +218,8 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const [consuming, setConsuming] = useState(false);
+  const [sourcesVisible, setSourcesVisible] = useState(false);
+  const [equipmentVisible, setEquipmentVisible] = useState(false);
   const feasible = props.evaluation.tier === 'ready' || props.evaluation.tier === 'caveat';
   const steps = feasible ? props.evaluation.steps : recipe.steps;
   const sources = props.catalog.sources.filter(source => recipe.source_ids.includes(source.source_id));
@@ -232,35 +230,38 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.heading}>
         <Text variant="headlineLarge" style={styles.title}>{textOf(recipe.name)}</Text>
-        <Text style={{ color: theme.colors.onSurfaceVariant }}>{recipe.time_minutes} 分钟 · {upstream ? '原文份量见下方' : `${recipe.servings} 人份`}</Text>
-        {upstream && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(recipe.variant)}</Text>}
-        {recipe.review_state !== 'reviewed' && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>菜谱内容待审核</Text>}
+        <Text style={{ color: theme.colors.onSurfaceVariant }}>{recipe.time_minutes} 分钟{!upstream && ` · ${recipe.servings} 人份`}</Text>
       </View>
-      <RecipeStatus catalog={props.catalog} evaluation={props.evaluation} onOpenSettings={props.onOpenSettings} />
-      <Text variant="titleLarge" style={styles.sectionTitle}>准备食材</Text>
-      <Text style={{ color: theme.colors.onSurfaceVariant }}>用量均为整道菜的参考量</Text>
+      <RecipeStatus catalog={props.catalog} evaluation={props.evaluation} onOpenEquipment={() => setEquipmentVisible(true)} />
+      <Text variant="titleLarge" style={styles.sectionTitle}>食材用量</Text>
       <Surface elevation={0} style={[styles.ingredients, { backgroundColor: theme.colors.surface }]}>
-        {recipe.requirements.map((requirement, index) => {
-          const match = props.evaluation.requirements.find(item => item.requirement_id === requirement.requirement_id);
-          if (!match) return null;
-          return <View key={requirement.requirement_id}>
+        {orderRequirements(recipe.requirements, props.evaluation.requirements).map(({ requirement, match }, index) =>
+          <View key={requirement.requirement_id}>
             {index > 0 && <Divider />}
             <RequirementRow catalog={props.catalog} requirement={requirement} match={match} update={props.update} onConfirmRule={props.onConfirmRule} />
-          </View>;
-        })}
+          </View>)}
       </Surface>
       <Text variant="titleLarge" style={styles.sectionTitle}>下厨步骤</Text>
-      {!feasible && <Text style={{ color: theme.colors.onSurfaceVariant }}>原做法供参考，补齐并确认后可制作</Text>}
       {steps.map((step, index) => <StepRow key={step.step_id} catalog={props.catalog} step={step} index={index} />)}
-      <Text variant="titleLarge" style={styles.sectionTitle}>菜谱来源</Text>
-      {sources.map(source => <RecipeSource key={source.source_id} source={source} />)}
-      {sources.length === 0 && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>来源待补充</Text>}
+      {sources.length > 0 && <View>
+        <Button icon={sourcesVisible ? 'chevron-up' : 'chevron-down'} onPress={() => setSourcesVisible(previous => !previous)}
+          accessibilityState={{ expanded: sourcesVisible }} style={styles.selfStart}>菜谱来源</Button>
+        {sourcesVisible && <>
+          {upstream && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(recipe.variant)}</Text>}
+          {sources.map(source => <RecipeSource key={source.source_id} source={source} />)}
+        </>}
+      </View>}
     </ScrollView>
     {feasible && <Surface elevation={1} style={[styles.footer, { paddingBottom: 12 + insets.bottom }]}>
       <Button mode="contained" contentStyle={styles.mainButton} onPress={() => setConsuming(true)}>做了这道</Button>
     </Surface>}
     {consuming && <ConsumedDialog catalog={props.catalog} items={consumedItems(props.state, props.evaluation)}
       onDismiss={() => setConsuming(false)} onConfirm={props.onConsumed} />}
+    {equipmentVisible && <EquipmentDialog initialSelection={props.state.equipmentConfigured ? props.state.equipment : ['wok', 'pot']}
+      onDismiss={() => setEquipmentVisible(false)} onSave={equipment => {
+        props.update(previous => ({ ...previous, equipment, equipmentConfigured: true }));
+        setEquipmentVisible(false);
+      }} />}
   </View>;
 }
 

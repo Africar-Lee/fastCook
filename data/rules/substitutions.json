@@ -18,7 +18,7 @@
       "factor": 1
     },
     "usage_note": {
-      "zh-CN": "此规则草案用于炒菜中的米醋替香醋，示例按相同毫升量使用，香气会改变。酸度适配及用量须人工核验后才能启用。"
+      "zh-CN": "用等量米醋替代香醋，香气会改变。"
     },
     "step_policy": "ingredient_replacement_only",
     "source_ids": [
@@ -45,7 +45,7 @@
       "factor": 1
     },
     "usage_note": {
-      "zh-CN": "使用同重量去骨去皮鸡腿肉，按原步骤切成同尺寸鸡丁并炒至熟透；口感和脂肪量不同，需人工核验。"
+      "zh-CN": "使用同重量去骨去皮鸡腿肉，按原步骤切成同尺寸鸡丁并炒至熟透；口感和脂肪量不同。"
     },
     "step_policy": "ingredient_replacement_only",
     "source_ids": [
@@ -73,7 +73,7 @@
       "factor": 1
     },
     "usage_note": {
-      "zh-CN": "用同重量土豆淀粉替代此做法的玉米淀粉，保持60克裹浆、5克勾芡的分配；挂糊厚度、脆度及酱汁稠度需要试做核验。"
+      "zh-CN": "用同重量土豆淀粉替代玉米淀粉，60 克裹浆、5 克勾芡。"
     },
     "step_policy": "ingredient_replacement_only",
     "source_ids": [

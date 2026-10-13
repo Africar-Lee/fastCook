@@ -24,7 +24,7 @@ function summaries(catalog: AppCatalog, evaluation: RecipeEvaluation): string[] 
     if (item.match_kind === 'substitution' && item.used_ingredient_id && !item.omitted) lines.push(`${name(item.used_ingredient_id)}替代${name(item.ingredient_id)}`);
   }
   const omitted = evaluation.requirements.filter((item) => item.omitted && item.importance === 'important');
-  if (omitted.length) lines.push(`省略 ${omitted.map((item) => name(item.ingredient_id)).join('、')}，风味有变化`);
+  if (omitted.length) lines.push(`省略 ${omitted.map((item) => name(item.ingredient_id)).join('、')}`);
   if (!evaluation.plan_valid) lines.push('做法组合需核对');
   return lines;
 }
@@ -50,7 +50,7 @@ export function RecipeCard({ catalog, evaluation, onPress }: Props) {
         <View style={styles.ingredients}>
           {highlights.map((item) => <Chip key={item.requirement_id} compact textStyle={styles.chipText} style={{ backgroundColor: theme.colors.surfaceVariant }}>{names.get(item.ingredient_id) ?? item.ingredient_id}</Chip>)}
         </View>
-        {lines.length > 0 ? lines.slice(0, 3).map((line) => <Text key={line} variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{line}</Text>) : <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{evaluation.current_ingredient_count > 0 ? `用到 ${evaluation.current_ingredient_count} 种当次食材` : '可用调料柜和基础食材制作'}</Text>}
+        {lines.slice(0, 3).map((line) => <Text key={line} variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{line}</Text>)}
       </Card.Content>
     </Card>
   );

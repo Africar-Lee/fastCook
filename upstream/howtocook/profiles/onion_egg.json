@@ -31,9 +31,6 @@
         "quantity": {
           "value": 2,
           "unit": "piece"
-        },
-        "preparation": {
-          "zh-CN": "原文用量为每份，未注明人数；这里保留一份用量。"
         }
       },
       {
@@ -83,7 +80,7 @@
           "unit": "piece"
         },
         "preparation": {
-          "zh-CN": "原文为葱半根，操作中切成葱花；此处按小葱整理。"
+          "zh-CN": "半根小葱，切成葱花。"
         }
       },
       {

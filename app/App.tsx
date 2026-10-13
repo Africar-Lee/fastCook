@@ -109,23 +109,23 @@ function KitchenApp() {
           : !kitchen.state ? <View style={styles.loading}>
             {kitchen.error ? <><Text variant="titleLarge">本地记录暂时无法读取</Text><Text>{kitchen.error}</Text>
               <Button mode="contained" onPress={kitchen.retry}>重新读取</Button><Button onPress={() => setResetVisible(true)}>重置本机记录</Button></>
-              : <><ActivityIndicator /><Text variant="bodyLarge">正在打开你的厨房</Text></>}
+              : <ActivityIndicator />}
           </View> : <>
-            <View style={styles.screen}>
-              {evaluation ? <RecipeScreen catalog={catalog} state={kitchen.state} evaluation={evaluation} update={update}
-                onBack={() => setSelectedDish(null)} onConfirmRule={confirmRule} onConsumed={consume} onOpenSettings={openSettings} />
-                : tab === 0 ? <HomeScreen catalog={catalog} state={kitchen.state} update={update}
+            <View style={[styles.screen, evaluation && styles.hidden]}>
+              {tab === 0 ? <HomeScreen catalog={catalog} state={kitchen.state} update={update}
                   recommendations={recommended?.data ?? null} error={recommended?.error?.message ?? null} onOpenRecipe={setSelectedDish}
                   onOpenPantry={() => setTab(1)} onOpenSettings={openSettings} filters={filters} onFiltersChange={setFilters} />
                   : tab === 1 ? <PantryScreen catalog={catalog} state={kitchen.state} update={update} />
                     : <SettingsScreen catalog={catalog} state={kitchen.state} update={update} onReset={reset} />}
             </View>
+            {evaluation && <RecipeScreen catalog={catalog} state={kitchen.state} evaluation={evaluation} update={update}
+              onBack={() => setSelectedDish(null)} onConfirmRule={confirmRule} onConsumed={consume} />}
             {!evaluation && <BottomNavigation.Bar navigationState={{ index: tab, routes }} onTabPress={({ route }) => setTab(routes.findIndex(item => item.key === route.key))}
               renderIcon={({ route, color }) => <MaterialCommunityIcons name={route.focusedIcon as 'silverware-fork-knife'} size={24} color={color} />}
               style={{ backgroundColor: theme.colors.surface }} />}
           </>}
         <Snackbar visible={removed.length > 0} onDismiss={() => setRemoved([])} duration={10000} action={{ label: '撤销', onPress: undo }}>
-          {`已移除 ${removed.length} 样用完的食材`}
+          {`已移除 ${removed.length} 种食材`}
         </Snackbar>
       </View>
     </SafeAreaView>
@@ -144,5 +144,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   outer: { flex: 1 }, shell: { flex: 1, width: '100%', maxWidth: 600, alignSelf: 'center', borderLeftWidth: StyleSheet.hairlineWidth, borderRightWidth: StyleSheet.hairlineWidth },
-  screen: { flex: 1 }, loading: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 28, gap: 20 },
+  screen: { flex: 1 }, hidden: { display: 'none' },
+  loading: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 28, gap: 20 },
 });
