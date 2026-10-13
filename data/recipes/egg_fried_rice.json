@@ -1,0 +1,161 @@
+{
+  "recipe_id": "egg_fried_rice",
+  "dish_id": "egg_fried_rice",
+  "name": {
+    "zh-CN": "蛋炒饭"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "staple",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 15,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 10,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cooked_rice",
+      "ingredient_id": "cooked_rice",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 400,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "使用已煮熟、米粒较松散的米饭。"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 2,
+        "unit": "piece"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成葱花。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱花，葱香明显减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "用饭勺将熟米饭拨散，鸡蛋打入碗中并充分打散。"
+      },
+      "requirement_ids": [
+        "req_cooked_rice",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_cook_egg",
+      "text": {
+        "zh-CN": "炒锅中火加入 10 毫升食用油，倒入蛋液，用锅铲划散，炒至鸡蛋完全凝固且熟透后盛出。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_cook_rice",
+      "text": {
+        "zh-CN": "锅中加入剩余 10 毫升食用油，放入米饭，转中大火边压散边翻炒约 4 分钟，使米饭均匀热透。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_cooked_rice"
+      ]
+    },
+    {
+      "step_id": "step_combine",
+      "text": {
+        "zh-CN": "倒回炒熟的鸡蛋，加入盐，翻炒约 1 分钟，使蛋块、米饭和盐混合均匀。"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_salt",
+        "req_cooked_rice"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "加入葱花，快速翻炒约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_serve",
+      "text": {
+        "zh-CN": "关火，将炒好的菜盛入盘中。"
+      },
+      "requirement_ids": []
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

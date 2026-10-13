@@ -1,0 +1,127 @@
+[
+  {
+    "source_id": "stage1_editorial_draft",
+    "provenance": {
+      "kind": "editorial_draft",
+      "origin": "FastCook 阶段1数据规范样本",
+      "locator": "data/",
+      "generation": "ai_assisted"
+    },
+    "revision": {
+      "identifier": "stage1-draft-1"
+    },
+    "license": {
+      "state": "pending"
+    }
+  },
+  {
+    "source_id": "howtocook_spinach_egg",
+    "provenance": {
+      "kind": "upstream",
+      "origin": "Anduin2017/HowToCook",
+      "locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/dishes/vegetable_dish/%E8%8F%A0%E8%8F%9C%E7%82%92%E9%B8%A1%E8%9B%8B/%E8%8F%A0%E8%8F%9C%E7%82%92%E9%B8%A1%E8%9B%8B.md",
+      "generation": "unknown"
+    },
+    "revision": {
+      "identifier": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+      "snapshot_sha256": "5f9053270d84462f8006f3bb69a9132d7c3d4f46497d39f6f31cb312c70e1bf7"
+    },
+    "license": {
+      "state": "pending",
+      "identifier": "Unlicense",
+      "evidence_locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/LICENSE",
+      "evidence_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "attribution": {
+        "zh-CN": "菜谱文字来源于 Anduin2017/HowToCook，仓库声明采用 Unlicense；结构化标注为 FastCook 离线整理，尚待复核。"
+      }
+    }
+  },
+  {
+    "source_id": "howtocook_onion_egg",
+    "provenance": {
+      "kind": "upstream",
+      "origin": "Anduin2017/HowToCook",
+      "locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/dishes/vegetable_dish/%E6%B4%8B%E8%91%B1%E7%82%92%E9%B8%A1%E8%9B%8B/%E6%B4%8B%E8%91%B1%E7%82%92%E9%B8%A1%E8%9B%8B.md",
+      "generation": "unknown"
+    },
+    "revision": {
+      "identifier": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+      "snapshot_sha256": "d744b2afa5588f756970ee237cbe0393434eaac84d4d0f04f15c773afb9c85b2"
+    },
+    "license": {
+      "state": "pending",
+      "identifier": "Unlicense",
+      "evidence_locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/LICENSE",
+      "evidence_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "attribution": {
+        "zh-CN": "菜谱文字来源于 Anduin2017/HowToCook，仓库声明采用 Unlicense；结构化标注为 FastCook 离线整理，尚待复核。"
+      }
+    }
+  },
+  {
+    "source_id": "howtocook_tiger_skin_pepper",
+    "provenance": {
+      "kind": "upstream",
+      "origin": "Anduin2017/HowToCook",
+      "locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/dishes/vegetable_dish/%E8%99%8E%E7%9A%AE%E9%9D%92%E6%A4%92/%E8%99%8E%E7%9A%AE%E9%9D%92%E6%A4%92.md",
+      "generation": "unknown"
+    },
+    "revision": {
+      "identifier": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+      "snapshot_sha256": "b49f516f967eb74688024ba32c332ee3893ad85ab0706de61ed87d6cd33e71da"
+    },
+    "license": {
+      "state": "pending",
+      "identifier": "Unlicense",
+      "evidence_locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/LICENSE",
+      "evidence_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "attribution": {
+        "zh-CN": "菜谱文字来源于 Anduin2017/HowToCook，仓库声明采用 Unlicense；结构化标注为 FastCook 离线整理，尚待复核。"
+      }
+    }
+  },
+  {
+    "source_id": "howtocook_cold_cucumber",
+    "provenance": {
+      "kind": "upstream",
+      "origin": "Anduin2017/HowToCook",
+      "locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/dishes/vegetable_dish/%E5%87%89%E6%8B%8C%E9%BB%84%E7%93%9C.md",
+      "generation": "unknown"
+    },
+    "revision": {
+      "identifier": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+      "snapshot_sha256": "2b1798821af132fdaf09cfae8381513dfcdbe2810288e1012137c93d8d82eea7"
+    },
+    "license": {
+      "state": "pending",
+      "identifier": "Unlicense",
+      "evidence_locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/LICENSE",
+      "evidence_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "attribution": {
+        "zh-CN": "菜谱文字来源于 Anduin2017/HowToCook，仓库声明采用 Unlicense；结构化标注为 FastCook 离线整理，尚待复核。"
+      }
+    }
+  },
+  {
+    "source_id": "howtocook_steamed_pumpkin",
+    "provenance": {
+      "kind": "upstream",
+      "origin": "Anduin2017/HowToCook",
+      "locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/dishes/vegetable_dish/%E6%B8%85%E8%92%B8%E5%8D%97%E7%93%9C.md",
+      "generation": "unknown"
+    },
+    "revision": {
+      "identifier": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+      "snapshot_sha256": "00708225f67ba4aa10a61b7ea3885487f63bc0b9d4e6d01afa57325bb05d495f"
+    },
+    "license": {
+      "state": "pending",
+      "identifier": "Unlicense",
+      "evidence_locator": "https://github.com/Anduin2017/HowToCook/blob/3dfa950f6daf0a5b311fc46619f1b559bac980c4/LICENSE",
+      "evidence_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "attribution": {
+        "zh-CN": "菜谱文字来源于 Anduin2017/HowToCook，仓库声明采用 Unlicense；结构化标注为 FastCook 离线整理，尚待复核。"
+      }
+    }
+  }
+]

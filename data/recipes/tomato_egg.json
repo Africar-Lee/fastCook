@@ -1,0 +1,155 @@
+{
+  "recipe_id": "tomato_egg",
+  "dish_id": "tomato_egg",
+  "name": {
+    "zh-CN": "番茄炒蛋"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 10,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_tomato",
+      "ingredient_id": "tomato",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 300,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去蒂后切成小块。"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 3,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "打散成均匀蛋液。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_sugar",
+      "ingredient_id": "sugar",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略白糖，成菜保留番茄自身的酸甜味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_sugar",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "番茄洗净去蒂，切成约两厘米的小块；鸡蛋打入碗中搅散。"
+      },
+      "requirement_ids": [
+        "req_tomato",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_cook_egg",
+      "text": {
+        "zh-CN": "炒锅中火加热，倒入 12 ml 食用油，再倒入蛋液。轻推至蛋液凝固成块后盛出。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_cook_tomato",
+      "text": {
+        "zh-CN": "锅中加入剩余 8 ml 食用油，放入番茄，中火翻炒约三分钟，至番茄边缘变软并析出汁液。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_tomato"
+      ]
+    },
+    {
+      "step_id": "step_add_sugar",
+      "text": {
+        "zh-CN": "向番茄中加入 3 g 白糖，翻拌至糖溶解。"
+      },
+      "requirement_ids": [
+        "req_sugar",
+        "req_tomato"
+      ]
+    },
+    {
+      "step_id": "step_finish",
+      "text": {
+        "zh-CN": "将鸡蛋倒回锅中，加入 2 g 盐，翻炒约一分钟。确认鸡蛋完全凝固、番茄熟软后盛出。"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_salt",
+        "req_tomato"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

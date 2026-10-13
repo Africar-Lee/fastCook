@@ -1,0 +1,103 @@
+{
+  "recipe": {
+    "recipe_id": "howtocook_steamed_pumpkin",
+    "dish_id": "steamed_pumpkin",
+    "name": {
+      "zh-CN": "清蒸南瓜"
+    },
+    "variant": {
+      "zh-CN": "HowToCook · 原文约 1–2 人份"
+    },
+    "original_locale": "zh-CN",
+    "course": "veg",
+    "cooking_method": "steam",
+    "servings": 2,
+    "time_minutes": 25,
+    "spicy_level": 0,
+    "equipment_slots": [
+      {
+        "equipment": "steamer",
+        "minutes": 20,
+        "burner_slots": 1
+      }
+    ],
+    "requirements": [
+      {
+        "requirement_id": "req_pumpkin",
+        "ingredient_id": "pumpkin",
+        "role": "main",
+        "importance": "required",
+        "consumes": true,
+        "quantity": {
+          "value": 300,
+          "unit": "g"
+        },
+        "preparation": {
+          "zh-CN": "洗净、去瓤去籽，切约 2 厘米厚片。原文需蒸 15–20 分钟，预留切配及烧水时间后预计共 25 分钟。"
+        }
+      },
+      {
+        "requirement_id": "req_water",
+        "ingredient_id": "water",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 1000,
+          "unit": "ml"
+        },
+        "preparation": {
+          "zh-CN": "用于蒸锅。"
+        }
+      }
+    ],
+    "substitution_overrides": []
+  },
+  "steps": [
+    {
+      "source_step": 1,
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "source_step": 2,
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "source_step": 3,
+      "requirement_ids": [
+        "req_water"
+      ]
+    },
+    {
+      "source_step": 4,
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "source_step": 5,
+      "requirement_ids": [
+        "req_water",
+        "req_pumpkin"
+      ]
+    },
+    {
+      "source_step": 6,
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "source_step": 7,
+      "requirement_ids": []
+    }
+  ],
+  "annotation_notes": [
+    "原文总时长15–20分钟与蒸制时间相同，预留切配和烧水后将总时间设为25分钟，此值为整理估计。",
+    "servings=2采用原文1–2人的上限，界面以variant保留原份量范围。"
+  ]
+}

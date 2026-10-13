@@ -1,0 +1,166 @@
+{
+  "recipe_id": "cucumber_egg",
+  "dish_id": "cucumber_egg",
+  "name": {
+    "zh-CN": "黄瓜炒蛋"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 15,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 8,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cucumber",
+      "ingredient_id": "cucumber",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 250,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 3,
+        "unit": "piece"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成葱花。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱花，保留黄瓜与鸡蛋的味道。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare_cucumber",
+      "text": {
+        "zh-CN": "黄瓜洗净，切成约 3 毫米厚的片。"
+      },
+      "requirement_ids": [
+        "req_cucumber"
+      ]
+    },
+    {
+      "step_id": "step_beat_egg",
+      "text": {
+        "zh-CN": "鸡蛋打入碗中，加入 1 克盐并打散。"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_cook_egg",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 12 毫升食用油，倒入蛋液，翻炒至完全凝固且熟透后盛出。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_cook_cucumber",
+      "text": {
+        "zh-CN": "锅中加入剩余 8 毫升食用油，放入黄瓜片，中大火翻炒约 2 分钟，至黄瓜略软。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_cucumber"
+      ]
+    },
+    {
+      "step_id": "step_combine",
+      "text": {
+        "zh-CN": "倒回鸡蛋，加入剩余 1 克盐，翻炒约 30 秒至均匀。"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "加入葱花并翻匀。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_serve",
+      "text": {
+        "zh-CN": "关火，将炒好的菜盛入盘中。"
+      },
+      "requirement_ids": []
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "ingredient_id": "onion",
+    "names": {
+      "zh-CN": "洋葱"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "howtocook_onion_egg"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "pumpkin",
+    "names": {
+      "zh-CN": "南瓜"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "howtocook_steamed_pumpkin"
+    ],
+    "review_state": "pending_review"
+  }
+]

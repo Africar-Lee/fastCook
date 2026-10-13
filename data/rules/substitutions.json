@@ -1,0 +1,85 @@
+[
+  {
+    "rule_id": "sub_rice_vinegar_for_aromatic_vinegar",
+    "scope": "global",
+    "required_ingredient_id": "aromatic_vinegar",
+    "substitute_ingredient_id": "rice_vinegar",
+    "level": "acceptable",
+    "conditions": {
+      "cooking_methods": [
+        "stir_fry"
+      ],
+      "requires_available_ingredient_ids": [],
+      "requires_confirmation": false
+    },
+    "quantity_ratio": {
+      "required_unit": "ml",
+      "substitute_unit": "ml",
+      "factor": 1
+    },
+    "usage_note": {
+      "zh-CN": "此规则草案用于炒菜中的米醋替香醋，示例按相同毫升量使用，香气会改变。酸度适配及用量须人工核验后才能启用。"
+    },
+    "step_policy": "ingredient_replacement_only",
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "rule_id": "sub_thigh_for_breast_kung_pao",
+    "scope": "recipe",
+    "required_ingredient_id": "chicken_breast",
+    "substitute_ingredient_id": "chicken_thigh",
+    "level": "acceptable",
+    "conditions": {
+      "cooking_methods": [
+        "stir_fry"
+      ],
+      "requires_available_ingredient_ids": [],
+      "requires_confirmation": false
+    },
+    "quantity_ratio": {
+      "required_unit": "g",
+      "substitute_unit": "g",
+      "factor": 1
+    },
+    "usage_note": {
+      "zh-CN": "使用同重量去骨去皮鸡腿肉，按原步骤切成同尺寸鸡丁并炒至熟透；口感和脂肪量不同，需人工核验。"
+    },
+    "step_policy": "ingredient_replacement_only",
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review",
+    "recipe_id": "kung_pao_chicken"
+  },
+  {
+    "rule_id": "sub_potato_starch_for_corn_sweet_sour",
+    "scope": "recipe",
+    "required_ingredient_id": "corn_starch",
+    "substitute_ingredient_id": "potato_starch",
+    "level": "acceptable",
+    "conditions": {
+      "cooking_methods": [
+        "deep_fry"
+      ],
+      "requires_available_ingredient_ids": [],
+      "requires_confirmation": false
+    },
+    "quantity_ratio": {
+      "required_unit": "g",
+      "substitute_unit": "g",
+      "factor": 1
+    },
+    "usage_note": {
+      "zh-CN": "用同重量土豆淀粉替代此做法的玉米淀粉，保持60克裹浆、5克勾芡的分配；挂糊厚度、脆度及酱汁稠度需要试做核验。"
+    },
+    "step_policy": "ingredient_replacement_only",
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review",
+    "recipe_id": "sweet_sour_pork"
+  }
+]

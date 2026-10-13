@@ -1,0 +1,162 @@
+{
+  "recipe": {
+    "recipe_id": "howtocook_cold_cucumber",
+    "dish_id": "cold_cucumber",
+    "name": {
+      "zh-CN": "凉拌黄瓜"
+    },
+    "variant": {
+      "zh-CN": "HowToCook · 原文 1 人份"
+    },
+    "original_locale": "zh-CN",
+    "course": "cold",
+    "cooking_method": "cold_mix",
+    "servings": 1,
+    "time_minutes": 20,
+    "spicy_level": 0,
+    "equipment_slots": [],
+    "requirements": [
+      {
+        "requirement_id": "req_cucumber",
+        "ingredient_id": "cucumber",
+        "role": "main",
+        "importance": "required",
+        "consumes": true,
+        "quantity": {
+          "value": 200,
+          "unit": "g"
+        },
+        "preparation": {
+          "zh-CN": "洗净后去除端头；原文按 1 人份计算。"
+        }
+      },
+      {
+        "requirement_id": "req_vinegar",
+        "ingredient_id": "vinegar",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 11.5,
+          "unit": "ml"
+        }
+      },
+      {
+        "requirement_id": "req_soy_sauce",
+        "ingredient_id": "soy_sauce",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 7.5,
+          "unit": "ml"
+        }
+      },
+      {
+        "requirement_id": "req_garlic",
+        "ingredient_id": "garlic",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 3,
+          "unit": "piece"
+        },
+        "preparation": {
+          "zh-CN": "原文为 3 瓣蒜，拍碎切末。"
+        }
+      },
+      {
+        "requirement_id": "req_salt",
+        "ingredient_id": "salt",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 0.6,
+          "unit": "g"
+        }
+      },
+      {
+        "requirement_id": "req_sesame_oil",
+        "ingredient_id": "sesame_oil",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 7,
+          "unit": "ml"
+        }
+      },
+      {
+        "requirement_id": "req_oyster_sauce",
+        "ingredient_id": "oyster_sauce",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 5,
+          "unit": "ml"
+        }
+      },
+      {
+        "requirement_id": "req_sugar",
+        "ingredient_id": "sugar",
+        "role": "seasoning",
+        "importance": "required",
+        "consumes": false,
+        "quantity": {
+          "value": 5,
+          "unit": "g"
+        },
+        "preparation": {
+          "zh-CN": "原文操作第 4 步使用 5 克白糖腌制 15 分钟。"
+        }
+      }
+    ],
+    "substitution_overrides": []
+  },
+  "steps": [
+    {
+      "source_step": 1,
+      "requirement_ids": [
+        "req_cucumber"
+      ]
+    },
+    {
+      "source_step": 2,
+      "requirement_ids": [
+        "req_cucumber"
+      ]
+    },
+    {
+      "source_step": 3,
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "source_step": 4,
+      "requirement_ids": [
+        "req_cucumber",
+        "req_sugar"
+      ]
+    },
+    {
+      "source_step": 5,
+      "requirement_ids": [
+        "req_vinegar",
+        "req_soy_sauce",
+        "req_salt",
+        "req_oyster_sauce",
+        "req_garlic"
+      ]
+    },
+    {
+      "source_step": 6,
+      "requirement_ids": [
+        "req_sesame_oil"
+      ]
+    }
+  ]
+}

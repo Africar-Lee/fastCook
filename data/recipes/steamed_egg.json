@@ -1,0 +1,214 @@
+{
+  "recipe_id": "steamed_egg",
+  "dish_id": "steamed_egg",
+  "name": {
+    "zh-CN": "蒸蛋"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "steam",
+  "servings": 2,
+  "time_minutes": 25,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "steamer",
+      "minutes": 20,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 3,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "使用中等大小鸡蛋。"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1250,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "250 毫升温水加入蛋液，1000 毫升水加入蒸锅。"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略生抽，表面酱香和咸鲜味减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_light_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_sesame_oil",
+      "ingredient_id": "sesame_oil",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略香油，芝麻香气减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_sesame_oil",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成葱花。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱花，保留平滑蛋羹表面。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_mix_egg",
+      "text": {
+        "zh-CN": "将鸡蛋打散，加入盐，再缓慢加入 250 毫升温水，边加边搅匀；温水以不烫手为准，避免将蛋液烫成絮状。"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_salt",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_strain",
+      "text": {
+        "zh-CN": "将蛋液过滤到浅耐热碗中，撇去表面泡沫，盖上一只耐热盘。"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_boil_water",
+      "text": {
+        "zh-CN": "蒸锅加入剩余 1000 毫升水，放好蒸架并大火煮沸，水面保持低于蒸架。"
+      },
+      "requirement_ids": [
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_steam_egg",
+      "text": {
+        "zh-CN": "将蛋碗放入蒸锅，加盖后转中小火，保持有蒸汽，蒸约 12 至 15 分钟。检查中心完全凝固且鸡蛋熟透；若仍有流动蛋液，每次再蒸 2 分钟后检查。"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_rest",
+      "text": {
+        "zh-CN": "关火后静置约 2 分钟，小心取出蛋碗并揭开盖盘。"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_add_light_soy",
+      "text": {
+        "zh-CN": "将生抽均匀淋在蛋羹表面。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_add_sesame_oil",
+      "text": {
+        "zh-CN": "在蛋羹表面淋入香油。"
+      },
+      "requirement_ids": [
+        "req_sesame_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "撒上葱花后食用。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

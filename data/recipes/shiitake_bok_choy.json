@@ -1,0 +1,214 @@
+{
+  "recipe_id": "shiitake_bok_choy",
+  "dish_id": "shiitake_bok_choy",
+  "name": {
+    "zh-CN": "香菇青菜"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 10,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_fresh_shiitake",
+      "ingredient_id": "fresh_shiitake",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 150,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去掉硬蒂，切成厚片。"
+      }
+    },
+    {
+      "requirement_id": "req_bok_choy",
+      "ingredient_id": "bok_choy",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 300,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "菜梗和菜叶分开放置。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1.5,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 40,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，成菜蒜香减弱，保留香菇风味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_oyster_sauce",
+      "ingredient_id": "oyster_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蚝油，鲜味和酱汁浓度降低，仍使用盐调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_oyster_sauce",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "鲜香菇洗净去掉硬蒂，切成厚片。小白菜洗净沥干，较粗菜梗纵向剖开，与菜叶分开放置。"
+      },
+      "requirement_ids": [
+        "req_fresh_shiitake",
+        "req_bok_choy"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 15 ml 食用油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切末加入锅中，翻炒约十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_cook_mushrooms",
+      "text": {
+        "zh-CN": "放入香菇，翻炒约两分钟至香菇略软、表面吸附油脂。"
+      },
+      "requirement_ids": [
+        "req_fresh_shiitake"
+      ]
+    },
+    {
+      "step_id": "step_cook_stems",
+      "text": {
+        "zh-CN": "加入小白菜菜梗翻炒一分钟，再加入 40 ml 水，盖锅盖焖煮约一分钟。"
+      },
+      "requirement_ids": [
+        "req_bok_choy",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_cook_leaves",
+      "text": {
+        "zh-CN": "揭盖加入菜叶和 1.5 g 盐，翻炒一至两分钟，至香菇与菜梗熟透、菜叶变软。"
+      },
+      "requirement_ids": [
+        "req_bok_choy",
+        "req_salt",
+        "req_fresh_shiitake"
+      ]
+    },
+    {
+      "step_id": "step_add_oyster_sauce",
+      "text": {
+        "zh-CN": "加入 10 ml 蚝油，翻拌均匀并煮至锅中汁液重新沸腾。"
+      },
+      "requirement_ids": [
+        "req_oyster_sauce"
+      ]
+    },
+    {
+      "step_id": "step_serve",
+      "text": {
+        "zh-CN": "将香菇与小白菜盛入盘中，淋上锅中剩余的少量菜汁。"
+      },
+      "requirement_ids": [
+        "req_fresh_shiitake",
+        "req_bok_choy"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

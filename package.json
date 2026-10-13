@@ -1,0 +1,39 @@
+{
+  "name": "fastcook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "app"
+  ],
+  "overrides": {
+    "react": "19.2.3",
+    "react-native": "0.86.3"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "data:validate": "node tools/data/check-data.mjs",
+    "data:check-release": "node tools/data/check-data.mjs --release",
+    "data:import": "node tools/data/import-howtocook.mjs",
+    "data:check-import": "node tools/data/import-howtocook.mjs --check",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tools/data/*.test.mjs tools/app/*.test.mjs packages/engine/test/*.test.mjs app/src/storage/*.test.mjs app/src/model/*.test.mjs",
+    "test:engine": "node --test packages/engine/test/*.test.mjs",
+    "check": "npm run data:check-import && npm run app:prepare && npm run typecheck && npm run app:typecheck && npm test",
+    "app:prepare": "node tools/app/build-catalog.mjs",
+    "app:start": "npm run app:prepare && npm --workspace app start",
+    "app:web": "npm run app:prepare && npm --workspace app run web",
+    "app:android": "npm run app:prepare && npm --workspace app run android",
+    "app:typecheck": "npm --workspace app run typecheck",
+    "app:export": "npm run app:prepare && npm --workspace app run export"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "canonicalize": "5.1.0",
+    "pinyin-pro": "3.29.5",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "recipe_id": "kung_pao_chicken",
+  "dish_id": "kung_pao_chicken",
+  "name": {
+    "zh-CN": "宫保鸡丁"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 30,
+  "spicy_level": 2,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 15,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_chicken_breast",
+      "ingredient_id": "chicken_breast",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 300,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去除筋膜，切成约 1.5 厘米的肉丁。"
+      }
+    },
+    {
+      "requirement_id": "req_peanut",
+      "ingredient_id": "peanut",
+      "role": "secondary",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 50,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "使用去皮生花生米。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 25,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_corn_starch",
+      "ingredient_id": "corn_starch",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 8,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 40,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_sugar",
+      "ingredient_id": "sugar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 8,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "ingredient_id": "aromatic_vinegar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 8,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成薄片。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜片，姜香减弱；鸡肉仍须炒至熟透。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成薄片。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜片，蒜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_dried_chili",
+      "ingredient_id": "dried_chili",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 4,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "剪成短段。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略干辣椒，成菜辣度降低并减少辣椒香。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_chili",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_sichuan_pepper",
+      "ingredient_id": "sichuan_pepper",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 1,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略花椒，成菜麻香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_pepper",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成约 1 厘米的葱段。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱段，成菜葱香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_marinate_chicken",
+      "text": {
+        "zh-CN": "将鸡肉丁与 5 毫升生抽、全部玉米淀粉及 10 毫升水抓匀，放入冰箱冷藏腌制约 10 分钟。"
+      },
+      "requirement_ids": [
+        "req_chicken_breast",
+        "req_light_soy_sauce",
+        "req_corn_starch",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_mix_sauce",
+      "text": {
+        "zh-CN": "另取碗，将剩余 10 毫升生抽、白糖、香醋和剩余 30 毫升水搅匀，调成碗汁。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce",
+        "req_sugar",
+        "req_aromatic_vinegar",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_cook_peanut",
+      "text": {
+        "zh-CN": "冷锅加入 10 毫升食用油和花生米，小火不断翻动约 4 分钟，至花生熟透且呈浅金黄色后盛出。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_peanut"
+      ]
+    },
+    {
+      "step_id": "step_cook_chicken",
+      "text": {
+        "zh-CN": "锅中加入剩余 15 毫升食用油，转中大火，倒入鸡肉丁并拨散，翻炒约 5 分钟至鸡肉熟透后盛出；肉丁较大时延长加热。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_chicken_breast"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "将锅转小火，利用锅内余油加入姜片，翻炒约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "加入蒜片，小火翻炒约 10 秒。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_add_chili",
+      "text": {
+        "zh-CN": "加入干辣椒段，小火翻炒约 10 秒，避免炒黑。"
+      },
+      "requirement_ids": [
+        "req_dried_chili"
+      ]
+    },
+    {
+      "step_id": "step_add_pepper",
+      "text": {
+        "zh-CN": "加入花椒，小火翻炒约 10 秒。"
+      },
+      "requirement_ids": [
+        "req_sichuan_pepper"
+      ]
+    },
+    {
+      "step_id": "step_combine_sauce",
+      "text": {
+        "zh-CN": "将鸡肉倒回锅中，倒入碗汁，转中火翻炒约 1 分钟，至汁液沸腾并均匀包住肉丁。"
+      },
+      "requirement_ids": [
+        "req_chicken_breast",
+        "req_light_soy_sauce",
+        "req_sugar",
+        "req_aromatic_vinegar",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "加入葱段，翻炒约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_finish_peanut",
+      "text": {
+        "zh-CN": "加入炒熟的花生米，快速翻匀后关火盛出。"
+      },
+      "requirement_ids": [
+        "req_peanut"
+      ]
+    }
+  ],
+  "substitution_overrides": [
+    {
+      "requirement_id": "req_chicken_breast",
+      "rule_id": "sub_thigh_for_breast_kung_pao",
+      "action": "allow",
+      "note": {
+        "zh-CN": "以等重去骨去皮鸡腿肉替代鸡胸肉，仍切成约 1.5 厘米的肉丁，沿用腌制与炒制步骤并烹饪至熟透；此替代待审核。"
+      },
+      "step_changes": []
+    }
+  ],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

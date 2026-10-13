@@ -1,0 +1,209 @@
+{
+  "recipe_id": "steamed_seabass",
+  "dish_id": "steamed_seabass",
+  "name": {
+    "zh-CN": "清蒸鲈鱼"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "steam",
+  "servings": 2,
+  "time_minutes": 30,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "steamer",
+      "minutes": 20,
+      "burner_slots": 1
+    },
+    {
+      "equipment": "frying_pan",
+      "minutes": 2,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_whole_seabass",
+      "ingredient_id": "whole_seabass",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 1,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "使用约 600 克整条鲈鱼，已去鳞、去鳃、去内脏。"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1500,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "用于蒸锅产汽，不加入鱼盘。"
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切片。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜片，姜香减弱；鱼仍放在耐热盘中蒸熟。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_steamed_fish_soy_sauce",
+      "ingredient_id": "steamed_fish_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成细丝。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱丝，葱香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare_fish",
+      "text": {
+        "zh-CN": "将处理好的鲈鱼擦干，在两侧鱼身最厚处各划两刀，保持鱼身完整。"
+      },
+      "requirement_ids": [
+        "req_whole_seabass"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "将姜片平铺在耐热鱼盘底部。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_place_fish",
+      "text": {
+        "zh-CN": "将鲈鱼放入耐热鱼盘，鱼身铺平，避免折叠。"
+      },
+      "requirement_ids": [
+        "req_whole_seabass"
+      ]
+    },
+    {
+      "step_id": "step_boil_water",
+      "text": {
+        "zh-CN": "蒸锅加入水并放好蒸架，大火煮沸，确保水面低于蒸架。"
+      },
+      "requirement_ids": [
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_steam_fish",
+      "text": {
+        "zh-CN": "将鱼盘放入蒸锅，加盖保持蒸汽充足，蒸约 12 至 15 分钟。检查鱼身最厚处及近骨处已熟透，较厚时继续蒸；取出后倒掉盘中蒸出的汁液。"
+      },
+      "requirement_ids": [
+        "req_whole_seabass"
+      ]
+    },
+    {
+      "step_id": "step_add_soy",
+      "text": {
+        "zh-CN": "将蒸鱼豉油均匀淋在鱼身及盘底。"
+      },
+      "requirement_ids": [
+        "req_steamed_fish_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "将葱丝铺在鱼身上。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_pour_oil",
+      "text": {
+        "zh-CN": "平底锅加入食用油，中火加热至油明显变稀、尚未冒烟时关火，小心将热油均匀淋在鱼身上。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

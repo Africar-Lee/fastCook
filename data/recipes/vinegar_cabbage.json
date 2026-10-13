@@ -1,0 +1,228 @@
+{
+  "recipe_id": "vinegar_cabbage",
+  "dish_id": "vinegar_cabbage",
+  "name": {
+    "zh-CN": "醋溜白菜"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 8,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_chinese_cabbage",
+      "ingredient_id": "chinese_cabbage",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 400,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "将白菜帮与叶分开，白菜帮斜切成片。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "ingredient_id": "aromatic_vinegar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，香醋风味保留，蒜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_dried_chili",
+      "ingredient_id": "dried_chili",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略干辣椒，成菜不带干辣椒的辣味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_chili",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略生抽，鲜味和颜色会变淡，仍按原步骤使用盐调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "白菜洗净后沥干。白菜帮斜切成薄片，白菜叶撕成小块，分别放置。"
+      },
+      "requirement_ids": [
+        "req_chinese_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 15 ml 食用油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_chili",
+      "text": {
+        "zh-CN": "干辣椒剪成段后加入锅中，翻炒约十秒。"
+      },
+      "requirement_ids": [
+        "req_dried_chili"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切成片，加入锅中，翻炒约十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_cook_stems",
+      "text": {
+        "zh-CN": "先放入白菜帮，中大火翻炒约两分钟，至边缘开始变透明。"
+      },
+      "requirement_ids": [
+        "req_chinese_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_cook_leaves",
+      "text": {
+        "zh-CN": "放入白菜叶，翻炒约一分钟至叶片变软。"
+      },
+      "requirement_ids": [
+        "req_chinese_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_add_soy",
+      "text": {
+        "zh-CN": "沿锅边加入 5 ml 生抽，翻拌均匀。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_finish",
+      "text": {
+        "zh-CN": "加入 15 ml 香醋和 2 g 盐，快速翻炒约三十秒，至白菜熟透后盛出，保留少量锅中汁液。"
+      },
+      "requirement_ids": [
+        "req_aromatic_vinegar",
+        "req_salt",
+        "req_chinese_cabbage"
+      ]
+    }
+  ],
+  "substitution_overrides": [
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "rule_id": "sub_rice_vinegar_for_aromatic_vinegar",
+      "action": "forbid",
+      "note": {
+        "zh-CN": "本做法保留香醋的发酵香气，禁止将这一香醋需求替换为米醋。"
+      }
+    }
+  ],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

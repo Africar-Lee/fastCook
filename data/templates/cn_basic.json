@@ -1,0 +1,28 @@
+[
+  {
+    "template_id": "cn_basic",
+    "names": {
+      "zh-CN": "中国家常基础草案"
+    },
+    "region": "CN",
+    "ingredient_ids": [
+      "sugar",
+      "light_soy_sauce",
+      "dark_soy_sauce",
+      "aromatic_vinegar",
+      "cooking_wine",
+      "oyster_sauce",
+      "corn_starch",
+      "scallion",
+      "ginger",
+      "garlic",
+      "dried_chili",
+      "sichuan_pepper",
+      "star_anise"
+    ],
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  }
+]

@@ -1,0 +1,139 @@
+{
+  "recipe_id": "howtocook_onion_egg",
+  "dish_id": "onion_egg",
+  "name": {
+    "zh-CN": "洋葱炒鸡蛋"
+  },
+  "variant": {
+    "zh-CN": "HowToCook · 按原文一份用量"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 1,
+  "time_minutes": 5,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 5,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 2,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "原文用量为每份，未注明人数；这里保留一份用量。"
+      }
+    },
+    {
+      "requirement_id": "req_onion",
+      "ingredient_id": "onion",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 50,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切片。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 50,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 0.5,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "原文为葱半根，操作中切成葱花；此处按小葱整理。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_wine",
+      "ingredient_id": "cooking_wine",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "ml"
+      }
+    }
+  ],
+  "substitution_overrides": [],
+  "steps": [
+    {
+      "step_id": "step_1",
+      "text": {
+        "zh-CN": "鸡蛋打入大碗中，加入洋葱片、盐后搅拌 60 S"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_onion",
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_2",
+      "text": {
+        "zh-CN": "起锅烧油，倒入鸡蛋，一面煎炸 30-45 S ，翻面继续翻炒，反复 2-3 分钟 后散上料酒出锅"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_egg",
+        "req_cooking_wine"
+      ]
+    },
+    {
+      "step_id": "step_3",
+      "text": {
+        "zh-CN": "鸡蛋装盘，散上葱花"
+      },
+      "requirement_ids": [
+        "req_egg",
+        "req_scallion"
+      ]
+    }
+  ],
+  "source_ids": [
+    "howtocook_onion_egg"
+  ],
+  "review_state": "pending_review"
+}

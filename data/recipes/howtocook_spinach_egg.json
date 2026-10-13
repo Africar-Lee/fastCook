@@ -1,0 +1,167 @@
+{
+  "recipe_id": "howtocook_spinach_egg",
+  "dish_id": "spinach_egg",
+  "name": {
+    "zh-CN": "菠菜炒鸡蛋"
+  },
+  "variant": {
+    "zh-CN": "HowToCook · 原文 1 人份"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 1,
+  "time_minutes": 15,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 15,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_spinach",
+      "ingredient_id": "spinach",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 350,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "原文为 1 人份，菠菜去根、洗净后焯水。"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 2,
+        "unit": "piece"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 100,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "100 ml 为原文第 7 步加入的饮用水；另备焯水用水，原文未注明焯水用量。"
+      }
+    }
+  ],
+  "substitution_overrides": [],
+  "steps": [
+    {
+      "step_id": "step_1",
+      "text": {
+        "zh-CN": "菠菜去根，洗净，放在篮子里，焯水"
+      },
+      "requirement_ids": [
+        "req_spinach",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_2",
+      "text": {
+        "zh-CN": "将鸡蛋打入碗中，搅匀"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_3",
+      "text": {
+        "zh-CN": "热锅，加入 10ml 油"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_4",
+      "text": {
+        "zh-CN": "油热后，倒入鸡蛋液，中火翻炒 15 秒，先煎成蛋饼，然后再用锅铲切成小块"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_5",
+      "text": {
+        "zh-CN": "关火，将鸡蛋块 盛到盘子中，不要洗锅"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_6",
+      "text": {
+        "zh-CN": "重新开火，倒入 5ml 油，油热后，放入菠菜，大火 翻炒 15 秒后，倒入鸡蛋块，翻炒均匀"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_spinach",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_7",
+      "text": {
+        "zh-CN": "加入 5g 盐、100ml 饮用水，大火 翻炒 10 秒"
+      },
+      "requirement_ids": [
+        "req_salt",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_8",
+      "text": {
+        "zh-CN": "关火，盛盘"
+      },
+      "requirement_ids": []
+    }
+  ],
+  "source_ids": [
+    "howtocook_spinach_egg"
+  ],
+  "review_state": "pending_review"
+}

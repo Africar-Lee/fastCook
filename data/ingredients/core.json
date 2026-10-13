@@ -1,0 +1,1129 @@
+[
+  {
+    "ingredient_id": "meat",
+    "names": {
+      "zh-CN": "肉类"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": false,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "tomato",
+    "names": {
+      "zh-CN": "番茄"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "西红柿",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "egg",
+    "names": {
+      "zh-CN": "鸡蛋"
+    },
+    "aliases": {},
+    "category": "egg",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "potato",
+    "names": {
+      "zh-CN": "土豆"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "马铃薯",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "green_pepper",
+    "names": {
+      "zh-CN": "青椒"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "pork",
+    "names": {
+      "zh-CN": "猪肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "meat",
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "pork_tenderloin",
+    "names": {
+      "zh-CN": "猪里脊"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "里脊肉",
+          "resolution": "needs_confirmation"
+        },
+        {
+          "text": "里脊",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "pork",
+    "matching_parent_ids": [
+      "pork"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "pork_belly",
+    "names": {
+      "zh-CN": "五花肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "pork",
+    "matching_parent_ids": [
+      "pork"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "beef",
+    "names": {
+      "zh-CN": "牛肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "meat",
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "beef_tenderloin",
+    "names": {
+      "zh-CN": "牛里脊"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "里脊肉",
+          "resolution": "needs_confirmation"
+        },
+        {
+          "text": "里脊",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "beef",
+    "matching_parent_ids": [
+      "beef"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "chicken",
+    "names": {
+      "zh-CN": "鸡肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "meat",
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "chicken_breast",
+    "names": {
+      "zh-CN": "鸡胸肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "chicken",
+    "matching_parent_ids": [
+      "chicken"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "chicken_thigh",
+    "names": {
+      "zh-CN": "鸡腿肉"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "chicken",
+    "matching_parent_ids": [
+      "chicken"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "chicken_wing",
+    "names": {
+      "zh-CN": "鸡翅"
+    },
+    "aliases": {},
+    "category": "meat",
+    "selectable": true,
+    "taxonomy_parent_id": "chicken",
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "whole_seabass",
+    "names": {
+      "zh-CN": "整条鲈鱼"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "鲈鱼",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "seafood",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "firm_tofu",
+    "names": {
+      "zh-CN": "老豆腐"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "北豆腐",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "soy",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "soft_tofu",
+    "names": {
+      "zh-CN": "嫩豆腐"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "南豆腐",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "soy",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "chinese_cabbage",
+    "names": {
+      "zh-CN": "大白菜"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cabbage",
+    "names": {
+      "zh-CN": "包菜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "卷心菜",
+          "resolution": "automatic"
+        },
+        {
+          "text": "圆白菜",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "broccoli",
+    "names": {
+      "zh-CN": "西兰花"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "bok_choy",
+    "names": {
+      "zh-CN": "小白菜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "青菜",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "spinach",
+    "names": {
+      "zh-CN": "菠菜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "青菜",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "fresh_shiitake",
+    "names": {
+      "zh-CN": "鲜香菇"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "香菇",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "dried_shiitake",
+    "names": {
+      "zh-CN": "干香菇"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "香菇",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "eggplant",
+    "names": {
+      "zh-CN": "茄子"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cucumber",
+    "names": {
+      "zh-CN": "黄瓜"
+    },
+    "aliases": {},
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "scallion",
+    "names": {
+      "zh-CN": "小葱"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "葱",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "ginger",
+    "names": {
+      "zh-CN": "姜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "生姜",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "garlic",
+    "names": {
+      "zh-CN": "蒜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "大蒜",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cooking_oil",
+    "names": {
+      "zh-CN": "食用油"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": true,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "salt",
+    "names": {
+      "zh-CN": "盐"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "食盐",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": true,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "water",
+    "names": {
+      "zh-CN": "水"
+    },
+    "aliases": {},
+    "category": "other",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": true,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "sugar",
+    "names": {
+      "zh-CN": "白糖"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "白砂糖",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "rock_sugar",
+    "names": {
+      "zh-CN": "冰糖"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "soy_sauce",
+    "names": {
+      "zh-CN": "酱油"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "light_soy_sauce",
+    "names": {
+      "zh-CN": "生抽"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "soy_sauce",
+    "matching_parent_ids": [
+      "soy_sauce"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "dark_soy_sauce",
+    "names": {
+      "zh-CN": "老抽"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "soy_sauce",
+    "matching_parent_ids": [
+      "soy_sauce"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "steamed_fish_soy_sauce",
+    "names": {
+      "zh-CN": "蒸鱼豉油"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "soy_sauce",
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "vinegar",
+    "names": {
+      "zh-CN": "醋"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "aromatic_vinegar",
+    "names": {
+      "zh-CN": "香醋"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "vinegar",
+    "matching_parent_ids": [
+      "vinegar"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "rice_vinegar",
+    "names": {
+      "zh-CN": "米醋"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "vinegar",
+    "matching_parent_ids": [
+      "vinegar"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "oyster_sauce",
+    "names": {
+      "zh-CN": "蚝油"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "doubanjiang",
+    "names": {
+      "zh-CN": "豆瓣酱"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "starch",
+    "names": {
+      "zh-CN": "淀粉"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "corn_starch",
+    "names": {
+      "zh-CN": "玉米淀粉"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "生粉",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "starch",
+    "matching_parent_ids": [
+      "starch"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "potato_starch",
+    "names": {
+      "zh-CN": "土豆淀粉"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "马铃薯淀粉",
+          "resolution": "automatic"
+        },
+        {
+          "text": "生粉",
+          "resolution": "needs_confirmation"
+        }
+      ]
+    },
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": "starch",
+    "matching_parent_ids": [
+      "starch"
+    ],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "dried_chili",
+    "names": {
+      "zh-CN": "干辣椒"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "sichuan_pepper",
+    "names": {
+      "zh-CN": "花椒"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "peanut",
+    "names": {
+      "zh-CN": "花生米"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "花生",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "grain",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cooking_wine",
+    "names": {
+      "zh-CN": "料酒"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cola",
+    "names": {
+      "zh-CN": "可乐"
+    },
+    "aliases": {},
+    "category": "other",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "star_anise",
+    "names": {
+      "zh-CN": "八角"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cinnamon",
+    "names": {
+      "zh-CN": "桂皮"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "bay_leaf",
+    "names": {
+      "zh-CN": "香叶"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "dried_laver",
+    "names": {
+      "zh-CN": "干紫菜"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "紫菜",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "vegetable",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "cooked_rice",
+    "names": {
+      "zh-CN": "熟米饭"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "米饭",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "grain",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "sesame_oil",
+    "names": {
+      "zh-CN": "芝麻油"
+    },
+    "aliases": {
+      "zh-CN": [
+        {
+          "text": "香油",
+          "resolution": "automatic"
+        }
+      ]
+    },
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  },
+  {
+    "ingredient_id": "white_pepper",
+    "names": {
+      "zh-CN": "白胡椒粉"
+    },
+    "aliases": {},
+    "category": "seasoning",
+    "selectable": true,
+    "taxonomy_parent_id": null,
+    "matching_parent_ids": [],
+    "implicit_staple": false,
+    "source_ids": [
+      "stage1_editorial_draft"
+    ],
+    "review_state": "pending_review"
+  }
+]

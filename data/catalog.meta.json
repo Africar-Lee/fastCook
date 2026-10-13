@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_version": "0.2.0-howtocook-draft",
+  "release_state": "draft",
+  "default_locale": "zh-CN",
+  "notes": {
+    "zh-CN": "20道数据规范样本与5道HowToCook固定版本导入菜谱。导入内容保留原文、许可和整理标注，全部菜谱尚待审核，未标记已试做或可发布。"
+  }
+}

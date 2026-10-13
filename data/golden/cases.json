@@ -1,0 +1,1471 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_version": "0.2.0-howtocook-draft",
+  "review_state": "pending_review",
+  "provenance": "assistant_authored",
+  "notes": "期望依据设计规则与数据草稿逐项编写，尚待人员复核。通过这些回归场景不代表烹饪验证，也不构成推荐准确率达到 95% 的证据。合成菜谱仅用于算法测试。替代确认绑定菜谱相关原料、规则替代品、条件、匹配层级相关库存、相关厨具与数据版本，无关新增食材保留已有确认，减少重复操作。",
+  "cases": [
+    {
+      "id": "real_tomato_egg_ready",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": [],
+        "rule_ids": [],
+        "steps_absent": [
+          "step_add_sugar"
+        ],
+        "current_count": 2
+      }
+    },
+    {
+      "id": "real_cucumber_egg_ready",
+      "target": "cucumber_egg",
+      "current": [
+        "cucumber",
+        "egg"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_broccoli_ready",
+      "target": "garlic_broccoli",
+      "current": [
+        "broccoli",
+        "garlic"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_potato_ready",
+      "target": "shredded_potato",
+      "current": [
+        "potato"
+      ],
+      "pantry": [
+        "aromatic_vinegar",
+        "garlic"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_vinegar_cabbage_ready",
+      "target": "vinegar_cabbage",
+      "current": [
+        "chinese_cabbage"
+      ],
+      "pantry": [
+        "aromatic_vinegar",
+        "garlic",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_torn_cabbage_ready",
+      "target": "torn_cabbage",
+      "current": [
+        "cabbage"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "garlic",
+        "aromatic_vinegar"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_shiitake_bok_choy_ready",
+      "target": "shiitake_bok_choy",
+      "current": [
+        "fresh_shiitake",
+        "bok_choy"
+      ],
+      "pantry": [
+        "garlic",
+        "oyster_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_eggplant_ready",
+      "target": "braised_eggplant",
+      "current": [
+        "eggplant"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "garlic",
+        "dark_soy_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_tofu_ready",
+      "target": "homestyle_tofu",
+      "current": [
+        "firm_tofu",
+        "green_pepper"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "garlic",
+        "doubanjiang"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_mapo_ready",
+      "target": "mapo_tofu",
+      "current": [
+        "soft_tofu",
+        "pork"
+      ],
+      "pantry": [
+        "doubanjiang",
+        "corn_starch",
+        "ginger",
+        "garlic",
+        "light_soy_sauce",
+        "sichuan_pepper"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_pepper_pork_ready",
+      "target": "green_pepper_pork",
+      "current": [
+        "green_pepper",
+        "pork"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "corn_starch",
+        "ginger"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_kung_pao_ready",
+      "target": "kung_pao_chicken",
+      "current": [
+        "chicken_breast",
+        "peanut"
+      ],
+      "pantry": [
+        "corn_starch",
+        "light_soy_sauce",
+        "sugar",
+        "aromatic_vinegar",
+        "ginger",
+        "garlic",
+        "dried_chili",
+        "sichuan_pepper",
+        "scallion"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_cola_wings_ready",
+      "target": "cola_chicken_wings",
+      "current": [
+        "chicken_wing"
+      ],
+      "pantry": [
+        "cola",
+        "light_soy_sauce",
+        "ginger"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_braised_pork_ready",
+      "target": "braised_pork",
+      "current": [
+        "pork_belly"
+      ],
+      "pantry": [
+        "rock_sugar",
+        "light_soy_sauce",
+        "dark_soy_sauce",
+        "ginger",
+        "star_anise"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_sweet_sour_pork_ready",
+      "target": "sweet_sour_pork",
+      "current": [
+        "pork_tenderloin",
+        "egg"
+      ],
+      "pantry": [
+        "corn_starch",
+        "sugar",
+        "rice_vinegar",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_seabass_ready",
+      "target": "steamed_seabass",
+      "current": [
+        "whole_seabass"
+      ],
+      "pantry": [
+        "steamed_fish_soy_sauce",
+        "ginger",
+        "scallion"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_tomato_soup_ready",
+      "target": "tomato_egg_soup",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_laver_soup_ready",
+      "target": "laver_egg_soup",
+      "current": [
+        "egg"
+      ],
+      "pantry": [
+        "dried_laver"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_fried_rice_ready",
+      "target": "egg_fried_rice",
+      "current": [
+        "cooked_rice",
+        "egg"
+      ],
+      "pantry": [
+        "scallion"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_steamed_egg_ready",
+      "target": "steamed_egg",
+      "current": [
+        "egg"
+      ],
+      "expect": {
+        "tier": "ready",
+        "missing": []
+      }
+    },
+    {
+      "id": "real_missing_egg",
+      "target": "tomato_egg",
+      "current": [
+        "tomato"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "egg"
+        ],
+        "buy_contains": [
+          "egg"
+        ]
+      }
+    },
+    {
+      "id": "real_empty_inventory",
+      "target": "tomato_egg",
+      "expect": {
+        "tier": "insufficient",
+        "missing": [
+          "egg",
+          "tomato"
+        ]
+      }
+    },
+    {
+      "id": "real_implicit_disabled",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "implicit": false,
+      "expect": {
+        "tier": "insufficient",
+        "missing": [
+          "cooking_oil",
+          "salt"
+        ]
+      }
+    },
+    {
+      "id": "real_explicit_salt_unavailable",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg",
+        "salt"
+      ],
+      "unavailable": [
+        "salt"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "salt"
+        ],
+        "buy_contains": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "id": "real_equipment_unknown",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "equipment": null,
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain_equipment": [
+          "wok"
+        ]
+      }
+    },
+    {
+      "id": "real_equipment_unavailable",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "equipment": {
+        "available": [],
+        "unavailable": [
+          "wok"
+        ]
+      },
+      "expect": {
+        "tier": "insufficient",
+        "missing_equipment": [
+          "wok"
+        ]
+      }
+    },
+    {
+      "id": "real_important_garlic_omitted",
+      "target": "shredded_potato",
+      "current": [
+        "potato"
+      ],
+      "pantry": [
+        "aromatic_vinegar"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "omitted": [
+          "req_garlic",
+          "req_dried_chili"
+        ],
+        "steps_absent": [
+          "step_add_garlic",
+          "step_add_chili"
+        ]
+      }
+    },
+    {
+      "id": "real_vinegar_substitution",
+      "target": "shredded_potato",
+      "current": [
+        "potato"
+      ],
+      "pantry": [
+        "rice_vinegar",
+        "garlic"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "sub_rice_vinegar_for_aromatic_vinegar"
+        ]
+      }
+    },
+    {
+      "id": "real_vinegar_forbidden",
+      "target": "vinegar_cabbage",
+      "current": [
+        "chinese_cabbage"
+      ],
+      "pantry": [
+        "rice_vinegar",
+        "garlic",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "aromatic_vinegar"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "real_pork_descendant",
+      "target": "green_pepper_pork",
+      "current": [
+        "green_pepper",
+        "pork_tenderloin"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "corn_starch",
+        "ginger"
+      ],
+      "expect": {
+        "tier": "ready",
+        "matches": {
+          "req_pork": "approved_descendant"
+        }
+      }
+    },
+    {
+      "id": "real_generic_pork_uncertain",
+      "target": "sweet_sour_pork",
+      "current": [
+        "pork",
+        "egg"
+      ],
+      "pantry": [
+        "corn_starch",
+        "sugar",
+        "rice_vinegar",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_pork_tenderloin"
+        ]
+      }
+    },
+    {
+      "id": "real_tofu_siblings_not_equivalent",
+      "target": "homestyle_tofu",
+      "current": [
+        "soft_tofu",
+        "green_pepper"
+      ],
+      "pantry": [
+        "light_soy_sauce",
+        "garlic",
+        "doubanjiang"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "firm_tofu"
+        ]
+      }
+    },
+    {
+      "id": "real_kung_pao_recipe_substitution",
+      "target": "kung_pao_chicken",
+      "current": [
+        "chicken_thigh",
+        "peanut"
+      ],
+      "pantry": [
+        "corn_starch",
+        "light_soy_sauce",
+        "sugar",
+        "aromatic_vinegar",
+        "ginger",
+        "garlic",
+        "dried_chili",
+        "sichuan_pepper",
+        "scallion"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "sub_thigh_for_breast_kung_pao"
+        ]
+      }
+    },
+    {
+      "id": "real_sweet_sour_recipe_substitution",
+      "target": "sweet_sour_pork",
+      "current": [
+        "pork_tenderloin",
+        "egg"
+      ],
+      "pantry": [
+        "potato_starch",
+        "sugar",
+        "rice_vinegar",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "sub_potato_starch_for_corn_sweet_sour"
+        ]
+      }
+    },
+    {
+      "id": "real_time_filter_excludes_slow_recipe",
+      "target": "braised_pork",
+      "current": [
+        "pork_belly"
+      ],
+      "filters": {
+        "max_time_minutes": 30
+      },
+      "expect": {
+        "absent": true
+      }
+    },
+    {
+      "id": "real_course_filter_excludes_stir_fry",
+      "target": "tomato_egg",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "filters": {
+        "courses": [
+          "soup"
+        ]
+      },
+      "expect": {
+        "absent": true
+      }
+    },
+    {
+      "id": "real_spice_filter_excludes_kung_pao",
+      "target": "kung_pao_chicken",
+      "filters": {
+        "max_spicy_level": 1
+      },
+      "expect": {
+        "absent": true
+      }
+    },
+    {
+      "id": "alias_tomato",
+      "kind": "resolve",
+      "query": "西红柿",
+      "expect": {
+        "status": "resolved",
+        "ingredient_ids": [
+          "tomato"
+        ]
+      }
+    },
+    {
+      "id": "alias_whitespace",
+      "kind": "resolve",
+      "query": "  马铃薯  ",
+      "expect": {
+        "status": "resolved",
+        "ingredient_ids": [
+          "potato"
+        ]
+      }
+    },
+    {
+      "id": "alias_ambiguous_greens",
+      "kind": "resolve",
+      "query": "青菜",
+      "expect": {
+        "status": "needs_confirmation",
+        "ingredient_ids": [
+          "bok_choy",
+          "spinach"
+        ]
+      }
+    },
+    {
+      "id": "alias_ambiguous_mushroom",
+      "kind": "resolve",
+      "query": "香菇",
+      "expect": {
+        "status": "needs_confirmation",
+        "ingredient_ids": [
+          "dried_shiitake",
+          "fresh_shiitake"
+        ]
+      }
+    },
+    {
+      "id": "alias_ambiguous_starch",
+      "kind": "resolve",
+      "query": "生粉",
+      "expect": {
+        "status": "needs_confirmation",
+        "ingredient_ids": [
+          "corn_starch",
+          "potato_starch"
+        ]
+      }
+    },
+    {
+      "id": "alias_unknown",
+      "kind": "resolve",
+      "query": "未知原料测试名称",
+      "expect": {
+        "status": "not_found",
+        "ingredient_ids": []
+      }
+    },
+    {
+      "id": "alias_nfkc_case_and_space_normalization",
+      "kind": "resolve",
+      "fixture": "alias_normalization",
+      "query": "  ＴＥＳＴ   ＴＯＭＡＴＯ  ",
+      "locale": "en",
+      "expect": {
+        "status": "resolved",
+        "ingredient_ids": [
+          "tomato"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_specific_satisfies_generic",
+      "fixture": "single_pork",
+      "current": [
+        "pork_tenderloin"
+      ],
+      "expect": {
+        "tier": "ready",
+        "matches": {
+          "req_pork": "approved_descendant"
+        }
+      }
+    },
+    {
+      "id": "synthetic_generic_needs_confirmation",
+      "fixture": "single_pork_tenderloin",
+      "current": [
+        "pork"
+      ],
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_pork_tenderloin"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_siblings_are_distinct",
+      "fixture": "single_pork_tenderloin",
+      "current": [
+        "pork_belly"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "pork_tenderloin"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_taxonomy_is_not_matching",
+      "fixture": "single_chicken",
+      "current": [
+        "chicken_wing"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "chicken"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_exact_beats_generic",
+      "fixture": "single_light_soy_sauce",
+      "current": [
+        "soy_sauce",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "matches": {
+          "req_light_soy_sauce": "exact"
+        }
+      }
+    },
+    {
+      "id": "synthetic_approved_descendant_beats_generic",
+      "fixture": "single_soy_sauce",
+      "current": [
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "ready",
+        "matches": {
+          "req_soy_sauce": "approved_descendant"
+        }
+      }
+    },
+    {
+      "id": "synthetic_equivalent_substitute",
+      "fixture": "equivalent",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "ready",
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_acceptable_substitute",
+      "fixture": "acceptable",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_rule_does_not_reverse",
+      "fixture": "reverse",
+      "current": [
+        "corn_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "potato_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_single_hop_only",
+      "fixture": "chained",
+      "current": [
+        "sugar"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "corn_starch"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_forbid_covers_other_rule_ids",
+      "fixture": "forbidden_pair",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "corn_starch"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_poor_default_disabled",
+      "fixture": "poor",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_poor_explicit_allow",
+      "fixture": "poor_allowed",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_optional_omission_avoids_flavor_penalty",
+      "fixture": "optional",
+      "current": [
+        "tomato",
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "ready",
+        "omitted": [
+          "req_corn_starch"
+        ],
+        "rule_ids": [],
+        "steps_absent": [
+          "step_req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_important_missing_warns",
+      "fixture": "important",
+      "current": [
+        "tomato"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "omitted": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_important_generic_can_omit",
+      "fixture": "important_generic",
+      "current": [
+        "tomato",
+        "soy_sauce"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "omitted": [
+          "req_light_soy_sauce"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_wrong_cooking_method",
+      "fixture": "wrong_method",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_condition_present",
+      "fixture": "condition_present",
+      "current": [
+        "potato_starch",
+        "light_soy_sauce"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_condition_uncertain",
+      "fixture": "condition_uncertain",
+      "current": [
+        "potato_starch",
+        "soy_sauce"
+      ],
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain_contains": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_condition_absent",
+      "fixture": "condition_absent",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "corn_starch"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_condition_cannot_be_omitted",
+      "fixture": "condition_omitted",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "synthetic_condition_cannot_use_another_substitute",
+      "fixture": "condition_substituted",
+      "current": [
+        "potato_starch",
+        "dark_soy_sauce"
+      ],
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_confirmation_required",
+      "fixture": "confirm",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_corn_starch"
+        ],
+        "confirmation_for": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_confirmation_accepted",
+      "fixture": "confirm",
+      "current": [
+        "potato_starch"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "uncertain": [],
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_unrelated_inventory_keeps_confirmation",
+      "fixture": "confirm",
+      "current": [
+        "potato_starch"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "add_after_confirmation": "tomato",
+      "expect": {
+        "tier": "caveat",
+        "uncertain": [],
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_confirmation_invalid_after_substitute_item_change",
+      "fixture": "confirm",
+      "current": [
+        "potato_starch"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "change_item_after_confirmation": "potato_starch",
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_confirmation_invalid_after_other_recipe_requirement_change",
+      "fixture": "confirm_other_requirement",
+      "current": [
+        "potato_starch",
+        "tomato"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "change_item_after_confirmation": "tomato",
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_confirmation_invalid_after_data_version_change",
+      "fixture": "confirm",
+      "current": [
+        "potato_starch"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "change_version_after_confirmation": true,
+      "expect": {
+        "tier": "needs_confirmation",
+        "uncertain": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_usage_note_requires_confirmation_without_ratio",
+      "fixture": "confirm_no_ratio",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "needs_confirmation",
+        "confirmation_for": [
+          "req_corn_starch"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_usage_note_confirmation_accepted",
+      "fixture": "confirm_no_ratio",
+      "current": [
+        "potato_starch"
+      ],
+      "confirm_rules": [
+        "fixture_substitute"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_substitute"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_range_quantity_scaled",
+      "fixture": "range_quantity",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "quantities": {
+          "req_corn_starch": {
+            "min": 10,
+            "max": 20,
+            "unit": "g"
+          }
+        }
+      }
+    },
+    {
+      "id": "synthetic_definite_alternative_beats_unconfirmed_rule",
+      "fixture": "alternative_rule",
+      "current": [
+        "potato_starch",
+        "sugar"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_b_definite"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_substitute_beats_generic_uncertainty",
+      "fixture": "generic_with_definite_substitute",
+      "current": [
+        "chicken",
+        "chicken_thigh"
+      ],
+      "expect": {
+        "tier": "caveat",
+        "rule_ids": [
+          "fixture_substitute"
+        ],
+        "uncertain": []
+      }
+    },
+    {
+      "id": "synthetic_one_purchase_fills_duplicate_requirements",
+      "fixture": "duplicate_requirements",
+      "expect": {
+        "tier": "one_missing",
+        "missing": [
+          "corn_starch"
+        ],
+        "buy_contains": [
+          "corn_starch",
+          "potato_starch"
+        ],
+        "purchases": [
+          {
+            "ingredient_id": "corn_starch",
+            "dish_ids": [
+              "fixture_dish"
+            ],
+            "new_dish_count": 1
+          },
+          {
+            "ingredient_id": "potato_starch",
+            "dish_ids": [
+              "fixture_dish"
+            ],
+            "new_dish_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "synthetic_one_item_satisfies_duplicate_requirements",
+      "fixture": "duplicate_requirements",
+      "current": [
+        "corn_starch"
+      ],
+      "expect": {
+        "tier": "ready",
+        "current_count": 1,
+        "missing": []
+      }
+    },
+    {
+      "id": "synthetic_distinct_current_coverage",
+      "fixture": "current_coverage",
+      "current": [
+        "tomato",
+        "tomato",
+        "salt"
+      ],
+      "expect": {
+        "tier": "ready",
+        "current_count": 1
+      }
+    },
+    {
+      "id": "synthetic_pantry_only_recipe_is_retrieved",
+      "fixture": "pantry_only",
+      "pantry": [
+        "sugar"
+      ],
+      "expect": {
+        "tier": "ready",
+        "current_count": 0
+      }
+    },
+    {
+      "id": "synthetic_dish_variant_chooses_shorter",
+      "fixture": "variants",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_a",
+      "expect": {
+        "tier": "ready",
+        "recipe_id": "fixture_b",
+        "dish_ids": [
+          "dish_a"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_filter_before_dish_aggregation",
+      "fixture": "variants",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_a",
+      "filters": {
+        "courses": [
+          "veg"
+        ]
+      },
+      "expect": {
+        "tier": "ready",
+        "recipe_id": "fixture_a",
+        "dish_ids": [
+          "dish_a"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_spice_filter_before_dish_aggregation",
+      "fixture": "variants",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_a",
+      "filters": {
+        "max_spicy_level": 0
+      },
+      "expect": {
+        "tier": "ready",
+        "recipe_id": "fixture_b"
+      }
+    },
+    {
+      "id": "synthetic_tie_uses_stable_recipe_id",
+      "fixture": "variant_tie",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_a",
+      "expect": {
+        "tier": "ready",
+        "recipe_id": "fixture_a"
+      }
+    },
+    {
+      "id": "synthetic_purchase_counts_new_dishes_only",
+      "fixture": "purchase_aggregation",
+      "current": [
+        "tomato"
+      ],
+      "target": "dish_b",
+      "expect": {
+        "tier": "one_missing",
+        "purchases": [
+          {
+            "ingredient_id": "egg",
+            "dish_ids": [
+              "dish_b"
+            ],
+            "new_dish_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "synthetic_coverage_precedes_duration",
+      "fixture": "ranking",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "pantry": [
+        "sugar"
+      ],
+      "target": "dish_b",
+      "expect": {
+        "tier": "ready",
+        "order": [
+          "dish_b",
+          "dish_a",
+          "dish_c"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_tier_precedes_duration",
+      "fixture": "ranking_tiers",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_b",
+      "expect": {
+        "tier": "ready",
+        "order": [
+          "dish_b",
+          "dish_a"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_important_gaps_precede_duration",
+      "fixture": "ranking_important_gaps",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "target": "dish_b",
+      "expect": {
+        "tier": "caveat",
+        "order": [
+          "dish_b",
+          "dish_a"
+        ]
+      }
+    },
+    {
+      "id": "synthetic_purchase_cannot_unlock_unknown_equipment",
+      "target": "tomato_egg",
+      "current": [
+        "tomato"
+      ],
+      "equipment": null,
+      "expect": {
+        "no_purchase_dish": "tomato_egg"
+      }
+    },
+    {
+      "id": "synthetic_conflicting_step_changes_rejected",
+      "kind": "invalid_catalog",
+      "fixture": "conflicting_steps",
+      "expect": {
+        "validation_code": "steps.conflicting_changes"
+      }
+    },
+    {
+      "id": "property_input_order_invariant",
+      "kind": "property",
+      "property": "input_order",
+      "fixture": "ranking",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "pantry": [
+        "sugar"
+      ],
+      "expect": {
+        "order": [
+          "dish_b",
+          "dish_a",
+          "dish_c"
+        ]
+      }
+    },
+    {
+      "id": "property_no_input_mutation",
+      "kind": "property",
+      "property": "no_mutation",
+      "fixture": "acceptable",
+      "current": [
+        "potato_starch"
+      ],
+      "expect": {
+        "feasible": [
+          "fixture_dish"
+        ]
+      }
+    },
+    {
+      "id": "property_adding_inventory_preserves_feasible_dishes",
+      "kind": "property",
+      "property": "monotonic",
+      "fixture": "purchase_aggregation",
+      "current": [
+        "tomato"
+      ],
+      "add": "egg",
+      "expect": {
+        "before": [
+          "dish_a"
+        ],
+        "after": [
+          "dish_a",
+          "dish_b"
+        ]
+      }
+    },
+    {
+      "id": "property_catalog_order_invariant",
+      "kind": "property",
+      "property": "catalog_order",
+      "fixture": "ranking",
+      "current": [
+        "tomato",
+        "egg"
+      ],
+      "pantry": [
+        "sugar"
+      ],
+      "expect": {
+        "order": [
+          "dish_b",
+          "dish_a",
+          "dish_c"
+        ]
+      }
+    }
+  ]
+}

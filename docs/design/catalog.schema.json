@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "../../data/schemas/catalog.schema.json",
+  "description": "数据规范已迁入 data/schemas，本文件保留原设计文档的引用入口。"
+}

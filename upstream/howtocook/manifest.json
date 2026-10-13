@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "repository": "https://github.com/Anduin2017/HowToCook",
+  "commit": "3dfa950f6daf0a5b311fc46619f1b559bac980c4",
+  "license_sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+  "recipes": [
+    {
+      "path": "dishes/vegetable_dish/菠菜炒鸡蛋/菠菜炒鸡蛋.md",
+      "sha256": "5f9053270d84462f8006f3bb69a9132d7c3d4f46497d39f6f31cb312c70e1bf7",
+      "profile": "spinach_egg"
+    },
+    {
+      "path": "dishes/vegetable_dish/洋葱炒鸡蛋/洋葱炒鸡蛋.md",
+      "sha256": "d744b2afa5588f756970ee237cbe0393434eaac84d4d0f04f15c773afb9c85b2",
+      "profile": "onion_egg"
+    },
+    {
+      "path": "dishes/vegetable_dish/虎皮青椒/虎皮青椒.md",
+      "sha256": "b49f516f967eb74688024ba32c332ee3893ad85ab0706de61ed87d6cd33e71da",
+      "profile": "tiger_skin_pepper"
+    },
+    {
+      "path": "dishes/vegetable_dish/凉拌黄瓜.md",
+      "sha256": "2b1798821af132fdaf09cfae8381513dfcdbe2810288e1012137c93d8d82eea7",
+      "profile": "cold_cucumber"
+    },
+    {
+      "path": "dishes/vegetable_dish/清蒸南瓜.md",
+      "sha256": "00708225f67ba4aa10a61b7ea3885487f63bc0b9d4e6d01afa57325bb05d495f",
+      "profile": "steamed_pumpkin"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "recipe_id": "laver_egg_soup",
+  "dish_id": "laver_egg_soup",
+  "name": {
+    "zh-CN": "紫菜蛋花汤"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "soup",
+  "cooking_method": "boil",
+  "servings": 2,
+  "time_minutes": 12,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "pot",
+      "minutes": 8,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_dried_laver",
+      "ingredient_id": "dried_laver",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "使用包装注明可直接烹调的免洗干紫菜。"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 2,
+        "unit": "piece"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 700,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_sesame_oil",
+      "ingredient_id": "sesame_oil",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略香油，芝麻香气减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_sesame_oil",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成葱花。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱花，葱香减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_white_pepper",
+      "ingredient_id": "white_pepper",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 0.3,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "使用白胡椒粉。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略白胡椒粉，汤的辛香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_white_pepper",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "将免洗干紫菜撕成小片，鸡蛋打入碗中并充分打散。"
+      },
+      "requirement_ids": [
+        "req_dried_laver",
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_boil_water",
+      "text": {
+        "zh-CN": "汤锅倒入水，大火煮至沸腾。"
+      },
+      "requirement_ids": [
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_cook_laver",
+      "text": {
+        "zh-CN": "加入紫菜，转中火煮约 1 分钟至紫菜展开。"
+      },
+      "requirement_ids": [
+        "req_dried_laver"
+      ]
+    },
+    {
+      "step_id": "step_cook_egg",
+      "text": {
+        "zh-CN": "保持汤轻微沸腾，缓慢淋入蛋液，待蛋花成形后轻轻推动，再煮约 1 分钟至鸡蛋完全凝固且熟透。"
+      },
+      "requirement_ids": [
+        "req_egg"
+      ]
+    },
+    {
+      "step_id": "step_add_salt",
+      "text": {
+        "zh-CN": "加入盐并搅匀，关火。"
+      },
+      "requirement_ids": [
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_add_white_pepper",
+      "text": {
+        "zh-CN": "加入白胡椒粉并拌匀。"
+      },
+      "requirement_ids": [
+        "req_white_pepper"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "加入葱花并拌匀。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_add_sesame_oil",
+      "text": {
+        "zh-CN": "淋入香油，轻轻搅匀后盛出。"
+      },
+      "requirement_ids": [
+        "req_sesame_oil"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

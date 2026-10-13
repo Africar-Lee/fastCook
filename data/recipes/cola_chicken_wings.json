@@ -1,0 +1,196 @@
+{
+  "recipe_id": "cola_chicken_wings",
+  "dish_id": "cola_chicken_wings",
+  "name": {
+    "zh-CN": "可乐鸡翅"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "braise",
+  "servings": 2,
+  "time_minutes": 40,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 30,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_chicken_wing",
+      "ingredient_id": "chicken_wing",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 500,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "使用鸡翅中，擦干表面。"
+      }
+    },
+    {
+      "requirement_id": "req_cola",
+      "ingredient_id": "cola",
+      "role": "secondary",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 330,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "使用含糖原味可乐。"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切片。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜片，姜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cooking_wine",
+      "ingredient_id": "cooking_wine",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略料酒，保留可乐与生抽的调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_wine",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare_wings",
+      "text": {
+        "zh-CN": "在每只鸡翅中两面各划两道浅口，保持肉与骨相连，再擦干表面。"
+      },
+      "requirement_ids": [
+        "req_chicken_wing"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，倒入食用油并铺开。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "加入姜片，中小火翻炒约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_sear_wings",
+      "text": {
+        "zh-CN": "将鸡翅单层放入锅中，中火每面煎约 3 分钟，至两面略上色。"
+      },
+      "requirement_ids": [
+        "req_chicken_wing"
+      ]
+    },
+    {
+      "step_id": "step_add_wine",
+      "text": {
+        "zh-CN": "沿锅边加入料酒，翻动鸡翅约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_cooking_wine"
+      ]
+    },
+    {
+      "step_id": "step_braise",
+      "text": {
+        "zh-CN": "倒入可乐和生抽，煮沸后转小火，加盖焖约 20 分钟，中途翻面一次。检查最厚处及近骨处已熟透，必要时继续小火焖煮。"
+      },
+      "requirement_ids": [
+        "req_cola",
+        "req_light_soy_sauce",
+        "req_chicken_wing"
+      ]
+    },
+    {
+      "step_id": "step_reduce",
+      "text": {
+        "zh-CN": "鸡翅熟透后开盖转中火，边翻动边收汁约 3 分钟，至酱汁能挂在鸡翅表面，避免熬干焦糊后盛出。"
+      },
+      "requirement_ids": [
+        "req_chicken_wing",
+        "req_cola",
+        "req_light_soy_sauce"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

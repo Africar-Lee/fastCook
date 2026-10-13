@@ -1,0 +1,335 @@
+{
+  "recipe_id": "mapo_tofu",
+  "dish_id": "mapo_tofu",
+  "name": {
+    "zh-CN": "麻婆豆腐"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "braise",
+  "servings": 2,
+  "time_minutes": 30,
+  "spicy_level": 2,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 16,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_soft_tofu",
+      "ingredient_id": "soft_tofu",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 350,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成约两厘米的小块。"
+      }
+    },
+    {
+      "requirement_id": "req_doubanjiang",
+      "ingredient_id": "doubanjiang",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 150,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "120 ml 用于煮豆腐，30 ml 用于调淀粉浆。"
+      }
+    },
+    {
+      "requirement_id": "req_corn_starch",
+      "ingredient_id": "corn_starch",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_pork",
+      "ingredient_id": "pork",
+      "role": "secondary",
+      "importance": "important",
+      "consumes": true,
+      "quantity": {
+        "value": 80,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略猪肉，肉香减弱，保留豆瓣与花椒的调味做法。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_cook_pork",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜，姜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，蒜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略生抽，咸鲜味略减，豆瓣酱仍提供主要调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_sichuan_pepper",
+      "ingredient_id": "sichuan_pepper",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 1,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略花椒，成菜麻味缺失，保留豆瓣的辣味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_peppercorn",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_scallion",
+      "ingredient_id": "scallion",
+      "role": "garnish",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略葱花，减少点缀与葱香。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_scallion",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare_tofu",
+      "text": {
+        "zh-CN": "嫩豆腐切成约两厘米的小块，轻拿轻放，倒去包装中剩余液体。"
+      },
+      "requirement_ids": [
+        "req_soft_tofu"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 15 ml 食用油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_cook_pork",
+      "text": {
+        "zh-CN": "猪肉剁成细末后放入锅中，用锅铲划散，翻炒约两分钟至肉末全部变色。"
+      },
+      "requirement_ids": [
+        "req_pork"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "姜切成细末，加入锅中翻炒约十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切末后加入锅中，翻炒约十秒。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_cook_doubanjiang",
+      "text": {
+        "zh-CN": "转小火，加入 20 g 豆瓣酱，翻炒约三十秒至油色变红。"
+      },
+      "requirement_ids": [
+        "req_doubanjiang"
+      ]
+    },
+    {
+      "step_id": "step_simmer",
+      "text": {
+        "zh-CN": "加入 120 ml 水，煮沸后轻放入嫩豆腐。小火煮五分钟，轻推锅铲使酱汁流动，保持豆腐完整。"
+      },
+      "requirement_ids": [
+        "req_water",
+        "req_soft_tofu"
+      ]
+    },
+    {
+      "step_id": "step_add_soy",
+      "text": {
+        "zh-CN": "加入 5 ml 生抽，轻晃锅身使调味均匀。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_thicken",
+      "text": {
+        "zh-CN": "将 5 g 玉米淀粉与剩余 30 ml 水搅匀，分两次沿锅边倒入，每次轻推均匀。煮约一分钟至酱汁浓稠且重新沸腾。"
+      },
+      "requirement_ids": [
+        "req_corn_starch",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_add_peppercorn",
+      "text": {
+        "zh-CN": "将花椒研成细末，均匀撒入锅中，轻推拌匀。"
+      },
+      "requirement_ids": [
+        "req_sichuan_pepper"
+      ]
+    },
+    {
+      "step_id": "step_add_scallion",
+      "text": {
+        "zh-CN": "葱切成葱花，撒在豆腐表面。"
+      },
+      "requirement_ids": [
+        "req_scallion"
+      ]
+    },
+    {
+      "step_id": "step_serve",
+      "text": {
+        "zh-CN": "关火，用宽铲轻轻将豆腐和酱汁盛入深盘。"
+      },
+      "requirement_ids": [
+        "req_soft_tofu"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

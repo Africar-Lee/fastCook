@@ -1,0 +1,256 @@
+{
+  "recipe_id": "sweet_sour_pork",
+  "dish_id": "sweet_sour_pork",
+  "name": {
+    "zh-CN": "糖醋里脊"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "deep_fry",
+  "servings": 2,
+  "time_minutes": 40,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "pot",
+      "minutes": 18,
+      "burner_slots": 1
+    },
+    {
+      "equipment": "frying_pan",
+      "minutes": 5,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_pork_tenderloin",
+      "ingredient_id": "pork_tenderloin",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 350,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成约 1 厘米粗、4 厘米长的肉条。"
+      }
+    },
+    {
+      "requirement_id": "req_corn_starch",
+      "ingredient_id": "corn_starch",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 65,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_egg",
+      "ingredient_id": "egg",
+      "role": "secondary",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 1,
+        "unit": "piece"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 350,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "用于小锅分批油炸，用量含炸后剩余的油。"
+      }
+    },
+    {
+      "requirement_id": "req_sugar",
+      "ingredient_id": "sugar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 35,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_rice_vinegar",
+      "ingredient_id": "rice_vinegar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 40,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 60,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略生抽，酱汁颜色更浅、鲜味与咸味减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_light_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_coat_pork",
+      "text": {
+        "zh-CN": "肉条加入盐和打散的鸡蛋，抓匀后加入 60 克淀粉及 20 毫升水，拌至每条肉均匀裹上面糊。"
+      },
+      "requirement_ids": [
+        "req_pork_tenderloin",
+        "req_salt",
+        "req_egg",
+        "req_corn_starch",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_mix_sauce",
+      "text": {
+        "zh-CN": "将白糖、米醋和 30 毫升水放入碗中，搅匀待用。"
+      },
+      "requirement_ids": [
+        "req_sugar",
+        "req_rice_vinegar",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_mix_slurry",
+      "text": {
+        "zh-CN": "将剩余 5 克淀粉与剩余 10 毫升水拌匀，单独放置，入锅前再次搅匀。"
+      },
+      "requirement_ids": [
+        "req_corn_starch",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_first_fry",
+      "text": {
+        "zh-CN": "小深锅倒入食用油，中火加热至少量面糊滴入后能浮起并持续冒泡。将肉条逐条放入，分批炸约 4 至 5 分钟，至肉条熟透、外层定型后捞出沥油；不要一次加入过多肉条。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_pork_tenderloin"
+      ]
+    },
+    {
+      "step_id": "step_second_fry",
+      "text": {
+        "zh-CN": "将油重新加热至放入肉条后迅速冒泡，分批复炸约 30 至 60 秒至表层金黄，捞出沥油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_pork_tenderloin"
+      ]
+    },
+    {
+      "step_id": "step_heat_sauce",
+      "text": {
+        "zh-CN": "将糖醋碗汁倒入干净平底锅，中火加热至沸腾。"
+      },
+      "requirement_ids": [
+        "req_sugar",
+        "req_rice_vinegar",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_add_light_soy",
+      "text": {
+        "zh-CN": "加入生抽并搅匀。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_thicken_sauce",
+      "text": {
+        "zh-CN": "将淀粉水再次搅匀后缓慢倒入锅中，边倒边搅拌，煮至酱汁略稠且再次沸腾。"
+      },
+      "requirement_ids": [
+        "req_corn_starch",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_coat_sauce",
+      "text": {
+        "zh-CN": "加入炸好的肉条，快速翻拌约 20 秒至均匀裹汁，立即关火盛出。"
+      },
+      "requirement_ids": [
+        "req_pork_tenderloin"
+      ]
+    }
+  ],
+  "substitution_overrides": [
+    {
+      "requirement_id": "req_corn_starch",
+      "rule_id": "sub_potato_starch_for_corn_sweet_sour",
+      "action": "allow",
+      "note": {
+        "zh-CN": "以等重土豆淀粉替代玉米淀粉，仍按 60 克裹浆、5 克勾芡分配；沿用原步骤，酥脆度与酱汁稠度变化待审核。"
+      },
+      "step_changes": []
+    }
+  ],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

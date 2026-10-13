@@ -1,0 +1,211 @@
+{
+  "recipe_id": "homestyle_tofu",
+  "dish_id": "homestyle_tofu",
+  "name": {
+    "zh-CN": "家常豆腐"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "mixed",
+  "servings": 2,
+  "time_minutes": 30,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 18,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_firm_tofu",
+      "ingredient_id": "firm_tofu",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 300,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成约一厘米厚的片，擦干表面。"
+      }
+    },
+    {
+      "requirement_id": "req_green_pepper",
+      "ingredient_id": "green_pepper",
+      "role": "secondary",
+      "importance": "important",
+      "consumes": true,
+      "quantity": {
+        "value": 150,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略青椒，成菜以豆腐为主，清香和脆嫩配菜减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_pepper",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 25,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 80,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，成菜蒜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_doubanjiang",
+      "ingredient_id": "doubanjiang",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略豆瓣酱，辣味和发酵豆香减弱，颜色较浅，保留生抽调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_doubanjiang",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare_tofu",
+      "text": {
+        "zh-CN": "老豆腐切成约一厘米厚的片，用厨房纸轻压吸去表面液体。"
+      },
+      "requirement_ids": [
+        "req_firm_tofu"
+      ]
+    },
+    {
+      "step_id": "step_pan_fry_tofu",
+      "text": {
+        "zh-CN": "炒锅加入 25 ml 食用油，中火放入豆腐，分面煎至两面浅金黄后盛出，锅中余油保留。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_firm_tofu"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切成片，加入锅中余油，小火翻炒约十秒。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_add_doubanjiang",
+      "text": {
+        "zh-CN": "加入 10 g 豆瓣酱，小火翻炒约二十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_doubanjiang"
+      ]
+    },
+    {
+      "step_id": "step_add_pepper",
+      "text": {
+        "zh-CN": "青椒洗净去蒂去籽，切成小块后放入锅中，中火翻炒约一分钟。"
+      },
+      "requirement_ids": [
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_braise",
+      "text": {
+        "zh-CN": "将煎好的豆腐放回锅中，加入 10 ml 生抽和 80 ml 水。轻推拌匀，小火煮约四分钟使豆腐入味。"
+      },
+      "requirement_ids": [
+        "req_firm_tofu",
+        "req_light_soy_sauce",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_reduce",
+      "text": {
+        "zh-CN": "转中火轻晃锅身，收汁约一分钟，保留少量酱汁，将豆腐与锅中配菜一起盛出。"
+      },
+      "requirement_ids": [
+        "req_firm_tofu"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

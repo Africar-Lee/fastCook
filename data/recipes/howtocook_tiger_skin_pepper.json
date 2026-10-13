@@ -1,0 +1,216 @@
+{
+  "recipe_id": "howtocook_tiger_skin_pepper",
+  "dish_id": "tiger_skin_pepper",
+  "name": {
+    "zh-CN": "虎皮青椒"
+  },
+  "variant": {
+    "zh-CN": "HowToCook · 按原文一份用量"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 1,
+  "time_minutes": 15,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 15,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_green_pepper",
+      "ingredient_id": "green_pepper",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 5,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "原文用量为每份，未注明人数；这里保留一份用量。选用长度 10–15 cm 的青椒，去蒂后纵切成 3–4 片；辣度随青椒品种变化，此处按微辣归类。"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "min": 2,
+        "max": 3,
+        "unit": "piece"
+      },
+      "preparation": {
+        "zh-CN": "原文为 2–3 瓣蒜，去皮后切末。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_sugar",
+      "ingredient_id": "sugar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "ingredient_id": "aromatic_vinegar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 4,
+        "unit": "g"
+      }
+    }
+  ],
+  "substitution_overrides": [
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "rule_id": "sub_rice_vinegar_for_aromatic_vinegar",
+      "action": "forbid",
+      "note": {
+        "zh-CN": "按原文使用香醋，尚未核对其他醋的用量与风味。"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_1",
+      "text": {
+        "zh-CN": "去掉青椒蒂，用自来水冲洗干净。"
+      },
+      "requirement_ids": [
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_2",
+      "text": {
+        "zh-CN": "青椒切长片，平均一个青椒纵向切成 3-4 片即可。"
+      },
+      "requirement_ids": [
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_3",
+      "text": {
+        "zh-CN": "大蒜去皮，切成碎末，体积在 2mm x 2mm x 2mm 即可。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_4",
+      "text": {
+        "zh-CN": "调料 1：拿一个小碗倒入 20ml 油，将大蒜末放入其中。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_5",
+      "text": {
+        "zh-CN": "调料 2：白糖、生抽、醋、盐全部倒入砵（碗）等容器，搅拌。"
+      },
+      "requirement_ids": [
+        "req_sugar",
+        "req_light_soy_sauce",
+        "req_aromatic_vinegar",
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_6",
+      "text": {
+        "zh-CN": "将 调料 1 倒入锅中，开火加热 5 成放入青椒，青椒片不要叠在一起，单独成片放置锅中。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_garlic",
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_7",
+      "text": {
+        "zh-CN": "用锅铲不停的按压青椒，合适的时候翻面。"
+      },
+      "requirement_ids": [
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_8",
+      "text": {
+        "zh-CN": "翻炒约 2 分钟，待青椒表皮出现褶皱时，倒入 调料 2。"
+      },
+      "requirement_ids": [
+        "req_green_pepper",
+        "req_sugar",
+        "req_light_soy_sauce",
+        "req_aromatic_vinegar",
+        "req_salt"
+      ]
+    },
+    {
+      "step_id": "step_9",
+      "text": {
+        "zh-CN": "加大火候继续翻炒 30s 后即可出锅盛入盘中。"
+      },
+      "requirement_ids": [
+        "req_green_pepper"
+      ]
+    }
+  ],
+  "source_ids": [
+    "howtocook_tiger_skin_pepper"
+  ],
+  "review_state": "pending_review"
+}

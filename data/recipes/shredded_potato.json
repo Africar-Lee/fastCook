@@ -1,0 +1,204 @@
+{
+  "recipe_id": "shredded_potato",
+  "dish_id": "shredded_potato",
+  "name": {
+    "zh-CN": "土豆丝"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 8,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_potato",
+      "ingredient_id": "potato",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 350,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去皮切细丝。"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 600,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "用于浸泡土豆丝，入锅前沥去。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "ingredient_id": "aromatic_vinegar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，减少蒜香，保留酸香土豆丝做法。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_dried_chili",
+      "ingredient_id": "dried_chili",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略干辣椒，成菜不带干辣椒的辣味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_chili",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_cut_soak",
+      "text": {
+        "zh-CN": "土豆去皮切成约两毫米的细丝，放入 600 ml 水中浸泡五分钟。"
+      },
+      "requirement_ids": [
+        "req_potato",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_drain",
+      "text": {
+        "zh-CN": "捞出土豆丝并充分沥干，浸泡液弃去。"
+      },
+      "requirement_ids": [
+        "req_potato",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 15 ml 食用油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_chili",
+      "text": {
+        "zh-CN": "干辣椒剪成段，加入锅中翻炒约十秒，至颜色略深。"
+      },
+      "requirement_ids": [
+        "req_dried_chili"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切成末，加入锅中翻炒约十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_cook_potato",
+      "text": {
+        "zh-CN": "放入沥干的土豆丝，转中大火连续翻炒约三分钟，至土豆丝由生硬变得可以弯曲。"
+      },
+      "requirement_ids": [
+        "req_potato"
+      ]
+    },
+    {
+      "step_id": "step_finish",
+      "text": {
+        "zh-CN": "加入 15 ml 香醋和 2 g 盐，继续翻炒约一分钟，至土豆丝熟透且仍有脆感后盛出。"
+      },
+      "requirement_ids": [
+        "req_aromatic_vinegar",
+        "req_salt",
+        "req_potato"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

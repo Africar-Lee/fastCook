@@ -1,0 +1,147 @@
+{
+  "recipe_id": "garlic_broccoli",
+  "dish_id": "garlic_broccoli",
+  "name": {
+    "zh-CN": "蒜蓉西兰花"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 10,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_broccoli",
+      "ingredient_id": "broccoli",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 350,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成大小接近的小朵，粗茎削去硬皮后切片。"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 20,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成细末。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_salt",
+      "ingredient_id": "salt",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1000,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "用于焯西兰花，焯后沥去。"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "西兰花洗净切小朵，粗茎削去硬皮后切成薄片；蒜切成细末。"
+      },
+      "requirement_ids": [
+        "req_broccoli",
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_boil",
+      "text": {
+        "zh-CN": "炒锅加入 1000 ml 水并煮沸，放入西兰花和茎片，煮约两分钟至颜色鲜亮、茎部略软。"
+      },
+      "requirement_ids": [
+        "req_water",
+        "req_broccoli"
+      ]
+    },
+    {
+      "step_id": "step_drain",
+      "text": {
+        "zh-CN": "捞出西兰花充分沥干，倒去焯菜液，将锅擦干。"
+      },
+      "requirement_ids": [
+        "req_broccoli",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_cook_garlic",
+      "text": {
+        "zh-CN": "锅中加入 15 ml 食用油，小火放入蒜末，翻炒约三十秒至出香味，保持蒜末浅色。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_finish",
+      "text": {
+        "zh-CN": "放回西兰花，加入 2 g 盐，中火翻炒约一分钟，使蒜蓉均匀附着，至西兰花熟透后盛出。"
+      },
+      "requirement_ids": [
+        "req_broccoli",
+        "req_salt",
+        "req_garlic"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

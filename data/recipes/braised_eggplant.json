@@ -1,0 +1,221 @@
+{
+  "recipe_id": "braised_eggplant",
+  "dish_id": "braised_eggplant",
+  "name": {
+    "zh-CN": "红烧茄子"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "braise",
+  "servings": 2,
+  "time_minutes": 30,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 18,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_eggplant",
+      "ingredient_id": "eggplant",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 400,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去蒂，切成约三厘米的滚刀块。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 25,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 80,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，蒜香减弱，仍可完成酱烧做法。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_dark_soy_sauce",
+      "ingredient_id": "dark_soy_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 3,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略老抽，成菜颜色较浅，保留生抽提供的咸味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_dark_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_sugar",
+      "ingredient_id": "sugar",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 4,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略白糖，酱汁甜味减少。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_sugar",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "茄子洗净去蒂，切成约三厘米的滚刀块，表面擦干后备用。"
+      },
+      "requirement_ids": [
+        "req_eggplant"
+      ]
+    },
+    {
+      "step_id": "step_pan_fry",
+      "text": {
+        "zh-CN": "炒锅加入 25 ml 食用油，中火放入茄子，翻煎约五分钟至几面略微上色、茄子开始变软。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_eggplant"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切末，推开部分茄子腾出锅底，加入蒜末翻炒约二十秒后拌匀。"
+      },
+      "requirement_ids": [
+        "req_garlic",
+        "req_eggplant"
+      ]
+    },
+    {
+      "step_id": "step_add_liquid",
+      "text": {
+        "zh-CN": "加入 15 ml 生抽和 80 ml 水，轻轻翻拌使茄子均匀接触酱汁。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce",
+        "req_water",
+        "req_eggplant"
+      ]
+    },
+    {
+      "step_id": "step_add_dark_soy",
+      "text": {
+        "zh-CN": "加入 3 ml 老抽，翻拌至酱汁颜色均匀。"
+      },
+      "requirement_ids": [
+        "req_dark_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_add_sugar",
+      "text": {
+        "zh-CN": "加入 4 g 白糖，搅动锅中酱汁使其溶解。"
+      },
+      "requirement_ids": [
+        "req_sugar"
+      ]
+    },
+    {
+      "step_id": "step_braise",
+      "text": {
+        "zh-CN": "盖锅盖，小火焖煮五至六分钟，中途轻推一次，至茄子中心熟软。"
+      },
+      "requirement_ids": [
+        "req_eggplant"
+      ]
+    },
+    {
+      "step_id": "step_reduce",
+      "text": {
+        "zh-CN": "揭盖转中火，轻推茄子并收汁一至两分钟，至酱汁能够附着在茄子上后盛出。"
+      },
+      "requirement_ids": [
+        "req_eggplant"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

@@ -1,0 +1,203 @@
+{
+  "recipe_id": "green_pepper_pork",
+  "dish_id": "green_pepper_pork",
+  "name": {
+    "zh-CN": "青椒炒肉"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 25,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 12,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_green_pepper",
+      "ingredient_id": "green_pepper",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 200,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去蒂去籽后切成细条。"
+      }
+    },
+    {
+      "requirement_id": "req_pork",
+      "ingredient_id": "pork",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 200,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去除硬筋，切成薄片；此草稿不限定具体部位。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_corn_starch",
+      "ingredient_id": "corn_starch",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略淀粉包裹，肉片嫩滑感减弱，翻炒时避免久煮。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_coat_pork",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜，成菜姜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "青椒洗净去蒂去籽后切条。猪肉去除硬筋，切成约三毫米厚的薄片。"
+      },
+      "requirement_ids": [
+        "req_green_pepper",
+        "req_pork"
+      ]
+    },
+    {
+      "step_id": "step_marinate",
+      "text": {
+        "zh-CN": "肉片加入 10 ml 生抽抓匀，静置五分钟。"
+      },
+      "requirement_ids": [
+        "req_pork",
+        "req_light_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_coat_pork",
+      "text": {
+        "zh-CN": "在腌好的肉片上撒入 5 g 玉米淀粉，抓拌至肉片表面均匀附着薄层淀粉。"
+      },
+      "requirement_ids": [
+        "req_pork",
+        "req_corn_starch"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 10 ml 食用油，转动锅身使油铺开。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "将姜切成细丝后加入锅中，翻炒约十秒至闻到姜香。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_cook_pork",
+      "text": {
+        "zh-CN": "倒入肉片并迅速划散，中大火翻炒至表面全部变色，暂时盛到单独的盘中。"
+      },
+      "requirement_ids": [
+        "req_pork"
+      ]
+    },
+    {
+      "step_id": "step_cook_pepper",
+      "text": {
+        "zh-CN": "锅中补入剩余 5 ml 食用油，加入青椒，翻炒约两分钟至颜色鲜亮、边缘略软。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_green_pepper"
+      ]
+    },
+    {
+      "step_id": "step_finish",
+      "text": {
+        "zh-CN": "将肉片及盘中汁液倒回锅中，与青椒一起翻炒至肉片完全熟透后盛出。"
+      },
+      "requirement_ids": [
+        "req_pork",
+        "req_green_pepper"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

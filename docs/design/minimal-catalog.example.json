@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_version": "0.0.0-design-example",
+  "release_state": "draft",
+  "default_locale": "zh-CN",
+  "notes": {"zh-CN": "此文件是 AI 辅助编写的结构示例，用量、步骤、必要性与隐含常备设置均待人工核验，尚未实做验证。仅供审查数据结构，不进入应用发布数据包。"},
+  "ingredients": [
+    {"ingredient_id": "tomato", "names": {"zh-CN": "番茄"}, "aliases": {"zh-CN": [{"text": "西红柿", "resolution": "automatic"}]}, "category": "vegetable", "selectable": true, "taxonomy_parent_id": null, "matching_parent_ids": [], "implicit_staple": false, "source_ids": ["editorial_example"], "review_state": "pending_review"},
+    {"ingredient_id": "egg", "names": {"zh-CN": "鸡蛋"}, "aliases": {}, "category": "egg", "selectable": true, "taxonomy_parent_id": null, "matching_parent_ids": [], "implicit_staple": false, "source_ids": ["editorial_example"], "review_state": "pending_review"},
+    {"ingredient_id": "cooking_oil", "names": {"zh-CN": "食用油"}, "aliases": {}, "category": "seasoning", "selectable": true, "taxonomy_parent_id": null, "matching_parent_ids": [], "implicit_staple": true, "source_ids": ["editorial_example"], "review_state": "pending_review"},
+    {"ingredient_id": "salt", "names": {"zh-CN": "盐"}, "aliases": {}, "category": "seasoning", "selectable": true, "taxonomy_parent_id": null, "matching_parent_ids": [], "implicit_staple": true, "source_ids": ["editorial_example"], "review_state": "pending_review"},
+    {"ingredient_id": "sugar", "names": {"zh-CN": "白糖"}, "aliases": {}, "category": "seasoning", "selectable": true, "taxonomy_parent_id": null, "matching_parent_ids": [], "implicit_staple": false, "source_ids": ["editorial_example"], "review_state": "pending_review"}
+  ],
+  "dishes": [{"dish_id": "tomato_egg", "names": {"zh-CN": "番茄炒蛋"}}],
+  "recipes": [
+    {
+      "recipe_id": "tomato_egg_design_example",
+      "dish_id": "tomato_egg",
+      "name": {"zh-CN": "番茄炒蛋"},
+      "variant": {"zh-CN": "待核验结构示例"},
+      "original_locale": "zh-CN",
+      "course": "veg",
+      "cooking_method": "stir_fry",
+      "servings": 2,
+      "time_minutes": 15,
+      "spicy_level": 0,
+      "equipment_slots": [{"equipment": "wok", "minutes": 8, "burner_slots": 1}],
+      "requirements": [
+        {"requirement_id": "req_tomato", "ingredient_id": "tomato", "role": "main", "importance": "required", "consumes": true, "quantity": {"min": 250, "max": 350, "unit": "g"}},
+        {"requirement_id": "req_egg", "ingredient_id": "egg", "role": "main", "importance": "required", "consumes": true, "quantity": {"value": 3, "unit": "piece"}},
+        {"requirement_id": "req_oil", "ingredient_id": "cooking_oil", "role": "seasoning", "importance": "required", "consumes": false, "quantity": {"value": 15, "unit": "ml"}},
+        {"requirement_id": "req_salt", "ingredient_id": "salt", "role": "seasoning", "importance": "required", "consumes": false, "quantity": {"unit": "to_taste"}},
+        {"requirement_id": "req_sugar", "ingredient_id": "sugar", "role": "seasoning", "importance": "optional", "consumes": false, "quantity": {"value": 3, "unit": "g"}, "omission": {"note": {"zh-CN": "省略白糖，保留番茄自身酸甜味。"}, "step_changes": [{"step_id": "step_add_sugar", "action": "skip"}]}}
+      ],
+      "steps": [
+        {"step_id": "step_prepare", "text": {"zh-CN": "番茄洗净切块，鸡蛋打入碗中并打散。"}, "requirement_ids": ["req_tomato", "req_egg"]},
+        {"step_id": "step_cook_egg", "text": {"zh-CN": "炒锅加入约三分之二食用油，倒入蛋液炒至凝固后盛出。"}, "requirement_ids": ["req_oil", "req_egg"]},
+        {"step_id": "step_cook_tomato", "text": {"zh-CN": "锅中加入剩余食用油，放入番茄炒软。"}, "requirement_ids": ["req_oil", "req_tomato"]},
+        {"step_id": "step_add_sugar", "text": {"zh-CN": "加入白糖并拌匀。"}, "requirement_ids": ["req_sugar"]},
+        {"step_id": "step_finish", "text": {"zh-CN": "倒回鸡蛋，加入盐并翻炒均匀，至鸡蛋完全凝固后盛出。"}, "requirement_ids": ["req_egg", "req_salt"]}
+      ],
+      "substitution_overrides": [],
+      "source_ids": ["editorial_example"],
+      "review_state": "pending_review"
+    }
+  ],
+  "substitution_rules": [],
+  "pantry_templates": [
+    {"template_id": "design_example_pantry", "names": {"zh-CN": "结构示例调料柜"}, "region": "CN", "ingredient_ids": ["sugar"], "source_ids": ["editorial_example"], "review_state": "pending_review"}
+  ],
+  "sources": [
+    {
+      "source_id": "editorial_example",
+      "provenance": {"kind": "editorial_draft", "origin": "FastCook 数据结构设计示例", "locator": "docs/design/minimal-catalog.example.json", "generation": "ai_assisted"},
+      "revision": {"identifier": "design-example-1"},
+      "license": {"state": "pending"}
+    }
+  ],
+  "reviews": []
+}

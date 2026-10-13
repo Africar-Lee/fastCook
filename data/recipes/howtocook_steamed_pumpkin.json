@@ -1,0 +1,122 @@
+{
+  "recipe_id": "howtocook_steamed_pumpkin",
+  "dish_id": "steamed_pumpkin",
+  "name": {
+    "zh-CN": "清蒸南瓜"
+  },
+  "variant": {
+    "zh-CN": "HowToCook · 原文约 1–2 人份"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "steam",
+  "servings": 2,
+  "time_minutes": 25,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "steamer",
+      "minutes": 20,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_pumpkin",
+      "ingredient_id": "pumpkin",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 300,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "洗净、去瓤去籽，切约 2 厘米厚片。原文需蒸 15–20 分钟，预留切配及烧水时间后预计共 25 分钟。"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1000,
+        "unit": "ml"
+      },
+      "preparation": {
+        "zh-CN": "用于蒸锅。"
+      }
+    }
+  ],
+  "substitution_overrides": [],
+  "steps": [
+    {
+      "step_id": "step_1",
+      "text": {
+        "zh-CN": "将 南瓜 外皮洗净，去除瓜瓤和籽。"
+      },
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "step_id": "step_2",
+      "text": {
+        "zh-CN": "将 南瓜 切成厚度大约 2 cm 的片，备用。"
+      },
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "step_id": "step_3",
+      "text": {
+        "zh-CN": "在 蒸锅 的锅中加入 1000 ml 饮用水。"
+      },
+      "requirement_ids": [
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_4",
+      "text": {
+        "zh-CN": "将切好的 南瓜 片均匀摆放在盘中。"
+      },
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "step_id": "step_5",
+      "text": {
+        "zh-CN": "待蒸锅中的水烧开后，将装有 南瓜 的盘子放入蒸锅中。"
+      },
+      "requirement_ids": [
+        "req_water",
+        "req_pumpkin"
+      ]
+    },
+    {
+      "step_id": "step_6",
+      "text": {
+        "zh-CN": "盖上锅盖，保持大火蒸 15-20 分钟，直至南瓜变软，可以用筷子轻松穿透。"
+      },
+      "requirement_ids": [
+        "req_pumpkin"
+      ]
+    },
+    {
+      "step_id": "step_7",
+      "text": {
+        "zh-CN": "关火，小心取出盘子。"
+      },
+      "requirement_ids": []
+    }
+  ],
+  "source_ids": [
+    "howtocook_steamed_pumpkin"
+  ],
+  "review_state": "pending_review"
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "dish_id": "tomato_egg",
+    "names": {
+      "zh-CN": "番茄炒蛋"
+    }
+  },
+  {
+    "dish_id": "green_pepper_pork",
+    "names": {
+      "zh-CN": "青椒炒肉"
+    }
+  },
+  {
+    "dish_id": "shredded_potato",
+    "names": {
+      "zh-CN": "土豆丝"
+    }
+  },
+  {
+    "dish_id": "vinegar_cabbage",
+    "names": {
+      "zh-CN": "醋溜白菜"
+    }
+  },
+  {
+    "dish_id": "torn_cabbage",
+    "names": {
+      "zh-CN": "手撕包菜"
+    }
+  },
+  {
+    "dish_id": "garlic_broccoli",
+    "names": {
+      "zh-CN": "蒜蓉西兰花"
+    }
+  },
+  {
+    "dish_id": "shiitake_bok_choy",
+    "names": {
+      "zh-CN": "香菇青菜"
+    }
+  },
+  {
+    "dish_id": "braised_eggplant",
+    "names": {
+      "zh-CN": "红烧茄子"
+    }
+  },
+  {
+    "dish_id": "homestyle_tofu",
+    "names": {
+      "zh-CN": "家常豆腐"
+    }
+  },
+  {
+    "dish_id": "mapo_tofu",
+    "names": {
+      "zh-CN": "麻婆豆腐"
+    }
+  },
+  {
+    "dish_id": "cucumber_egg",
+    "names": {
+      "zh-CN": "黄瓜炒蛋"
+    }
+  },
+  {
+    "dish_id": "kung_pao_chicken",
+    "names": {
+      "zh-CN": "宫保鸡丁"
+    }
+  },
+  {
+    "dish_id": "cola_chicken_wings",
+    "names": {
+      "zh-CN": "可乐鸡翅"
+    }
+  },
+  {
+    "dish_id": "braised_pork",
+    "names": {
+      "zh-CN": "红烧肉"
+    }
+  },
+  {
+    "dish_id": "sweet_sour_pork",
+    "names": {
+      "zh-CN": "糖醋里脊"
+    }
+  },
+  {
+    "dish_id": "steamed_seabass",
+    "names": {
+      "zh-CN": "清蒸鲈鱼"
+    }
+  },
+  {
+    "dish_id": "tomato_egg_soup",
+    "names": {
+      "zh-CN": "番茄蛋汤"
+    }
+  },
+  {
+    "dish_id": "laver_egg_soup",
+    "names": {
+      "zh-CN": "紫菜蛋花汤"
+    }
+  },
+  {
+    "dish_id": "egg_fried_rice",
+    "names": {
+      "zh-CN": "蛋炒饭"
+    }
+  },
+  {
+    "dish_id": "steamed_egg",
+    "names": {
+      "zh-CN": "蒸蛋"
+    }
+  },
+  {
+    "dish_id": "spinach_egg",
+    "names": {
+      "zh-CN": "菠菜炒鸡蛋"
+    }
+  },
+  {
+    "dish_id": "onion_egg",
+    "names": {
+      "zh-CN": "洋葱炒鸡蛋"
+    }
+  },
+  {
+    "dish_id": "tiger_skin_pepper",
+    "names": {
+      "zh-CN": "虎皮青椒"
+    }
+  },
+  {
+    "dish_id": "cold_cucumber",
+    "names": {
+      "zh-CN": "凉拌黄瓜"
+    }
+  },
+  {
+    "dish_id": "steamed_pumpkin",
+    "names": {
+      "zh-CN": "清蒸南瓜"
+    }
+  }
+]

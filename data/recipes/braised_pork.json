@@ -1,0 +1,337 @@
+{
+  "recipe_id": "braised_pork",
+  "dish_id": "braised_pork",
+  "name": {
+    "zh-CN": "红烧肉"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿，待人工审核与试做"
+  },
+  "original_locale": "zh-CN",
+  "course": "meat",
+  "cooking_method": "braise",
+  "servings": 2,
+  "time_minutes": 90,
+  "spicy_level": 0,
+  "equipment_slots": [
+    {
+      "equipment": "pot",
+      "minutes": 75,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_pork_belly",
+      "ingredient_id": "pork_belly",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 500,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成约 3 厘米的方块。"
+      }
+    },
+    {
+      "requirement_id": "req_water",
+      "ingredient_id": "water",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 1000,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_rock_sugar",
+      "ingredient_id": "rock_sugar",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "g"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 20,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_dark_soy_sauce",
+      "ingredient_id": "dark_soy_sauce",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略老抽，成菜颜色较浅。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_dark_soy",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_ginger",
+      "ingredient_id": "ginger",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "切成厚片。"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略姜片，姜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_ginger",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cooking_wine",
+      "ingredient_id": "cooking_wine",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略料酒，保留糖色与生抽调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_wine",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_star_anise",
+      "ingredient_id": "star_anise",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 1,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略八角，卤香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_star_anise",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_cinnamon",
+      "ingredient_id": "cinnamon",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 1,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略桂皮，香料气味稍淡。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_cinnamon",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_bay_leaf",
+      "ingredient_id": "bay_leaf",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 0.2,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略香叶，香料气味稍淡。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_bay_leaf",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_blanch_pork",
+      "text": {
+        "zh-CN": "五花肉块放入锅中，加入 500 毫升水，煮沸后撇去浮沫，再煮约 3 分钟，捞出沥干；倒掉焯肉水并擦干锅。"
+      },
+      "requirement_ids": [
+        "req_pork_belly",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_melt_sugar",
+      "text": {
+        "zh-CN": "锅中加入食用油和冰糖，小火缓慢搅动至冰糖融化并呈浅琥珀色。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil",
+        "req_rock_sugar"
+      ]
+    },
+    {
+      "step_id": "step_color_pork",
+      "text": {
+        "zh-CN": "加入充分沥干的五花肉，小心翻动约 2 分钟，使肉块均匀裹上糖色。"
+      },
+      "requirement_ids": [
+        "req_pork_belly",
+        "req_rock_sugar"
+      ]
+    },
+    {
+      "step_id": "step_add_wine",
+      "text": {
+        "zh-CN": "沿锅边加入料酒，翻动约 20 秒。"
+      },
+      "requirement_ids": [
+        "req_cooking_wine"
+      ]
+    },
+    {
+      "step_id": "step_add_liquid",
+      "text": {
+        "zh-CN": "加入生抽和剩余 500 毫升水，搅匀后煮沸。使用能让汤汁基本浸到肉块的锅。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce",
+        "req_water"
+      ]
+    },
+    {
+      "step_id": "step_add_dark_soy",
+      "text": {
+        "zh-CN": "加入老抽，翻动肉块使颜色均匀。"
+      },
+      "requirement_ids": [
+        "req_dark_soy_sauce"
+      ]
+    },
+    {
+      "step_id": "step_add_ginger",
+      "text": {
+        "zh-CN": "加入姜片并拌匀。"
+      },
+      "requirement_ids": [
+        "req_ginger"
+      ]
+    },
+    {
+      "step_id": "step_add_star_anise",
+      "text": {
+        "zh-CN": "加入八角。"
+      },
+      "requirement_ids": [
+        "req_star_anise"
+      ]
+    },
+    {
+      "step_id": "step_add_cinnamon",
+      "text": {
+        "zh-CN": "加入桂皮。"
+      },
+      "requirement_ids": [
+        "req_cinnamon"
+      ]
+    },
+    {
+      "step_id": "step_add_bay_leaf",
+      "text": {
+        "zh-CN": "加入香叶。"
+      },
+      "requirement_ids": [
+        "req_bay_leaf"
+      ]
+    },
+    {
+      "step_id": "step_simmer",
+      "text": {
+        "zh-CN": "转小火加盖炖约 60 分钟，每隔 15 分钟翻动一次，保持轻微沸腾；炖至五花肉熟透、筷子能轻松插入。若汤汁下降过快，调小火力并盖严锅盖。"
+      },
+      "requirement_ids": [
+        "req_pork_belly"
+      ]
+    },
+    {
+      "step_id": "step_reduce",
+      "text": {
+        "zh-CN": "开盖转中火，翻动肉块收汁约 3 分钟，至汤汁浓稠并包裹肉块后关火盛出。"
+      },
+      "requirement_ids": [
+        "req_pork_belly"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}

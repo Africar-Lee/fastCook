@@ -1,0 +1,207 @@
+{
+  "recipe_id": "torn_cabbage",
+  "dish_id": "torn_cabbage",
+  "name": {
+    "zh-CN": "手撕包菜"
+  },
+  "variant": {
+    "zh-CN": "家常做法草稿"
+  },
+  "original_locale": "zh-CN",
+  "course": "veg",
+  "cooking_method": "stir_fry",
+  "servings": 2,
+  "time_minutes": 20,
+  "spicy_level": 1,
+  "equipment_slots": [
+    {
+      "equipment": "wok",
+      "minutes": 8,
+      "burner_slots": 1
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "req_cabbage",
+      "ingredient_id": "cabbage",
+      "role": "main",
+      "importance": "required",
+      "consumes": true,
+      "quantity": {
+        "value": 400,
+        "unit": "g"
+      },
+      "preparation": {
+        "zh-CN": "去除硬芯，叶片撕成小块并充分沥干。"
+      }
+    },
+    {
+      "requirement_id": "req_cooking_oil",
+      "ingredient_id": "cooking_oil",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 15,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_light_soy_sauce",
+      "ingredient_id": "light_soy_sauce",
+      "role": "seasoning",
+      "importance": "required",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "ml"
+      }
+    },
+    {
+      "requirement_id": "req_garlic",
+      "ingredient_id": "garlic",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 10,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略蒜，成菜蒜香减弱。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_garlic",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_dried_chili",
+      "ingredient_id": "dried_chili",
+      "role": "seasoning",
+      "importance": "optional",
+      "consumes": false,
+      "quantity": {
+        "value": 2,
+        "unit": "g"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略干辣椒，成菜不带干辣椒的辣味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_chili",
+            "action": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "requirement_id": "req_aromatic_vinegar",
+      "ingredient_id": "aromatic_vinegar",
+      "role": "seasoning",
+      "importance": "important",
+      "consumes": false,
+      "quantity": {
+        "value": 5,
+        "unit": "ml"
+      },
+      "omission": {
+        "note": {
+          "zh-CN": "省略香醋，成菜酸香减弱，保留生抽调味。"
+        },
+        "step_changes": [
+          {
+            "step_id": "step_add_vinegar",
+            "action": "skip"
+          }
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_prepare",
+      "text": {
+        "zh-CN": "包菜去掉硬芯，叶片撕成约四厘米大小的块，洗净后充分沥干。"
+      },
+      "requirement_ids": [
+        "req_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_heat_oil",
+      "text": {
+        "zh-CN": "炒锅中火加热，加入 15 ml 食用油。"
+      },
+      "requirement_ids": [
+        "req_cooking_oil"
+      ]
+    },
+    {
+      "step_id": "step_add_chili",
+      "text": {
+        "zh-CN": "干辣椒剪成段，加入锅中翻炒约十秒。"
+      },
+      "requirement_ids": [
+        "req_dried_chili"
+      ]
+    },
+    {
+      "step_id": "step_add_garlic",
+      "text": {
+        "zh-CN": "蒜切片，加入锅中翻炒约十秒至出香味。"
+      },
+      "requirement_ids": [
+        "req_garlic"
+      ]
+    },
+    {
+      "step_id": "step_cook_cabbage",
+      "text": {
+        "zh-CN": "加入包菜，转中大火翻炒三至四分钟，至叶片变软、较厚的叶梗熟透。"
+      },
+      "requirement_ids": [
+        "req_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_add_soy",
+      "text": {
+        "zh-CN": "沿锅边加入 10 ml 生抽，快速翻拌至包菜均匀着色。"
+      },
+      "requirement_ids": [
+        "req_light_soy_sauce",
+        "req_cabbage"
+      ]
+    },
+    {
+      "step_id": "step_add_vinegar",
+      "text": {
+        "zh-CN": "加入 5 ml 香醋，翻炒约十秒。"
+      },
+      "requirement_ids": [
+        "req_aromatic_vinegar"
+      ]
+    },
+    {
+      "step_id": "step_serve",
+      "text": {
+        "zh-CN": "关火，将包菜连同少量锅中汁液盛入盘中。"
+      },
+      "requirement_ids": [
+        "req_cabbage"
+      ]
+    }
+  ],
+  "substitution_overrides": [],
+  "source_ids": [
+    "stage1_editorial_draft"
+  ],
+  "review_state": "pending_review"
+}
