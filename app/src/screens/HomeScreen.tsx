@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Card, Chip, Divider, Text, useTheme } from 'react-native-paper';
 import type { Course, Recommendations, Tier } from '../../../packages/engine/src/types';
+import { rankMealCandidates } from '../../../packages/engine/src/meal';
+import type { RecipeEvaluation } from '../../../packages/engine/src/types';
 import { IngredientPicker } from '../components/IngredientPicker';
 import { RecipeCard } from '../components/RecipeCard';
 import { addIngredient } from '../model/inventory-actions';
+import { addMealRecipe } from '../model/meal-actions';
 import type { AppCatalog, AppFilters, KitchenState, UpdateKitchen } from '../model/types';
 
 type Props = Readonly<{
@@ -13,7 +16,9 @@ type Props = Readonly<{
   update: UpdateKitchen;
   recommendations: Recommendations | null;
   error: string | null;
-  onOpenRecipe: (dishId: string) => void;
+  onOpenRecipe: (recipeId: string) => void;
+  mealEvaluations: readonly RecipeEvaluation[];
+  onAutoPlan: () => void;
   onOpenPantry: () => void;
   onOpenSettings: () => void;
   filters: AppFilters;
@@ -30,14 +35,19 @@ const courses: readonly Readonly<{ id: Course; name: string }>[] = [
   { id: 'meat', name: '荤菜' }, { id: 'veg', name: '素菜' }, { id: 'soup', name: '汤羹' }, { id: 'staple', name: '主食' }, { id: 'cold', name: '凉菜' },
 ];
 
-export function HomeScreen({ catalog, state, update, recommendations, error, onOpenRecipe, onOpenPantry, onOpenSettings, filters, onFiltersChange }: Props) {
+export function HomeScreen({ catalog, state, update, recommendations, error, onOpenRecipe, onOpenPantry, onOpenSettings, filters, onFiltersChange, mealEvaluations, onAutoPlan }: Props) {
   const theme = useTheme();
   const [pickerVisible, setPickerVisible] = useState(false);
   const [showInsufficient, setShowInsufficient] = useState(false);
   const names = new Map(catalog.ingredients.map((item) => [item.ingredient_id, item.names['zh-CN'] ?? item.ingredient_id]));
   const hasInventory = state.currentIds.length > 0 || state.pantryIds.length > 0;
   const filterStyle = (selected: boolean) => ({ backgroundColor: selected ? theme.colors.secondaryContainer : theme.colors.surfaceVariant });
-  const dishes = recommendations?.dishes ?? [];
+  const dishes = state.mealRecipeIds.length ? rankMealCandidates(catalog, recommendations?.dishes ?? [], mealEvaluations,
+    { people: state.mealPeople, sharedIngredientIds: state.sharedIngredientIds }) : recommendations?.dishes ?? [];
+  const selectedDishes = new Set(catalog.recipes.filter(recipe => state.mealRecipeIds.includes(recipe.recipe_id)).map(recipe => recipe.dish_id));
+  const card = (evaluation: RecipeEvaluation) => <RecipeCard key={evaluation.dish_id} catalog={catalog} evaluation={evaluation}
+    onPress={() => onOpenRecipe(evaluation.recipe_id)} selected={selectedDishes.has(evaluation.dish_id)} addDisabled={state.mealRecipeIds.length >= 5}
+    onAdd={() => update(previous => addMealRecipe(previous, catalog, evaluation.recipe_id))} />;
   const feasibleCount = dishes.filter((item) => item.tier === 'ready' || item.tier === 'caveat').length;
   const insufficient = dishes.filter((item) => item.tier === 'insufficient');
   const toggleCurrent = (id: string) => update((previous) => {
@@ -97,13 +107,14 @@ export function HomeScreen({ catalog, state, update, recommendations, error, onO
           <Text variant="titleLarge" style={styles.bold}>推荐菜谱</Text>
           <Text variant="labelLarge" style={{ color: theme.colors.onSurfaceVariant }}>{feasibleCount} 道可做</Text>
         </View>
+        <Button mode="contained-tonal" icon="silverware-fork-knife" onPress={onAutoPlan}>帮我配一顿</Button>
         {!error && dishes.length === 0 && <Text style={{ color: theme.colors.onSurfaceVariant }}>暂无符合筛选条件的菜谱</Text>}
         {groups.map((group) => {
           const matches = dishes.filter((item) => item.tier === group.tier);
           if (matches.length === 0) return null;
           return <View key={group.tier} style={styles.group}>
             <View style={styles.groupTitle}><Text variant="titleSmall">{group.title}</Text><Text variant="labelMedium" style={{ color: theme.colors.onSurfaceVariant }}>{matches.length}</Text></View>
-            {matches.map((evaluation) => <RecipeCard key={evaluation.dish_id} catalog={catalog} evaluation={evaluation} onPress={() => onOpenRecipe(evaluation.dish_id)} />)}
+            {matches.map(card)}
           </View>;
         })}
 
@@ -120,7 +131,7 @@ export function HomeScreen({ catalog, state, update, recommendations, error, onO
         {insufficient.length > 0 && <View style={styles.group}>
           <Divider />
           <Button mode="text" icon={showInsufficient ? 'chevron-up' : 'chevron-down'} onPress={() => setShowInsufficient(!showInsufficient)}>{showInsufficient ? '收起' : '查看'}其他 {insufficient.length} 道</Button>
-          {showInsufficient && insufficient.map((evaluation) => <RecipeCard key={evaluation.dish_id} catalog={catalog} evaluation={evaluation} onPress={() => onOpenRecipe(evaluation.dish_id)} />)}
+          {showInsufficient && insufficient.map(card)}
         </View>}
         </> : <Text style={{ color: theme.colors.onSurfaceVariant }}>选择食材，查看推荐菜谱</Text>}
       </ScrollView>

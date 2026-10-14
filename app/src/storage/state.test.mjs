@@ -11,6 +11,7 @@ const catalog = {
     { ingredient_id: 'egg', selectable: true },
     { ingredient_id: 'meat', selectable: false },
   ],
+  recipes: [{ recipe_id: 'tomato-egg', dish_id: 'tomato-egg' }, { recipe_id: 'tomato-egg-variant', dish_id: 'tomato-egg' }],
 };
 const timestamp = '2026-10-14T10:00:00.000Z';
 const valid = () => ({ ...initialKitchen(catalog), updatedAt: timestamp });
@@ -50,7 +51,7 @@ for (const [name, source] of [
   ['malformed JSON', '{'],
   ['oversized JSON', ' '.repeat(65_537)],
   ['null record', 'null'],
-  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 2 })],
+  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 3 })],
   ['missing field', JSON.stringify({ ...valid(), updatedAt: undefined })],
   ['unexpected field', JSON.stringify({ ...valid(), apiKey: 'not-stored' })],
   ['unknown ingredient', JSON.stringify({ ...valid(), currentIds: ['unknown'] })],
@@ -63,6 +64,14 @@ for (const [name, source] of [
   ['conflicting absence', JSON.stringify({ ...valid(), currentIds: ['egg'], unavailableIds: ['egg'] })],
   ['invalid boolean', JSON.stringify({ ...valid(), pantryConfigured: 1 })],
   ['invalid timestamp', JSON.stringify({ ...valid(), updatedAt: '2026-02-30T10:00:00.000Z' })],
+  ['zero people', JSON.stringify({ ...valid(), defaultPeople: 0 })],
+  ['too many people', JSON.stringify({ ...valid(), mealPeople: 13 })],
+  ['fractional burner count', JSON.stringify({ ...valid(), burnerCount: 1.5 })],
+  ['unknown recipe', JSON.stringify({ ...valid(), mealRecipeIds: ['unknown'] })],
+  ['duplicate recipe', JSON.stringify({ ...valid(), mealRecipeIds: ['tomato-egg', 'tomato-egg'] })],
+  ['duplicate dish variants', JSON.stringify({ ...valid(), mealRecipeIds: ['tomato-egg', 'tomato-egg-variant'] })],
+  ['unknown shared ingredient', JSON.stringify({ ...valid(), sharedIngredientIds: ['unknown'] })],
+  ['sharing with an empty basket', JSON.stringify({ ...valid(), sharedIngredientIds: ['egg'] })],
 ]) {
   test(`rejects ${name} without returning default inventory`, () => {
     const result = decodeKitchen(source, catalog);
@@ -274,4 +283,114 @@ test('subscribers receive updates and unsubscribe stops notifications', async ()
   session.update((state) => ({ ...state, currentIds: ['egg'] }));
   await session.settled();
   assert.equal(notifications, 2);
+});
+
+test('migrates version one records while preserving all confirmed kitchen selections', () => {
+  const { defaultPeople, burnerCount, mealRecipeIds, mealPeople, sharedIngredientIds, ...original } = valid();
+  const legacy = { ...original, schemaVersion: 1, currentIds: ['tomato'], pantryIds: ['egg'], equipment: ['wok'], equipmentConfigured: true, pantryConfigured: true };
+  const result = decodeKitchen(JSON.stringify(legacy), catalog);
+  assert.equal(result.error, null);
+  assert.equal(result.data.schemaVersion, 2);
+  assert.deepEqual(result.data.currentIds, legacy.currentIds);
+  assert.deepEqual(result.data.pantryIds, legacy.pantryIds);
+  assert.deepEqual(result.data.equipment, legacy.equipment);
+  assert.equal(result.data.pantryConfigured, true);
+  assert.equal(result.data.equipmentConfigured, true);
+  assert.equal(result.data.defaultPeople, 2);
+  assert.equal(result.data.mealPeople, 2);
+  assert.equal(result.data.burnerCount, 2);
+  assert.deepEqual(result.data.mealRecipeIds, []);
+  assert.deepEqual(result.data.sharedIngredientIds, []);
+});
+
+test('restores a kitchen only after its write succeeds and persists it across reopening', async () => {
+  const storage = memoryStorage(JSON.stringify({ ...valid(), currentIds: ['egg'] }));
+  const originalWrite = storage.write;
+  let finish;
+  storage.write = value => new Promise(resolve => { finish = async () => resolve(await originalWrite(value)); });
+  const session = createKitchenSession(catalog, storage, () => timestamp);
+  session.load();
+  await session.settled();
+  const restoring = session.restore({ ...valid(), currentIds: ['tomato'], mealRecipeIds: ['tomato-egg'], defaultPeople: 4 });
+  await Promise.resolve();
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['egg']);
+  assert.equal(session.getSnapshot().saving, true);
+  await finish();
+  assert.equal((await restoring).error, null);
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['tomato']);
+  const reopened = createKitchenSession(catalog, storage);
+  reopened.load();
+  await reopened.settled();
+  assert.equal(reopened.getSnapshot().state.defaultPeople, 4);
+  assert.deepEqual(reopened.getSnapshot().state.mealRecipeIds, ['tomato-egg']);
+});
+
+test('failed restore keeps old inventory on screen and disk and can retry the same backup', async () => {
+  const storage = memoryStorage(JSON.stringify({ ...valid(), currentIds: ['egg'] }));
+  const originalWrite = storage.write;
+  let attempts = 0;
+  storage.write = value => ++attempts === 1 ? Promise.resolve(fail('存储已满')) : originalWrite(value);
+  const session = createKitchenSession(catalog, storage, () => timestamp);
+  session.load();
+  await session.settled();
+  const backup = { ...valid(), currentIds: ['tomato'] };
+  assert.equal((await session.restore(backup)).error, '存储已满');
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['egg']);
+  assert.deepEqual(JSON.parse((await storage.read()).data).currentIds, ['egg']);
+  assert.equal((await session.restore(backup)).error, null);
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['tomato']);
+});
+
+test('restore rejects invalid backups before writing or changing the visible state', async () => {
+  const storage = memoryStorage();
+  const session = createKitchenSession(catalog, storage, () => timestamp);
+  session.load();
+  await session.settled();
+  const previous = session.getSnapshot().state;
+  assert.notEqual((await session.restore({ ...valid(), currentIds: ['unknown'] })).error, null);
+  assert.equal(session.getSnapshot().state, previous);
+  assert.deepEqual(storage.writes, []);
+});
+
+test('edits queued during a restore apply to the restored kitchen and persist afterward', async () => {
+  const storage = memoryStorage();
+  const originalWrite = storage.write;
+  let finish;
+  let attempts = 0;
+  storage.write = value => ++attempts === 1 ? new Promise(resolve => { finish = async () => resolve(await originalWrite(value)); }) : originalWrite(value);
+  const session = createKitchenSession(catalog, storage, () => timestamp);
+  session.load();
+  await session.settled();
+  const restoring = session.restore({ ...valid(), currentIds: ['tomato'] });
+  session.update(state => ({ ...state, currentIds: [...state.currentIds, 'egg'] }));
+  assert.deepEqual(session.getSnapshot().state.currentIds, []);
+  assert.notEqual((await session.restore(valid())).error, null);
+  await Promise.resolve();
+  await finish();
+  await restoring;
+  await session.settled();
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['tomato', 'egg']);
+  assert.deepEqual(storage.writes.map(raw => JSON.parse(raw).currentIds), [['tomato'], ['tomato', 'egg']]);
+});
+
+test('restore waits for previous saves and older completions cannot replace its state', async () => {
+  const storage = memoryStorage();
+  const originalWrite = storage.write;
+  const pending = [];
+  storage.write = value => new Promise(resolve => pending.push(async () => resolve(await originalWrite(value))));
+  const session = createKitchenSession(catalog, storage, () => timestamp);
+  session.load();
+  await session.settled();
+  session.update(state => ({ ...state, currentIds: ['egg'] }));
+  const restoring = session.restore({ ...valid(), currentIds: ['tomato'] });
+  await Promise.resolve();
+  assert.equal(pending.length, 1);
+  await pending[0]();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(pending.length, 2);
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['egg']);
+  assert.equal(session.getSnapshot().saving, true);
+  await pending[1]();
+  await restoring;
+  assert.deepEqual(session.getSnapshot().state.currentIds, ['tomato']);
 });

@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import { Card, Chip, Icon, Text, useTheme } from 'react-native-paper';
+import { Button, Card, Chip, Icon, Text, useTheme } from 'react-native-paper';
 import type { RecipeEvaluation } from '../../../packages/engine/src/types';
 import type { AppCatalog } from '../model/types';
 import { courseLabels, equipmentLabels } from '../model/presentation';
 
-type Props = Readonly<{ catalog: AppCatalog; evaluation: RecipeEvaluation; onPress: () => void }>;
+type Props = Readonly<{ catalog: AppCatalog; evaluation: RecipeEvaluation; onPress: () => void;
+  onAdd?: () => void; selected?: boolean; addDisabled?: boolean }>;
 
 function summaries(catalog: AppCatalog, evaluation: RecipeEvaluation): string[] {
   const names = new Map(catalog.ingredients.map((item) => [item.ingredient_id, item.names['zh-CN'] ?? item.ingredient_id]));
@@ -29,7 +30,7 @@ function summaries(catalog: AppCatalog, evaluation: RecipeEvaluation): string[] 
   return lines;
 }
 
-export function RecipeCard({ catalog, evaluation, onPress }: Props) {
+export function RecipeCard({ catalog, evaluation, onPress, onAdd, selected, addDisabled }: Props) {
   const theme = useTheme();
   const recipe = catalog.recipes.find((item) => item.recipe_id === evaluation.recipe_id);
   if (!recipe) return null;
@@ -52,6 +53,8 @@ export function RecipeCard({ catalog, evaluation, onPress }: Props) {
         </View>
         {lines.slice(0, 3).map((line) => <Text key={line} variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{line}</Text>)}
       </Card.Content>
+      {onAdd && <Card.Actions><Button icon={selected ? 'check' : 'plus'} disabled={selected || addDisabled}
+        onPress={event => { event.stopPropagation(); onAdd(); }}>{selected ? '已加入' : '加入这顿'}</Button></Card.Actions>}
     </Card>
   );
 }

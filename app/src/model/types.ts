@@ -22,7 +22,7 @@ export type AppCatalog = Omit<Catalog, 'ingredients' | 'recipes'> & Readonly<{
 }>;
 
 export type KitchenState = Readonly<{
-  schemaVersion: 1;
+  schemaVersion: 2;
   datasetVersion: string;
   currentIds: readonly string[];
   pantryIds: readonly string[];
@@ -30,6 +30,11 @@ export type KitchenState = Readonly<{
   equipment: readonly Equipment[];
   equipmentConfigured: boolean;
   pantryConfigured: boolean;
+  defaultPeople: number;
+  burnerCount: number;
+  mealRecipeIds: readonly string[];
+  mealPeople: number;
+  sharedIngredientIds: readonly string[];
   updatedAt: string | null;
 }>;
 

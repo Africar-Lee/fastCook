@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, Checkbox, Dialog, Divider, Portal, Surface, Text, useTheme } from 'react-native-paper';
+import { Appbar, Button, Checkbox, Dialog, Divider, Portal, Snackbar, Surface, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { ExecutionStep, RecipeEvaluation, Requirement, RequirementMatch, Step } from '../../../packages/engine/src/types';
 import { EquipmentDialog } from '../components/EquipmentDialog';
+import { RecipeReportDialog } from '../components/RecipeReportDialog';
 import { addIngredient, markUnavailable } from '../model/inventory-actions';
 import { equipmentLabels, formatQuantity, importanceLabels, nameOf, textOf, tierLabels } from '../model/presentation';
 import { orderRequirements } from '../model/requirement-presentation';
@@ -19,6 +20,9 @@ type Props = Readonly<{
   onBack: () => void;
   onConfirmRule: (key: string) => void;
   onConsumed: (removed: readonly ConsumedItem[]) => void;
+  onAddMeal: () => void;
+  inMeal: boolean;
+  mealFull: boolean;
 }>;
 
 function matchLabel(match: RequirementMatch): string {
@@ -220,6 +224,8 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
   const [consuming, setConsuming] = useState(false);
   const [sourcesVisible, setSourcesVisible] = useState(false);
   const [equipmentVisible, setEquipmentVisible] = useState(false);
+  const [reportVisible, setReportVisible] = useState(false);
+  const [reportNotice, setReportNotice] = useState<string | null>(null);
   const feasible = props.evaluation.tier === 'ready' || props.evaluation.tier === 'caveat';
   const steps = feasible ? props.evaluation.steps : recipe.steps;
   const sources = props.catalog.sources.filter(source => recipe.source_ids.includes(source.source_id));
@@ -243,18 +249,23 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
       </Surface>
       <Text variant="titleLarge" style={styles.sectionTitle}>下厨步骤</Text>
       {steps.map((step, index) => <StepRow key={step.step_id} catalog={props.catalog} step={step} index={index} />)}
-      {sources.length > 0 && <View>
-        <Button icon={sourcesVisible ? 'chevron-up' : 'chevron-down'} onPress={() => setSourcesVisible(previous => !previous)}
-          accessibilityState={{ expanded: sourcesVisible }} style={styles.selfStart}>菜谱来源</Button>
+      <View>
+        <View style={styles.actions}>
+          {sources.length > 0 && <Button icon={sourcesVisible ? 'chevron-up' : 'chevron-down'} onPress={() => setSourcesVisible(previous => !previous)}
+            accessibilityState={{ expanded: sourcesVisible }}>菜谱来源</Button>}
+          <Button icon="flag-outline" onPress={() => setReportVisible(true)}>报告问题</Button>
+        </View>
         {sourcesVisible && <>
           {upstream && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(recipe.variant)}</Text>}
           {sources.map(source => <RecipeSource key={source.source_id} source={source} />)}
         </>}
-      </View>}
+      </View>
     </ScrollView>
-    {feasible && <Surface elevation={1} style={[styles.footer, { paddingBottom: 12 + insets.bottom }]}>
-      <Button mode="contained" contentStyle={styles.mainButton} onPress={() => setConsuming(true)}>做了这道</Button>
-    </Surface>}
+    <Surface elevation={1} style={[styles.footer, { paddingBottom: 12 + insets.bottom }]}>
+      <Button mode="outlined" icon={props.inMeal ? 'check' : 'plus'} disabled={props.inMeal || props.mealFull}
+        onPress={props.onAddMeal}>{props.inMeal ? '已加入这顿' : '加入这顿'}</Button>
+      {feasible && <Button mode="contained" contentStyle={styles.mainButton} onPress={() => setConsuming(true)}>做了这道</Button>}
+    </Surface>
     {consuming && <ConsumedDialog catalog={props.catalog} items={consumedItems(props.state, props.evaluation)}
       onDismiss={() => setConsuming(false)} onConfirm={props.onConsumed} />}
     {equipmentVisible && <EquipmentDialog initialSelection={props.state.equipmentConfigured ? props.state.equipment : ['wok', 'pot']}
@@ -262,6 +273,11 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
         props.update(previous => ({ ...previous, equipment, equipmentConfigured: true }));
         setEquipmentVisible(false);
       }} />}
+    {reportVisible && <RecipeReportDialog catalog={props.catalog} recipeId={recipe.recipe_id}
+      onDismiss={() => setReportVisible(false)} onExported={message => { setReportVisible(false); setReportNotice(message); }} />}
+    <Snackbar visible={reportNotice !== null} onDismiss={() => setReportNotice(null)} duration={4000}>
+      {reportNotice ?? ''}
+    </Snackbar>
   </View>;
 }
 
@@ -290,7 +306,7 @@ const styles = StyleSheet.create({
   stepText: { lineHeight: 27 },
   source: { gap: 6, paddingVertical: 8 },
   substitution: { padding: 12, borderRadius: 12, gap: 5, marginBottom: 10 },
-  footer: { paddingHorizontal: 20, paddingVertical: 12 },
+  footer: { paddingHorizontal: 20, paddingVertical: 12, gap: 8 },
   mainButton: { minHeight: 48 },
   dialog: { maxWidth: 520, alignSelf: 'center', width: '90%' },
   dialogScroll: { maxHeight: 300 },
