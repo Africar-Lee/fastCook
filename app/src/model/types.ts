@@ -1,5 +1,6 @@
 import type { Catalog, EngineInput, Equipment, Ingredient, LocalizedText, Recipe, Requirement } from '../../../packages/engine/src/types';
 import type { PrivateRecipe } from './private-recipes';
+import type { RecipeMedia, RecipeMediaMap } from './recipe-media';
 
 export type AppIngredient = Ingredient & Readonly<{ category: string; search_terms: readonly string[] }>;
 export type AppRequirement = Requirement & Readonly<{ preparation?: LocalizedText }>;
@@ -8,6 +9,7 @@ export type AppRecipe = Omit<Recipe, 'requirements'> & Readonly<{
   variant: Readonly<Record<string, string>>;
   source_ids: readonly string[];
   requirements: readonly AppRequirement[];
+  media?: RecipeMedia;
 }>;
 export type AppSource = Readonly<{
   source_id: string;
@@ -23,7 +25,7 @@ export type AppCatalog = Omit<Catalog, 'ingredients' | 'recipes'> & Readonly<{
 }>;
 
 export type KitchenState = Readonly<{
-  schemaVersion: 3;
+  schemaVersion: 4;
   datasetVersion: string;
   currentIds: readonly string[];
   pantryIds: readonly string[];
@@ -37,6 +39,7 @@ export type KitchenState = Readonly<{
   mealPeople: number;
   sharedIngredientIds: readonly string[];
   privateRecipes: readonly PrivateRecipe[];
+  recipeMedia: RecipeMediaMap;
   updatedAt: string | null;
 }>;
 

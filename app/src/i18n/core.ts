@@ -1,3 +1,4 @@
+import { mediaMessages } from './messages-media.ts';
 import { appMessages } from './messages-app.ts';
 import { engineMessages } from './messages-engine.ts';
 import { errorMessages } from './messages-errors.ts';
@@ -6,7 +7,7 @@ import { toolMessages } from './messages-tools.ts';
 
 export type Locale = 'zh-CN' | 'en';
 type Parameters = Readonly<Record<string, string | number>>;
-export const messages: Readonly<Record<string, string>> = Object.freeze({ ...engineMessages, ...errorMessages, ...kitchenMessages, ...toolMessages, ...appMessages });
+export const messages: Readonly<Record<string, string>> = Object.freeze({ ...engineMessages, ...errorMessages, ...kitchenMessages, ...toolMessages, ...appMessages, ...mediaMessages });
 const originalMessages = new Map(Object.entries(messages).filter(([key]) => !key.endsWith('::one')).map(([key, value]) => [value, key]));
 const engineTemplates = Object.keys(engineMessages).filter(key => key.includes('{')).map(key => {
   const parameters = [...key.matchAll(/\{([a-zA-Z]+)\}/g)].map(match => match[1]!);

@@ -1,3 +1,4 @@
+import { RecipeCover } from '../components/RecipeCover';
 import { useEffect, useRef, useState } from 'react';
 import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar, Button, Card, Dialog, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from 'react-native-paper';
@@ -71,6 +72,7 @@ export function PrivateRecipesScreen({ recipes, catalog, state, active, onBack, 
       {matches.length === 0 && <Text style={{ color: theme.colors.onSurfaceVariant }}>{t(recipes.length === 0 ? '还没有菜谱' : '没有找到菜谱')}</Text>}
       {recipes.length >= MAX_PRIVATE_RECIPES && <Text>{t('已保存 {count} 道菜谱', { count: MAX_PRIVATE_RECIPES })}</Text>}
       {matches.map(recipe => <Card key={recipe.id} mode="contained" style={{ backgroundColor: theme.colors.surface }}>
+        {state.recipeMedia[recipe.id]?.images[0] && <RecipeCover image={state.recipeMedia[recipe.id]!.images[0]!} label={recipe.name} />}
         <Card.Content style={styles.content}>
           <Text variant="titleLarge">{recipe.name}</Text>
           <Text style={{ color: theme.colors.onSurfaceVariant }}>{t('{course} · {minutes} 分钟 · {servings} 人份', {
@@ -99,7 +101,7 @@ export function PrivateRecipesScreen({ recipes, catalog, state, active, onBack, 
         setMessage(summary.skipped > 0 ? t('已导入 {added} 道菜谱，跳过重复 {skipped} 道', summary)
           : t('已导入 {added} 道菜谱', summary));
       }} />}
-    {sharing && <RecipeShareDialog catalog={catalog} recipes={sharing} onDismiss={() => setSharing(null)} />}
+    {sharing && <RecipeShareDialog catalog={catalog} recipes={sharing} media={state.recipeMedia} onDismiss={() => setSharing(null)} />}
     <Snackbar visible={message !== null} onDismiss={() => setMessage(null)} duration={5000}>{message ?? ''}</Snackbar>
   </View>;
 }

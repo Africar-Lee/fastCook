@@ -6,9 +6,11 @@ import type { CookingMethod, Equipment } from '../../../packages/engine/src/type
 import { IngredientPicker } from '../components/IngredientPicker';
 import { PrivateRecipeChoices } from '../components/PrivateRecipeChoices';
 import { PrivateRecipeIngredientDialog } from '../components/PrivateRecipeIngredientDialog';
+import { RecipeImageEditor } from '../components/RecipeImageEditor';
 import { courseLabels, equipmentLabels, formatQuantity, importanceLabels, nameOf } from '../model/presentation';
 import { createPrivateRecipeId, createPrivateRecipeStepId, validatePrivateRecipe } from '../model/private-recipes';
 import type { PrivateRecipe, PrivateRecipeIngredient, PrivateRecipeStep } from '../model/private-recipes';
+import { EMPTY_RECIPE_MEDIA, MAX_IMAGES_PER_RECIPE, type RecipeImage, type RecipeMedia } from '../model/recipe-media';
 import type { AppCatalog } from '../model/types';
 import type { StorageResult } from '../storage/types';
 import { useI18n } from '../i18n/useI18n';
@@ -16,9 +18,10 @@ import { useI18n } from '../i18n/useI18n';
 type Props = Readonly<{
   catalog: AppCatalog;
   recipe: PrivateRecipe | null;
+  media?: RecipeMedia;
   defaultServings: number;
   onBack: () => void;
-  onSave: (recipe: PrivateRecipe) => Promise<StorageResult<void>>;
+  onSave: (recipe: PrivateRecipe, media: RecipeMedia) => Promise<StorageResult<void>>;
 }>;
 
 const methodLabels: Readonly<Record<CookingMethod, string>> = {
@@ -89,10 +92,12 @@ function RecipeIngredients({ catalog, ingredients, onAdd, onEdit, onRemove }: Re
   </View>;
 }
 
-function RecipeStepEditor({ catalog, ingredients, step, index, count, disabled, onChange, onMove, onRemove }: Readonly<{
+function RecipeStepEditor({ catalog, ingredients, step, index, count, disabled, images, remaining,
+  onChange, onMove, onRemove, onImagesChange, onImageBusyChange }: Readonly<{
   catalog: AppCatalog; ingredients: readonly PrivateRecipeIngredient[]; step: PrivateRecipeStep; index: number; count: number;
-  disabled: boolean;
+  disabled: boolean; images: readonly RecipeImage[]; remaining: number;
   onChange: (step: PrivateRecipeStep) => void; onMove: (direction: -1 | 1) => void; onRemove: () => void;
+  onImagesChange: (images: readonly RecipeImage[]) => void; onImageBusyChange: (busy: boolean) => void;
 }>) {
   const { t } = useI18n();
   const labels = Object.fromEntries(ingredients.map(item => [item.ingredientId, nameOf(catalog, item.ingredientId)]));
@@ -100,22 +105,26 @@ function RecipeStepEditor({ catalog, ingredients, step, index, count, disabled, 
     ? step.ingredientIds.filter(value => value !== id) : [...step.ingredientIds, id] });
   return <Card mode="outlined"><Card.Content style={styles.step}>
     <View style={styles.row}><Text variant="titleMedium" style={styles.grow}>{t('步骤 {number}', { number: index + 1 })}</Text>
-      <IconButton icon="arrow-up" size={20} disabled={index === 0} accessibilityLabel={t('上移步骤 {number}', { number: index + 1 })} onPress={() => onMove(-1)} />
-      <IconButton icon="arrow-down" size={20} disabled={index === count - 1} accessibilityLabel={t('下移步骤 {number}', { number: index + 1 })} onPress={() => onMove(1)} />
-      <IconButton icon="close" size={20} disabled={count <= 1} accessibilityLabel={t('删除步骤 {number}', { number: index + 1 })} onPress={onRemove} />
+      <IconButton icon="arrow-up" size={20} disabled={disabled || index === 0} accessibilityLabel={t('上移步骤 {number}', { number: index + 1 })} onPress={() => onMove(-1)} />
+      <IconButton icon="arrow-down" size={20} disabled={disabled || index === count - 1} accessibilityLabel={t('下移步骤 {number}', { number: index + 1 })} onPress={() => onMove(1)} />
+      <IconButton icon="close" size={20} disabled={disabled || count <= 1} accessibilityLabel={t('删除步骤 {number}', { number: index + 1 })} onPress={onRemove} />
     </View>
     <TextInput mode="outlined" label={t('步骤 {number} 做法', { number: index + 1 })} multiline value={step.text} editable={!disabled}
       onChangeText={text => onChange({ ...step, text })} maxLength={1000} style={styles.stepInput} />
     {ingredients.length > 0 && <PrivateRecipeChoices label={t('使用食材')} values={labels} selected={step.ingredientIds} onSelect={toggle} />}
+    <RecipeImageEditor images={images} label={t('步骤图片')} disabled={disabled} remaining={remaining}
+      onChange={onImagesChange} onBusyChange={onImageBusyChange} />
   </Card.Content></Card>;
 }
 
-export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, onBack, onSave }: Props) {
+export function PrivateRecipeEditorScreen({ catalog, recipe, media = EMPTY_RECIPE_MEDIA, defaultServings, onBack, onSave }: Props) {
   const { t } = useI18n();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const [initial] = useState(() => recipe ?? newRecipe(defaultServings));
   const [draft, setDraftState] = useState(initial);
+  const [initialMedia] = useState(media);
+  const [draftMedia, setDraftMedia] = useState(media);
   const [minutes, setMinutes] = useState(String(initial.timeMinutes));
   const [servings, setServings] = useState(String(initial.servings));
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -124,29 +133,54 @@ export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, on
   const [discardVisible, setDiscardVisible] = useState(false);
   const [removingStep, setRemovingStep] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [imageProcessing, setImageProcessing] = useState(false);
   const inFlight = useRef(false);
+  const imagePending = useRef(false);
   const mounted = useRef(true);
+  const busy = saving || imageProcessing;
+  const remainingImages = MAX_IMAGES_PER_RECIPE - draftMedia.images.length - Object.values(draftMedia.steps).reduce((count, images) => count + images.length, 0);
+  const onImageBusyChange = (processing: boolean) => {
+    imagePending.current = processing;
+    if (mounted.current) setImageProcessing(processing);
+  };
   const setDraft = (update: PrivateRecipe | ((previous: PrivateRecipe) => PrivateRecipe)) => {
-    if (!inFlight.current) setDraftState(update);
+    if (!inFlight.current && !imagePending.current) setDraftState(update);
   };
-  const openIngredients = () => { if (!inFlight.current) setPickerVisible(true); };
-  const editIngredient = (ingredientId: string) => { if (!inFlight.current) setEditingIngredient(ingredientId); };
+  const openIngredients = () => { if (!inFlight.current && !imagePending.current) setPickerVisible(true); };
+  const editIngredient = (ingredientId: string) => { if (!inFlight.current && !imagePending.current) setEditingIngredient(ingredientId); };
+  const removeStepAndImages = (stepId: string) => {
+    if (inFlight.current || imagePending.current) return;
+    setDraft(previous => removeStep(previous, stepId));
+    setDraftMedia(previous => {
+      const steps = { ...previous.steps };
+      delete steps[stepId];
+      return { ...previous, steps };
+    });
+  };
+  const changeStepImages = (stepId: string, images: readonly RecipeImage[]) => setDraftMedia(previous => {
+    const steps = { ...previous.steps };
+    if (images.length > 0) steps[stepId] = images;
+    else delete steps[stepId];
+    return { ...previous, steps };
+  });
   const requestRemoveStep = (step: PrivateRecipeStep) => {
-    if (inFlight.current) return;
-    if (step.text.trim()) setRemovingStep(step.id);
-    else setDraft(previous => removeStep(previous, step.id));
+    if (inFlight.current || imagePending.current) return;
+    if (step.text.trim() || draftMedia.steps[step.id]?.length) setRemovingStep(step.id);
+    else removeStepAndImages(step.id);
   };
-  const dirty = JSON.stringify(draft) !== JSON.stringify(initial) || minutes !== String(initial.timeMinutes) || servings !== String(initial.servings);
+  const dirty = JSON.stringify(draft) !== JSON.stringify(initial) || JSON.stringify(draftMedia) !== JSON.stringify(initialMedia)
+    || minutes !== String(initial.timeMinutes) || servings !== String(initial.servings);
   const selectedIngredient = draft.ingredients.find(item => item.ingredientId === editingIngredient);
   const requestBack = () => {
-    if (inFlight.current) return;
+    if (inFlight.current || imagePending.current) return;
     if (dirty) setDiscardVisible(true);
     else onBack();
   };
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useEffect(() => {
     const listener = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (inFlight.current || imagePending.current) return true;
       if (pickerVisible) setPickerVisible(false);
       else if (editingIngredient) setEditingIngredient(null);
       else if (removingStep) setRemovingStep(null);
@@ -157,7 +191,7 @@ export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, on
     return () => listener.remove();
   }, [dirty, pickerVisible, editingIngredient, removingStep, discardVisible, onBack]);
   const toggleIngredient = (ingredientId: string) => {
-    if (inFlight.current) return;
+    if (inFlight.current || imagePending.current) return;
     const ingredient = catalog.ingredients.find(item => item.ingredient_id === ingredientId && item.selectable);
     if (!ingredient) return;
     if (draft.ingredients.some(item => item.ingredientId === ingredientId)) { setDraft(previous => removeIngredient(previous, ingredientId)); return; }
@@ -178,28 +212,30 @@ export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, on
     return { ...previous, steps };
   });
   const save = async () => {
-    if (inFlight.current) return;
+    if (inFlight.current || imagePending.current) return;
     if (!/^\d+$/.test(minutes) || !/^\d+$/.test(servings)) { setError('耗时和人数请填写整数。'); return; }
     const validation = validatePrivateRecipe({ ...draft, timeMinutes: Number(minutes), servings: Number(servings) }, catalog);
     if (validation.error !== null) { setError(validation.error); return; }
-    inFlight.current = true; Keyboard.dismiss(); setBusy(true); setError(null);
-    const result = await onSave(validation.data);
+    inFlight.current = true; Keyboard.dismiss(); setSaving(true); setError(null);
+    const result = await onSave(validation.data, draftMedia);
     inFlight.current = false;
     if (!mounted.current) return;
-    setBusy(false); setError(result.error);
+    setSaving(false); setError(result.error);
   };
   return <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.root, { backgroundColor: theme.colors.background }]}>
     <Appbar.Header statusBarHeight={0}><Appbar.BackAction onPress={requestBack} disabled={busy} accessibilityLabel={t('返回我的菜谱')} />
       <Appbar.Content title={t(recipe ? '编辑菜谱' : '新建菜谱')} /></Appbar.Header>
     <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.page} pointerEvents={busy ? 'none' : 'auto'}>
       <TextInput mode="outlined" label={t('菜名')} value={draft.name} editable={!busy} onChangeText={name => setDraft(previous => ({ ...previous, name }))} maxLength={80} />
+      <RecipeImageEditor images={draftMedia.images} label={t('菜谱图片')} cover disabled={busy} remaining={remainingImages}
+        onBusyChange={onImageBusyChange} onChange={images => setDraftMedia(previous => ({ ...previous, images }))} />
       <View style={styles.row}>
         <TextInput mode="outlined" label={t('耗时（分钟）')} value={minutes} editable={!busy}
-          onChangeText={value => { if (!inFlight.current) setMinutes(value); }} keyboardType="number-pad" maxLength={4} style={styles.grow} />
+          onChangeText={value => { if (!inFlight.current && !imagePending.current) setMinutes(value); }} keyboardType="number-pad" maxLength={4} style={styles.grow} />
         <TextInput mode="outlined" label={t('人数')} value={servings} editable={!busy}
-          onChangeText={value => { if (!inFlight.current) setServings(value); }} keyboardType="number-pad" maxLength={2} style={styles.grow} />
+          onChangeText={value => { if (!inFlight.current && !imagePending.current) setServings(value); }} keyboardType="number-pad" maxLength={2} style={styles.grow} />
       </View>
-      <Button icon={detailsVisible ? 'chevron-up' : 'chevron-down'} onPress={() => { if (!inFlight.current) setDetailsVisible(previous => !previous); }}
+      <Button icon={detailsVisible ? 'chevron-up' : 'chevron-down'} disabled={busy} onPress={() => { if (!inFlight.current && !imagePending.current) setDetailsVisible(previous => !previous); }}
         accessibilityState={{ expanded: detailsVisible }}>{t('{course} · {method} · 分类与厨具', {
           course: courseLabels[draft.course], method: t(methodLabels[draft.cookingMethod]),
         })}</Button>
@@ -209,14 +245,15 @@ export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, on
       <Text variant="titleLarge">{t('做法')}</Text>
       {draft.steps.map((step, index) => <RecipeStepEditor key={step.id} catalog={catalog} ingredients={draft.ingredients}
         step={step} index={index} count={draft.steps.length} disabled={busy} onChange={changeStep} onMove={direction => moveStep(step.id, direction)}
-        onRemove={() => requestRemoveStep(step)} />)}
-      <Button icon="plus" disabled={draft.steps.length >= 30} onPress={() => setDraft(previous => ({ ...previous,
+        onRemove={() => requestRemoveStep(step)} images={draftMedia.steps[step.id] ?? []} remaining={remainingImages}
+        onImagesChange={images => changeStepImages(step.id, images)} onImageBusyChange={onImageBusyChange} />)}
+      <Button icon="plus" disabled={busy || draft.steps.length >= 30} onPress={() => setDraft(previous => ({ ...previous,
         steps: [...previous.steps, { id: createPrivateRecipeStepId(), text: '', ingredientIds: [] }],
       }))}>{t('添加步骤')}</Button>
     </ScrollView>
     <Surface elevation={1} style={[styles.footer, { paddingBottom: Math.max(16, insets.bottom) }]}>
       {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{t(error)}</Text>}
-      <Button mode="contained" loading={busy} disabled={busy} onPress={() => void save()}>{t('保存菜谱')}</Button>
+      <Button mode="contained" loading={saving} disabled={busy} onPress={() => void save()}>{t('保存菜谱')}</Button>
     </Surface>
     {pickerVisible && <IngredientPicker visible title={t('菜谱食材')} location="current" ingredients={catalog.ingredients}
       selectedIds={draft.ingredients.map(item => item.ingredientId)} otherSelectedIds={[]} onToggle={toggleIngredient} onDismiss={() => setPickerVisible(false)} />}
@@ -226,14 +263,16 @@ export function PrivateRecipeEditorScreen({ catalog, recipe, defaultServings, on
         setEditingIngredient(null);
       }} />}
     <Portal>
-      <Dialog visible={discardVisible} onDismiss={() => setDiscardVisible(false)} style={styles.dialog}>
+      <Dialog visible={discardVisible} dismissable={!busy} dismissableBackButton={!busy} onDismiss={() => { if (!busy) setDiscardVisible(false); }} style={styles.dialog}>
         <Dialog.Title>{t('放弃修改？')}</Dialog.Title><Dialog.Content><Text>{t('未保存的内容将丢失。')}</Text></Dialog.Content>
-        <Dialog.Actions><Button onPress={() => setDiscardVisible(false)}>{t('继续编辑')}</Button><Button onPress={onBack}>{t('放弃修改')}</Button></Dialog.Actions>
+        <Dialog.Actions><Button disabled={busy} onPress={() => setDiscardVisible(false)}>{t('继续编辑')}</Button>
+          <Button disabled={busy} onPress={() => { if (!inFlight.current && !imagePending.current) onBack(); }}>{t('放弃修改')}</Button></Dialog.Actions>
       </Dialog>
-      <Dialog visible={removingStep !== null} onDismiss={() => setRemovingStep(null)} style={styles.dialog}>
+      <Dialog visible={removingStep !== null} dismissable={!busy} dismissableBackButton={!busy} onDismiss={() => { if (!busy) setRemovingStep(null); }} style={styles.dialog}>
         <Dialog.Title>{t('删除这一步？')}</Dialog.Title>
-        <Dialog.Actions><Button onPress={() => setRemovingStep(null)}>{t('取消')}</Button><Button onPress={() => {
-          if (removingStep) setDraft(previous => removeStep(previous, removingStep));
+        <Dialog.Actions><Button disabled={busy} onPress={() => setRemovingStep(null)}>{t('取消')}</Button><Button disabled={busy} onPress={() => {
+          if (inFlight.current || imagePending.current) return;
+          if (removingStep) removeStepAndImages(removingStep);
           setRemovingStep(null);
         }}>{t('删除')}</Button></Dialog.Actions>
       </Dialog>

@@ -40,7 +40,7 @@ test('private recipes and their meal selections survive storage and backup round
   assert.deepEqual(restored.data, original);
   const backup = createKitchenBackup(original, catalog, timestamp);
   assert.equal(backup.error, null);
-  assert.equal(backup.data.version, 1);
+  assert.equal(backup.data.version, 2);
   const imported = decodeKitchenBackup(JSON.stringify(backup.data), catalog);
   assert.equal(imported.error, null);
   assert.deepEqual(imported.data.kitchen, original);
@@ -65,14 +65,14 @@ for (const [name, privateRecipes] of [
 
 for (const version of [1, 2]) {
   test(`version ${version} backups migrate without losing old selections`, () => {
-    const { privateRecipes, ...state } = initialKitchen(catalog);
+    const { privateRecipes, recipeMedia, ...state } = initialKitchen(catalog);
     const legacy = { ...state, schemaVersion: version, currentIds: ['egg'], pantryConfigured: true, equipment: ['steamer'], equipmentConfigured: true };
     if (version === 1) for (const field of ['defaultPeople', 'burnerCount', 'mealRecipeIds', 'mealPeople', 'sharedIngredientIds']) delete legacy[field];
     if (version === 2) legacy.mealRecipeIds = [catalog.recipes[0].recipe_id];
     const backup = { format: 'fastcook-kitchen', version: 1, exportedAt: timestamp, datasetVersion: catalog.dataset_version, kitchen: legacy };
     const imported = decodeKitchenBackup(JSON.stringify(backup), catalog);
     assert.equal(imported.error, null);
-    assert.equal(imported.data.kitchen.schemaVersion, 3);
+    assert.equal(imported.data.kitchen.schemaVersion, 4);
     assert.deepEqual(imported.data.kitchen.currentIds, ['egg']);
     assert.equal(imported.data.kitchen.pantryConfigured, true);
     assert.deepEqual(imported.data.kitchen.equipment, ['steamer']);

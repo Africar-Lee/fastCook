@@ -34,7 +34,7 @@ test('native backup import rejects oversized files and releases the handle', asy
   fileSystem.File.pickFileAsync = async () => ({ open: () => ({ readBytes: limit => new Uint8Array(limit), close: () => { closed = true; } }) });
   const result = await importKitchenBackup();
   assert.equal(result.status, 'failed');
-  assert.match(result.error, /2 MiB/);
+  assert.match(result.error, /48 MiB/);
   assert.equal(closed, true);
 });
 
@@ -90,7 +90,7 @@ test('native backup export rejects oversized UTF-8 content before opening a dire
   fileSystem.Directory.pickDirectoryAsync = async () => { opened = true; };
   const result = await exportKitchenBackup({ content: '中'.repeat(Math.ceil(MAX_BACKUP_BYTES / 3)) });
   assert.equal(result.status, 'failed');
-  assert.match(result.error, /2 MiB/);
+  assert.match(result.error, /48 MiB/);
   assert.equal(opened, false);
 });
 

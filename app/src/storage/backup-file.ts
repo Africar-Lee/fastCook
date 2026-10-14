@@ -4,7 +4,7 @@ import type { FileHandle } from 'expo-file-system';
 import { backupFileName, MAX_BACKUP_BYTES } from './backup.ts';
 import type { BackupImportResult, KitchenBackup } from './backup';
 import type { ReportExportResult } from './report-export-result';
-import { withinStorageLimit } from './types.ts';
+import { withinMediaPackageLimit } from '../model/media-file-limit.ts';
 
 function cancelled(error: unknown): boolean {
   return !!error && typeof error === 'object' && 'code' in error && error.code === 'ERR_PICKER_CANCELLED';
@@ -12,7 +12,7 @@ function cancelled(error: unknown): boolean {
 
 export async function exportKitchenBackup(backup: KitchenBackup): Promise<ReportExportResult> {
   const content = JSON.stringify(backup);
-  if (!withinStorageLimit(content)) return { status: 'failed', error: t('备份超过 2 MiB，请减少自建菜谱内容后重试。') };
+  if (!withinMediaPackageLimit(content)) return { status: 'failed', error: t('图片文件超过 48 MiB，请减少所选菜谱或图片后重试。') };
   let directory: Directory;
   try {
     directory = await Directory.pickDirectoryAsync();
@@ -59,7 +59,7 @@ function readBackup(file: File): BackupImportResult {
       return { status: 'failed', error: t('备份文件未能完成读取，请重新选择文件后重试。') };
     }
   }
-  if (bytes.byteLength > MAX_BACKUP_BYTES) return { status: 'failed', error: t('备份超过 2 MiB，请选择 FastCook 导出的 JSON 文件。') };
+  if (bytes.byteLength > MAX_BACKUP_BYTES) return { status: 'failed', error: t('图片文件超过 48 MiB，请减少所选菜谱或图片后重试。') };
   return { status: 'selected', content: new TextDecoder().decode(bytes), error: null };
 }
 

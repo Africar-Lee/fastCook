@@ -1,9 +1,11 @@
+import { MAX_MEDIA_PACKAGE_BYTES } from '../model/recipe-media.ts';
+import { withinMediaPackageLimit } from '../model/media-file-limit.ts';
 import { t } from '../i18n/core.ts';
 import { Directory, File, FileMode, Paths } from 'expo-file-system';
 import type { FileHandle } from 'expo-file-system';
 import { isAvailableAsync, shareAsync } from 'expo-sharing';
 import type { ReportExportResult } from './report-export-result';
-import { failure, MAX_STORAGE_BYTES, success, withinStorageLimit } from './types.ts';
+import { failure, success } from './types.ts';
 import type { StorageResult } from './types';
 
 export type RecipeFileImportResult = Readonly<{ status: 'selected'; content: string; error: null }>
@@ -11,7 +13,7 @@ export type RecipeFileImportResult = Readonly<{ status: 'selected'; content: str
 export type RecipeShareResult = (Readonly<{ status: 'closed' | 'cancelled' | 'unsupported'; error: null }>
   | Readonly<{ status: 'failed'; error: string }>) & Readonly<{ cleanupError?: string }>;
 
-const FILE_TOO_LARGE = '菜谱文件超过 2 MiB，请减少所选菜谱后重试。';
+const FILE_TOO_LARGE = '图片文件超过 48 MiB，请减少所选菜谱或图片后重试。';
 const CLEANUP_ERROR = '部分分享缓存未能清理，请检查设备存储空间后重试。';
 const SHARE_LIFETIME_MS = 24 * 60 * 60 * 1000;
 let sharing = false;
@@ -21,7 +23,7 @@ function fileName(): string {
 }
 
 function contentError(content: string): string | null {
-  return typeof content === 'string' && withinStorageLimit(content) ? null : t(FILE_TOO_LARGE);
+  return typeof content === 'string' && withinMediaPackageLimit(content) ? null : t(FILE_TOO_LARGE);
 }
 
 function fileCall<Value>(operation: () => Value, message: string): StorageResult<Value> {
@@ -61,15 +63,15 @@ function readRecipeFile(file: File): RecipeFileImportResult {
   let read: StorageResult<Uint8Array>;
   let closed: StorageResult<void>;
   try {
-    read = fileCall(() => handle.readBytes(MAX_STORAGE_BYTES + 1), t('菜谱文件读取失败，请检查文件是否完整后重试。'));
+    read = fileCall(() => handle.readBytes(MAX_MEDIA_PACKAGE_BYTES + 1), t('菜谱文件读取失败，请检查文件是否完整后重试。'));
   } finally {
     closed = fileCall(() => handle.close(), t('菜谱文件未能完成读取，请重新选择后重试。'));
   }
   if (read.error !== null) return { status: 'failed', error: read.error };
   if (closed.error !== null) return { status: 'failed', error: closed.error };
-  if (read.data.byteLength > MAX_STORAGE_BYTES) return { status: 'failed', error: t(FILE_TOO_LARGE) };
+  if (read.data.byteLength > MAX_MEDIA_PACKAGE_BYTES) return { status: 'failed', error: t(FILE_TOO_LARGE) };
   const content = new TextDecoder().decode(read.data);
-  return withinStorageLimit(content) ? { status: 'selected', content, error: null } : { status: 'failed', error: t(FILE_TOO_LARGE) };
+  return withinMediaPackageLimit(content) ? { status: 'selected', content, error: null } : { status: 'failed', error: t(FILE_TOO_LARGE) };
 }
 
 export async function importRecipeFile(): Promise<RecipeFileImportResult> {

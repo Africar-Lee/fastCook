@@ -1,16 +1,17 @@
+import { MAX_MEDIA_PACKAGE_BYTES } from '../model/recipe-media.ts';
+import { withinMediaPackageLimit } from '../model/media-file-limit.ts';
 import { t } from '../i18n/core.ts';
 import type { RecipeFileImportResult, RecipeShareResult } from './recipe-file';
 import type { ReportExportResult } from './report-export-result';
-import { MAX_STORAGE_BYTES, withinStorageLimit } from './types.ts';
 
-const FILE_TOO_LARGE = '菜谱文件超过 2 MiB，请减少所选菜谱后重试。';
+const FILE_TOO_LARGE = '图片文件超过 48 MiB，请减少所选菜谱或图片后重试。';
 
 function fileName(): string {
   return `fastcook-recipes-${Date.now()}.json`;
 }
 
 function validContent(content: string): boolean {
-  return typeof content === 'string' && withinStorageLimit(content);
+  return typeof content === 'string' && withinMediaPackageLimit(content);
 }
 
 export async function exportRecipeFile(content: string): Promise<ReportExportResult> {
@@ -41,7 +42,7 @@ export async function exportRecipeFile(content: string): Promise<ReportExportRes
 }
 
 async function readRecipeFile(file: File): Promise<RecipeFileImportResult> {
-  if (file.size > MAX_STORAGE_BYTES) return { status: 'failed', error: t(FILE_TOO_LARGE) };
+  if (file.size > MAX_MEDIA_PACKAGE_BYTES) return { status: 'failed', error: t(FILE_TOO_LARGE) };
   let content: string;
   try {
     content = await file.text();

@@ -53,7 +53,7 @@ for (const [name, source] of [
   ['oversized JSON', ' '.repeat(MAX_STORAGE_BYTES + 1)],
   ['oversized UTF-8 JSON', '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3))],
   ['null record', 'null'],
-  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 4 })],
+  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 5 })],
   ['missing field', JSON.stringify({ ...valid(), updatedAt: undefined })],
   ['unexpected field', JSON.stringify({ ...valid(), apiKey: 'not-stored' })],
   ['unknown ingredient', JSON.stringify({ ...valid(), currentIds: ['unknown'] })],
@@ -288,11 +288,11 @@ test('subscribers receive updates and unsubscribe stops notifications', async ()
 });
 
 test('migrates version one records while preserving all confirmed kitchen selections', () => {
-  const { defaultPeople, burnerCount, mealRecipeIds, mealPeople, sharedIngredientIds, privateRecipes, ...original } = valid();
+  const { defaultPeople, burnerCount, mealRecipeIds, mealPeople, sharedIngredientIds, privateRecipes, recipeMedia, ...original } = valid();
   const legacy = { ...original, schemaVersion: 1, currentIds: ['tomato'], pantryIds: ['egg'], equipment: ['wok'], equipmentConfigured: true, pantryConfigured: true };
   const result = decodeKitchen(JSON.stringify(legacy), catalog);
   assert.equal(result.error, null);
-  assert.equal(result.data.schemaVersion, 3);
+  assert.equal(result.data.schemaVersion, 4);
   assert.deepEqual(result.data.currentIds, legacy.currentIds);
   assert.deepEqual(result.data.pantryIds, legacy.pantryIds);
   assert.deepEqual(result.data.equipment, legacy.equipment);
@@ -307,11 +307,11 @@ test('migrates version one records while preserving all confirmed kitchen select
 });
 
 test('migrates version two records while preserving the meal basket and all kitchen settings', () => {
-  const { privateRecipes, ...original } = valid();
+  const { privateRecipes, recipeMedia, ...original } = valid();
   const legacy = { ...original, schemaVersion: 2, currentIds: ['tomato'], pantryIds: ['egg'], mealRecipeIds: ['tomato-egg'], defaultPeople: 4, mealPeople: 3, burnerCount: 1, sharedIngredientIds: ['egg'] };
   const result = decodeKitchen(JSON.stringify(legacy), catalog);
   assert.equal(result.error, null);
-  assert.deepEqual(result.data, { ...legacy, schemaVersion: 3, privateRecipes: [] });
+  assert.deepEqual(result.data, { ...legacy, schemaVersion: 4, privateRecipes: [], recipeMedia: {} });
 });
 
 test('restores a kitchen only after its write succeeds and persists it across reopening', async () => {

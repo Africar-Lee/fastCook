@@ -1,3 +1,4 @@
+import { readMediaAssets, storeMediaAssets } from '../storage/media-transfer';
 import { formatDate, formatList, t } from '../i18n/core';
 import { useI18n } from '../i18n/useI18n';
 import { useRef, useState } from 'react';
@@ -29,6 +30,7 @@ function BackupPreview({ backup, catalog }: Readonly<{ backup: KitchenBackup; ca
     <Text>{t('默认 {people} 人 · {burners} 个灶眼', { people: kitchen.defaultPeople, burners: kitchen.burnerCount })}</Text>
     <Text>{t('菜篮 {recipes} 道 · {people} 人', { recipes: kitchen.mealRecipeIds.length, people: kitchen.mealPeople })}</Text>
     <Text>{t('我的菜谱 {count} 道', { count: kitchen.privateRecipes.length })}</Text>
+    {!!backup.assets?.length && <Text>{t('图片 {count} 张', { count: backup.assets.length })}</Text>}
     {recipeNames.length > 0 && <Text>{formatList(recipeNames)}</Text>}
     <Text variant="bodySmall">{t('数据版本 {version}', { version: backup.datasetVersion })}</Text>
     <Text>{t('恢复后将覆盖本机食材、调料柜、菜篮、我的菜谱和设置。')}</Text>
@@ -52,7 +54,9 @@ export function BackupDialog({ catalog, state, onRestore, onDismiss, onCompleted
     setBusy(false);
   };
   const save = () => run(async () => {
-    const result = createKitchenBackup(state, catalog);
+    const assets = await readMediaAssets(state.recipeMedia);
+    if (assets.error !== null) { setError(assets.error); return; }
+    const result = createKitchenBackup(state, catalog, undefined, assets.data);
     if (result.error !== null) { setError(result.error); return; }
     const exported = await exportKitchenBackup(result.data);
     if (exported.status === 'failed') { setError(exported.error); return; }
@@ -69,6 +73,8 @@ export function BackupDialog({ catalog, state, onRestore, onDismiss, onCompleted
   });
   const restore = () => run(async () => {
     if (!preview) return;
+    const stored = await storeMediaAssets(preview.assets ?? []);
+    if (stored.error !== null) { setError(stored.error); return; }
     const result = await onRestore(preview.kitchen);
     if (result.error !== null) { setError(t('恢复未完成，原记录已保留。{error}', { error: t(result.error) })); return; }
     onCompleted(t('厨房记录已恢复'));

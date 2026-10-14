@@ -2,11 +2,11 @@ import { t } from '../i18n/core.ts';
 import { backupFileName, MAX_BACKUP_BYTES } from './backup.ts';
 import type { BackupImportResult, KitchenBackup } from './backup';
 import type { ReportExportResult } from './report-export-result';
-import { withinStorageLimit } from './types.ts';
+import { withinMediaPackageLimit } from '../model/media-file-limit.ts';
 
 export async function exportKitchenBackup(backup: KitchenBackup): Promise<ReportExportResult> {
   const content = JSON.stringify(backup);
-  if (!withinStorageLimit(content)) return { status: 'failed', error: t('备份超过 2 MiB，请减少自建菜谱内容后重试。') };
+  if (!withinMediaPackageLimit(content)) return { status: 'failed', error: t('图片文件超过 48 MiB，请减少所选菜谱或图片后重试。') };
   if (typeof document === 'undefined' || typeof URL.createObjectURL !== 'function') return { status: 'failed', error: t('浏览器不支持导出文件，请使用支持下载的浏览器重试。') };
   let url: string;
   try {
@@ -34,7 +34,7 @@ export async function exportKitchenBackup(backup: KitchenBackup): Promise<Report
 }
 
 async function readBackup(file: File): Promise<BackupImportResult> {
-  if (file.size > MAX_BACKUP_BYTES) return { status: 'failed', error: t('备份超过 2 MiB，请选择 FastCook 导出的 JSON 文件。') };
+  if (file.size > MAX_BACKUP_BYTES) return { status: 'failed', error: t('图片文件超过 48 MiB，请减少所选菜谱或图片后重试。') };
   let content: string;
   try {
     content = await file.text();
@@ -42,8 +42,8 @@ async function readBackup(file: File): Promise<BackupImportResult> {
     if (!(error instanceof Error)) throw error;
     return { status: 'failed', error: t('备份读取失败，请检查文件是否完整后重试。') };
   }
-  return withinStorageLimit(content) ? { status: 'selected', content, error: null }
-    : { status: 'failed', error: t('备份超过 2 MiB，请选择 FastCook 导出的 JSON 文件。') };
+  return withinMediaPackageLimit(content) ? { status: 'selected', content, error: null }
+    : { status: 'failed', error: t('图片文件超过 48 MiB，请减少所选菜谱或图片后重试。') };
 }
 
 export async function importKitchenBackup(): Promise<BackupImportResult> {

@@ -1,3 +1,5 @@
+import { RecipeImageGallery } from '../components/RecipeImageGallery';
+import type { RecipeImage } from '../model/recipe-media';
 import { formatList, t } from '../i18n/core';
 import { useI18n } from '../i18n/useI18n';
 import { useState } from 'react';
@@ -26,6 +28,7 @@ type Props = Readonly<{
   inMeal: boolean;
   mealFull: boolean;
   onEdit?: () => void;
+  onEditMedia: () => void;
 }>;
 
 function matchLabel(match: RequirementMatch): string {
@@ -141,7 +144,7 @@ function RecipeStatus({ catalog, evaluation, onOpenEquipment }: Pick<Props, 'cat
   </Surface>;
 }
 
-function StepRow({ catalog, step, index }: Readonly<{ catalog: AppCatalog; step: Step | ExecutionStep; index: number }>) {
+function StepRow({ catalog, step, index, images }: Readonly<{ catalog: AppCatalog; step: Step | ExecutionStep; index: number; images: readonly RecipeImage[] }>) {
   useI18n();
   const theme = useTheme();
   const substitutions = 'substitutions' in step ? step.substitutions : [];
@@ -157,6 +160,7 @@ function StepRow({ catalog, step, index }: Readonly<{ catalog: AppCatalog; step:
         </Text>}
       </Surface>)}
       <Text variant="bodyLarge" style={styles.stepText}>{textOf(step.text)}</Text>
+      <RecipeImageGallery images={images} label={t('步骤 {number} 图片', { number: index + 1 })} />
     </View>
   </View>;
 }
@@ -243,6 +247,7 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
   return <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
     <Appbar.Header elevated={false} statusBarHeight={0}><Appbar.BackAction onPress={props.onBack} accessibilityLabel={t('返回推荐')} />
       <Appbar.Content title={t(props.onEdit ? '我的菜谱' : '菜谱做法')} />
+      <Appbar.Action icon="image-multiple-outline" accessibilityLabel={t('编辑图片')} onPress={props.onEditMedia} />
       {props.onEdit && <Appbar.Action icon="pencil-outline" accessibilityLabel={t('编辑菜谱')} onPress={props.onEdit} />}
     </Appbar.Header>
     <ScrollView contentContainerStyle={styles.content}>
@@ -250,6 +255,7 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
         <Text variant="headlineLarge" style={styles.title}>{textOf(recipe.name)}</Text>
         <Text style={{ color: theme.colors.onSurfaceVariant }}>{t('{minutes} 分钟', { minutes: recipe.time_minutes })}{!upstream && ` · ${t('{count} 人份', { count: recipe.servings })}`}</Text>
       </View>
+      <RecipeImageGallery images={recipe.media?.images ?? []} label={t('菜谱主图')} />
       <RecipeStatus catalog={props.catalog} evaluation={props.evaluation} onOpenEquipment={() => setEquipmentVisible(true)} />
       <Text variant="titleLarge" style={styles.sectionTitle}>{t('食材用量')}</Text>
       <Surface elevation={0} style={[styles.ingredients, { backgroundColor: theme.colors.surface }]}>
@@ -260,7 +266,9 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
           </View>)}
       </Surface>
       <Text variant="titleLarge" style={styles.sectionTitle}>{t('下厨步骤')}</Text>
-      {steps.map((step, index) => <StepRow key={step.step_id} catalog={props.catalog} step={step} index={index} />)}
+      {steps.map((step, index) => <StepRow key={step.step_id} catalog={props.catalog} step={step} index={index}
+        images={textOf(recipe.steps.find(original => original.step_id === step.step_id)?.text) === textOf(step.text)
+          ? recipe.media?.steps[step.step_id] ?? [] : []} />)}
       <View>
         <View style={styles.actions}>
           {sources.length > 0 && <Button icon={sourcesVisible ? 'chevron-up' : 'chevron-down'} onPress={() => setSourcesVisible(previous => !previous)}

@@ -1,3 +1,4 @@
+import { RecipeCover } from './RecipeCover';
 import { formatList, t } from '../i18n/core';
 import { useI18n } from '../i18n/useI18n';
 import { StyleSheet, View } from 'react-native';
@@ -44,6 +45,7 @@ export function RecipeCard({ catalog, evaluation, onPress, onAdd, selected, addD
 
   return (
     <Card mode="contained" onPress={onPress} style={[styles.card, { backgroundColor: theme.colors.surface }]} accessibilityLabel={t('{name}，{minutes}分钟，查看做法', { name: recipe.name['zh-CN'] ?? recipe.recipe_id, minutes: recipe.time_minutes })}>
+      {recipe.media?.images[0] && <RecipeCover image={recipe.media.images[0]} label={recipe.name['zh-CN'] ?? recipe.recipe_id} />}
       <Card.Content style={styles.content}>
         <View style={styles.heading}>
           <View style={styles.titleArea}>

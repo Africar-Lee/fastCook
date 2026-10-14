@@ -1,3 +1,6 @@
+import { readMediaAssets } from '../storage/media-transfer';
+import type { RecipeMediaMap } from '../model/recipe-media';
+import { failure } from '../storage/types';
 import { useI18n } from '../i18n/useI18n';
 import { useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -11,28 +14,38 @@ import { RecipeQrCode } from './RecipeQrCode';
 type Props = Readonly<{
   catalog: AppCatalog;
   recipes: readonly PrivateRecipe[];
+  media: RecipeMediaMap;
   onDismiss: () => void;
 }>;
 
-export function RecipeShareDialog({ catalog, recipes, onDismiss }: Props) {
+export function RecipeShareDialog({ catalog, recipes, media, onDismiss }: Props) {
   const { t } = useI18n();
   const theme = useTheme();
-  const prepared = useMemo(() => {
-    const result = createRecipePackage(recipes, catalog);
-    return result.error !== null ? result : encodeRecipePackage(result.data, catalog);
-  }, [recipes, catalog]);
+  const selectedMedia = useMemo<RecipeMediaMap>(() => Object.fromEntries(recipes.flatMap(recipe => {
+    const item = media[recipe.id];
+    return item ? [[recipe.id, item]] : [];
+  })), [recipes, media]);
   const qr = useMemo(() => {
+    if (Object.values(selectedMedia).some(item => item.images.length || Object.values(item.steps).some(images => images.length))) {
+      return failure<string>(t('带图片的菜谱请使用文件分享。'));
+    }
     const result = createRecipePackage(recipes, catalog);
     return result.error !== null ? result : encodeRecipeQr(result.data, catalog);
-  }, [recipes, catalog]);
+  }, [recipes, catalog, selectedMedia, t]);
   const [showQr, setShowQr] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const inFlight = useRef(false);
   const run = async (mode: 'share' | 'export') => {
-    if (inFlight.current || prepared.error !== null) return;
+    if (inFlight.current) return;
     inFlight.current = true; setBusy(true); setMessage(null); setError(null);
+    const assets = await readMediaAssets(selectedMedia);
+    const pack = assets.error !== null ? assets : createRecipePackage(recipes, catalog, selectedMedia, assets.data);
+    const prepared = pack.error !== null ? pack : encodeRecipePackage(pack.data, catalog);
+    if (prepared.error !== null) {
+      setError(prepared.error); inFlight.current = false; setBusy(false); return;
+    }
     if (mode === 'export') {
       const result = await exportRecipeFile(prepared.data);
       if (result.status === 'failed') setError(result.error);
@@ -50,16 +63,16 @@ export function RecipeShareDialog({ catalog, recipes, onDismiss }: Props) {
     <Dialog.Title>{t(recipes.length === 1 ? '分享菜谱' : '导出我的菜谱')}</Dialog.Title>
     <Dialog.ScrollArea style={styles.scroll}><ScrollView contentContainerStyle={styles.content}>
       <Text variant="titleMedium">{recipes.length === 1 ? recipes[0]!.name : t('{count} 道菜谱', { count: recipes.length })}</Text>
-      <Button mode="contained" icon="share-variant" disabled={busy || prepared.error !== null} loading={busy}
+      <Button mode="contained" icon="share-variant" disabled={busy} loading={busy}
         onPress={() => void run('share')}>{t('分享文件')}</Button>
-      <Button mode="outlined" icon="download-outline" disabled={busy || prepared.error !== null}
+      <Button mode="outlined" icon="download-outline" disabled={busy}
         onPress={() => void run('export')}>{t('导出文件')}</Button>
-      {recipes.length === 1 && <Button icon="qrcode" disabled={busy || prepared.error !== null}
+      {recipes.length === 1 && <Button icon="qrcode" disabled={busy}
         onPress={() => setShowQr(previous => !previous)}>{t(showQr ? '收起二维码' : '显示二维码')}</Button>}
       {showQr && <View style={styles.qr}>
         {qr.error !== null ? <Text>{t(qr.error)}</Text> : <><RecipeQrCode value={qr.data} /><Text>{t('用 FastCook 扫码导入')}</Text></>}
       </View>}
-      {(prepared.error || error) && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{t(prepared.error ?? error ?? '')}</Text>}
+      {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{t(error)}</Text>}
       {message && <Text accessibilityLiveRegion="polite">{t(message)}</Text>}
     </ScrollView></Dialog.ScrollArea>
     <Dialog.Actions><Button disabled={busy} onPress={onDismiss}>{t('关闭')}</Button></Dialog.Actions>

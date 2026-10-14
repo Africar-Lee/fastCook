@@ -27,7 +27,7 @@ test('known ids from older data remain restorable while preserving the source ve
 
 for (const [name, value] of [
   ['unknown format', { ...backup(), format: 'other-app' }],
-  ['unknown version', { ...backup(), version: 2 }],
+  ['unknown version', { ...backup(), version: 3 }],
   ['extra top level field', { ...backup(), token: 'must-not-import' }],
   ['missing field', { ...backup(), kitchen: undefined }],
   ['invalid timestamp', { ...backup(), exportedAt: '2026-02-30T10:00:00.000Z' }],

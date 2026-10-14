@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { exportRecipeFile, importRecipeFile, shareRecipeFile } from './recipe-file.web.ts';
-import { MAX_STORAGE_BYTES } from './types.ts';
+import { MAX_MEDIA_PACKAGE_BYTES } from '../model/recipe-media.ts';
 
 function replaceGlobal(context, name, value) {
   const descriptor = Object.getOwnPropertyDescriptor(globalThis, name);
@@ -79,17 +79,17 @@ test('web recipe picker rejects multiple files without reading their contents', 
 });
 
 test('web recipe import rejects files over the byte limit before reading', async context => {
-  const setup = browser(context, { file: { size: MAX_STORAGE_BYTES + 1, text: () => { assert.fail('must not read'); } } });
+  const setup = browser(context, { file: { size: MAX_MEDIA_PACKAGE_BYTES + 1, text: () => { assert.fail('must not read'); } } });
   const selecting = importRecipeFile(); setup.events.get('change')();
   const result = await selecting;
-  assert.equal(result.status, 'failed'); assert.match(result.error, /2 MiB/);
+  assert.equal(result.status, 'failed'); assert.match(result.error, /48 MiB/);
 });
 
 test('web recipe import rechecks UTF-8 size after reading', async context => {
-  const setup = browser(context, { file: { size: 1, text: async () => '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3)) } });
+  const setup = browser(context, { file: { size: 1, text: async () => '中'.repeat(Math.floor(MAX_MEDIA_PACKAGE_BYTES / 3) + 1) } });
   const selecting = importRecipeFile(); setup.events.get('change')();
   const result = await selecting;
-  assert.equal(result.status, 'failed'); assert.match(result.error, /2 MiB/);
+  assert.equal(result.status, 'failed'); assert.match(result.error, /48 MiB/);
 });
 
 test('web recipe read failures give retryable context without leaking filenames', async context => {
@@ -159,7 +159,7 @@ test('web export and share enforce the UTF-8 bound before any system action', as
   const setup = browser(context);
   replaceGlobal(context, 'navigator', { canShare: () => { assert.fail('must not query sharing'); }, share() {} });
   context.mock.method(URL, 'createObjectURL', () => { assert.fail('must not create a download'); });
-  for (const content of [null, ' '.repeat(MAX_STORAGE_BYTES + 1), '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3))]) {
+  for (const content of [null, ' '.repeat(MAX_MEDIA_PACKAGE_BYTES + 1), '中'.repeat(Math.floor(MAX_MEDIA_PACKAGE_BYTES / 3) + 1)]) {
     assert.equal((await exportRecipeFile(content)).status, 'failed'); assert.equal((await shareRecipeFile(content)).status, 'failed');
   }
   assert.equal(setup.isAttached(), false);
@@ -168,6 +168,6 @@ test('web export and share enforce the UTF-8 bound before any system action', as
 test('web sharing accepts content exactly at the UTF-8 byte limit', async context => {
   let file;
   replaceGlobal(context, 'navigator', { canShare: () => true, share: async data => { [file] = data.files; } });
-  assert.equal((await shareRecipeFile('a'.repeat(MAX_STORAGE_BYTES))).status, 'closed');
-  assert.equal(file.size, MAX_STORAGE_BYTES);
+  assert.equal((await shareRecipeFile('a'.repeat(MAX_MEDIA_PACKAGE_BYTES))).status, 'closed');
+  assert.equal(file.size, MAX_MEDIA_PACKAGE_BYTES);
 });

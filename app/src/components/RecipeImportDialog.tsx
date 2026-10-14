@@ -75,6 +75,7 @@ export function RecipeImportDialog({ catalog, state, onImport, onDismiss, onComp
     <Dialog.ScrollArea style={styles.scroll}><ScrollView contentContainerStyle={styles.content}>
       {preview ? <>
         <RecipePreview value={preview} catalog={catalog} />
+        {!!preview.assets?.length && <Text>{t('图片 {count} 张', { count: preview.assets.length })}</Text>}
         {planned?.data && <>
           <Text>{planned.data.skipped > 0
             ? t('新增 {added} 道 · 跳过重复 {skipped} 道', { added: planned.data.added, skipped: planned.data.skipped })

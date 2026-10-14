@@ -1,3 +1,8 @@
+import { RecipeMediaDialog } from './src/components/RecipeMediaDialog';
+import { EMPTY_RECIPE_MEDIA } from './src/model/recipe-media';
+import type { RecipeMedia } from './src/model/recipe-media';
+import { useRecipeMediaMaintenance } from './src/model/useRecipeMediaMaintenance';
+import { storeMediaAssets } from './src/storage/media-transfer';
 import { useI18n } from './src/i18n/useI18n';
 import { useLanguagePreference } from './src/i18n/useLanguagePreference';
 import type { LanguagePreference } from './src/i18n/useLanguagePreference';
@@ -31,7 +36,7 @@ import type { RecipeImportSummary, RecipePackage } from './src/model/recipe-tran
 import { success } from './src/storage/types';
 import { isNewKitchen } from './src/model/pantry-setup';
 import { equipmentLabels } from './src/model/presentation';
-import type { AppCatalog, AppFilters, KitchenState, UpdateKitchen } from './src/model/types';
+import type { AppCatalog, AppFilters, AppRecipe, KitchenState, UpdateKitchen } from './src/model/types';
 import { useKitchen } from './src/model/useKitchen';
 import { darkTheme, lightTheme } from './src/theme';
 
@@ -60,8 +65,11 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
   const { t } = useI18n();
   const kitchen = useKitchen(baseCatalog);
   const privateRecipes = kitchen.state?.privateRecipes ?? noPrivateRecipes;
-  const catalog = useMemo(() => mergePrivateRecipes(baseCatalog, privateRecipes), [privateRecipes]);
-  const built = useMemo(() => createEngine(catalog, { allowDraft: true }), [catalog]);
+  const matchingCatalog = useMemo(() => mergePrivateRecipes(baseCatalog, privateRecipes), [privateRecipes]);
+  const catalog = useMemo(() => ({ ...matchingCatalog,
+    recipes: matchingCatalog.recipes.map(recipe => ({ ...recipe, media: kitchen.state?.recipeMedia[recipe.recipe_id] })),
+  }), [matchingCatalog, kitchen.state?.recipeMedia]);
+  const built = useMemo(() => createEngine(matchingCatalog, { allowDraft: true }), [matchingCatalog]);
   const isDark = useColorScheme() === 'dark';
   const theme = isDark ? darkTheme : lightTheme;
   const [tab, setTab] = useState<number | null>(null);
@@ -72,6 +80,9 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
   const [privateRecipesVisible, setPrivateRecipesVisible] = useState(false);
   const [editingRecipe, setEditingRecipe] = useState<PrivateRecipe | null | undefined>(undefined);
   const editorVisible = editingRecipe !== undefined;
+  const [mediaEditing, setMediaEditing] = useState<AppRecipe | null>(null);
+  const mediaMaintenance = useRecipeMediaMaintenance(kitchen.state?.recipeMedia,
+    !editorVisible && !mediaEditing && !privateRecipesVisible && tab !== 2 && !kitchen.saving && !kitchen.error);
   const [plansVisible, setPlansVisible] = useState(false);
   const [filters, setFilters] = useState<AppFilters>({});
   const [confirmations, setConfirmations] = useState<readonly string[]>([]);
@@ -126,7 +137,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
   }, [kitchen.update]);
 
   useEffect(() => {
-    if (Platform.OS !== 'android' || editorVisible || (privateRecipesVisible && selectedRecipe === null)) return;
+    if (Platform.OS !== 'android' || editorVisible || mediaEditing || (privateRecipesVisible && selectedRecipe === null)) return;
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
       if (visionVisible) { setVisionVisible(false); return true; }
       if (selectedRecipe !== null) { setSelectedRecipe(null); return true; }
@@ -139,7 +150,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
       return false;
     });
     return () => subscription.remove();
-  }, [selectedRecipe, mealVisible, visionVisible, privateRecipesVisible, editorVisible, kitchen.saving, tab, selectTab]);
+  }, [selectedRecipe, mealVisible, visionVisible, privateRecipesVisible, editorVisible, mediaEditing, kitchen.saving, tab, selectTab]);
 
   const openSettings = () => { setSelectedRecipe(null); setMealVisible(false); selectTab(2); };
   const finishSetup = () => { initialSetup.current = false; setTab(0); };
@@ -163,7 +174,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
   };
   const reset = () => {
     initialSetup.current = false;
-    setVisionVisible(false);
+    setVisionVisible(false); setMediaEditing(null);
     setPrivateRecipesVisible(false); setEditingRecipe(undefined);
     setSelectedRecipe(null); setMealVisible(false); setPlansVisible(false); setTab(0); setRemoved([]); setFilters({});
     confirmationRef.current = []; setConfirmations([]); kitchen.reset();
@@ -172,7 +183,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
     const result = await kitchen.restore(state);
     if (result.error === null) {
       initialSetup.current = false;
-      setVisionVisible(false);
+      setVisionVisible(false); setMediaEditing(null);
       setPrivateRecipesVisible(false); setEditingRecipe(undefined);
       setSelectedRecipe(null); setMealVisible(false); setPlansVisible(false); setRemoved([]); setFilters({});
       confirmationRef.current = []; setConfirmations([]);
@@ -187,8 +198,8 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
     setVisionVisible(false);
     return null;
   };
-  const saveRecipe = async (recipe: PrivateRecipe) => {
-    const result = await kitchen.commit(previous => savePrivateRecipe(previous, baseCatalog, recipe, editingRecipe?.id));
+  const saveRecipe = async (recipe: PrivateRecipe, media: RecipeMedia) => {
+    const result = await kitchen.commit(previous => savePrivateRecipe(previous, baseCatalog, recipe, editingRecipe?.id, media));
     if (result.error !== null) return result;
     confirmationRef.current = []; setConfirmations([]);
     setEditingRecipe(undefined); setSelectedRecipe(recipe.id);
@@ -201,26 +212,42 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
   };
   const activePrivateRecipe = privateRecipes.find(recipe => recipe.id === selectedRecipe);
   const importRecipes = async (value: RecipePackage) => {
+    const initialPlan = kitchen.state ? prepareRecipeImport(kitchen.state, baseCatalog, value) : null;
+    if (initialPlan?.error) return initialPlan;
+    const stored = await storeMediaAssets(initialPlan?.data?.assets ?? []);
+    if (stored.error !== null) return stored;
     let summary: RecipeImportSummary = { added: 0, skipped: 0, sameNameCount: 0 };
     const result = await kitchen.commit(previous => {
       const prepared = prepareRecipeImport(previous, baseCatalog, value);
       if (prepared.error !== null) return prepared;
-      const { state, ...counts } = prepared.data;
-      summary = counts;
+      const { state, added, skipped, sameNameCount } = prepared.data;
+      summary = { added, skipped, sameNameCount };
       return success(state);
     });
     return result.error !== null ? result : success(summary);
+  };
+
+  const saveMedia = async (media: RecipeMedia) => {
+    if (!mediaEditing) return success(undefined);
+    const result = await kitchen.commit(previous => success({ ...previous,
+      recipeMedia: { ...previous.recipeMedia, [mediaEditing.recipe_id]: media },
+    }));
+    if (result.error === null) setMediaEditing(null);
+    return result;
   };
 
   return <PaperProvider theme={theme} settings={{ icon: props => <MaterialCommunityIcons {...props} /> }}>
     <StatusBar style={isDark ? 'light' : 'dark'} />
     <SafeAreaView style={[styles.outer, { backgroundColor: theme.colors.background }]} edges={['top', 'left', 'right']}>
       <View style={[styles.shell, { borderColor: theme.colors.outlineVariant }]}>
+        <Banner visible={Boolean(mediaMaintenance.error)} actions={[{ label: t('重试'), onPress: () => { void mediaMaintenance.retry(); } }]}>
+          {t(mediaMaintenance.error ?? '')}
+        </Banner>
         <Banner visible={Boolean(kitchen.state && kitchen.error)} actions={[{ label: t('重试保存'), onPress: kitchen.retry }]} icon="content-save-alert-outline">
           {t(kitchen.error ?? '')}
         </Banner>
         {built.error ? <View style={styles.loading}><Text variant="titleLarge">{t('菜谱数据暂时无法加载')}</Text><Text>{t(built.error.message)}</Text></View>
-          : !kitchen.state || tab === null ? <View style={styles.loading}>
+          : !kitchen.state || tab === null || !mediaMaintenance.ready ? <View style={styles.loading}>
             {kitchen.error ? <><Text variant="titleLarge">{t('本地记录暂时无法读取')}</Text><Text>{t(kitchen.error)}</Text>
               <Button mode="contained" onPress={kitchen.retry}>{t('重新读取')}</Button><Button onPress={() => setResetVisible(true)}>{t('重置厨房记录')}</Button></>
               : <ActivityIndicator />}
@@ -240,7 +267,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
                 onBack={() => setPrivateRecipesVisible(false)} onCreate={() => setEditingRecipe(null)}
                 onEdit={setEditingRecipe} onOpen={setSelectedRecipe} onDelete={removeRecipe} onImport={importRecipes} />
             </View>}
-            {editorVisible && <PrivateRecipeEditorScreen catalog={baseCatalog} recipe={editingRecipe} defaultServings={kitchen.state.defaultPeople}
+            {editorVisible && <PrivateRecipeEditorScreen catalog={baseCatalog} recipe={editingRecipe} media={editingRecipe ? kitchen.state.recipeMedia[editingRecipe.id] : undefined} defaultServings={kitchen.state.defaultPeople}
               onBack={() => setEditingRecipe(undefined)} onSave={saveRecipe} />}
             {visionVisible && <VisionScreen catalog={catalog} onBack={() => setVisionVisible(false)} onConfirm={confirmRecognized} />}
             {mealVisible && <View style={[styles.screen, evaluation && styles.hidden]}>
@@ -249,6 +276,7 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
             </View>}
             {evaluation && !editorVisible && <RecipeScreen catalog={catalog} state={kitchen.state} evaluation={evaluation} update={update}
               onBack={() => setSelectedRecipe(null)} onConfirmRule={confirmRule} onConsumed={consume}
+              onEditMedia={() => setMediaEditing(catalog.recipes.find(recipe => recipe.recipe_id === evaluation.recipe_id)!)}
               onEdit={activePrivateRecipe ? () => setEditingRecipe(activePrivateRecipe) : undefined}
               onAddMeal={() => update(previous => addMealRecipe(previous, catalog, evaluation.recipe_id))}
               inMeal={catalog.recipes.some(recipe => kitchen.state!.mealRecipeIds.includes(recipe.recipe_id) && recipe.dish_id === evaluation.dish_id)}
@@ -269,6 +297,8 @@ function KitchenApp({ language }: Readonly<{ language: LanguagePreference }>) {
         </Snackbar>
       </View>
     </SafeAreaView>
+    {mediaEditing && kitchen.state && <RecipeMediaDialog recipe={mediaEditing} media={kitchen.state.recipeMedia[mediaEditing.recipe_id] ?? EMPTY_RECIPE_MEDIA}
+      onSave={saveMedia} onDismiss={() => setMediaEditing(null)} />}
     <Portal><Dialog visible={resetVisible} onDismiss={() => setResetVisible(false)}>
       <Dialog.Title>{t('重置厨房记录？')}</Dialog.Title><Dialog.Content><Text>{t('已保存的食材、调料柜、菜篮、我的菜谱和厨房设置会被清除。')}</Text></Dialog.Content>
       <Dialog.Actions><Button onPress={() => setResetVisible(false)}>{t('保留')}</Button><Button onPress={() => { setResetVisible(false); reset(); }}>{t('确认重置')}</Button></Dialog.Actions>

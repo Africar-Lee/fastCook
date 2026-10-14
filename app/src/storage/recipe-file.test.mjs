@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
 import test from 'node:test';
-import { MAX_STORAGE_BYTES } from './types.ts';
+import { MAX_MEDIA_PACKAGE_BYTES } from '../model/recipe-media.ts';
 
 const state = {};
 class FakeFile {
@@ -92,7 +92,7 @@ for (const stage of ['picker', 'create', 'write']) {
 test('native export and share reject invalid or oversized UTF-8 content before any system action', async () => {
   FakeDirectory.pickDirectoryAsync = async () => { assert.fail('must not open a directory'); };
   sharing.isAvailableAsync = async () => { assert.fail('must not query sharing'); };
-  for (const content of [null, ' '.repeat(MAX_STORAGE_BYTES + 1), '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3))]) {
+  for (const content of [null, ' '.repeat(MAX_MEDIA_PACKAGE_BYTES + 1), '中'.repeat(Math.ceil(MAX_MEDIA_PACKAGE_BYTES / 3))]) {
     assert.equal((await exportRecipeFile(content)).status, 'failed');
     assert.equal((await shareRecipeFile(content)).status, 'failed');
   }
@@ -105,7 +105,7 @@ test('native recipe import reads a bounded read-only handle and releases it', as
     assert.equal(initialUri, undefined); assert.equal(mime, 'application/json');
     return { open: mode => {
       assert.equal(mode, 'r');
-      return { readBytes: limit => { assert.equal(limit, MAX_STORAGE_BYTES + 1); return new TextEncoder().encode(content); }, close: () => { closed = true; } };
+      return { readBytes: limit => { assert.equal(limit, MAX_MEDIA_PACKAGE_BYTES + 1); return new TextEncoder().encode(content); }, close: () => { closed = true; } };
     } };
   };
   assert.deepEqual(await importRecipeFile(), { status: 'selected', content, error: null });
@@ -116,7 +116,7 @@ test('native recipe import rejects excessive bytes and closes the handle', async
   let closed = false;
   FakeFile.pickFileAsync = async () => ({ open: () => ({ readBytes: limit => new Uint8Array(limit), close: () => { closed = true; } }) });
   const result = await importRecipeFile();
-  assert.equal(result.status, 'failed'); assert.match(result.error, /2 MiB/); assert.equal(closed, true);
+  assert.equal(result.status, 'failed'); assert.match(result.error, /48 MiB/); assert.equal(closed, true);
 });
 
 test('native recipe import cancellation and multiple selections cannot become success', async () => {
