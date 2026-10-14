@@ -51,6 +51,15 @@ test('web backup oversized input is rejected before file reading', async context
   assert.equal(read, false);
 });
 
+test('web backup content remains byte bounded when file metadata understates its size', async context => {
+  const setup = browser(context, { file: { size: 1, text: async () => '中'.repeat(Math.ceil(MAX_BACKUP_BYTES / 3)) } });
+  const selecting = importKitchenBackup();
+  setup.events.get('change')();
+  const result = await selecting;
+  assert.equal(result.status, 'failed');
+  assert.match(result.error, /2 MiB/);
+});
+
 test('web backup read failures are retryable and do not expose private details', async context => {
   const setup = browser(context, { file: { size: 1, text: async () => { throw new Error('private browser error'); } } });
   const selecting = importKitchenBackup();
@@ -83,4 +92,15 @@ test('web backup download attaches a link, preserves JSON and releases resources
   assert.equal(setup.element.removed, true);
   cleanup();
   assert.equal(released, 'blob:backup');
+});
+
+test('web backup export rejects oversized UTF-8 content before creating a download', async context => {
+  const setup = browser(context);
+  let created = false;
+  context.mock.method(URL, 'createObjectURL', () => { created = true; return 'blob:backup'; });
+  const result = await exportKitchenBackup({ content: '中'.repeat(Math.ceil(MAX_BACKUP_BYTES / 3)) });
+  assert.equal(result.status, 'failed');
+  assert.match(result.error, /2 MiB/);
+  assert.equal(created, false);
+  assert.equal(setup.isAttached(), false);
 });

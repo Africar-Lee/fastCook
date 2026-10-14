@@ -1,3 +1,4 @@
+import { t } from '../i18n/core.ts';
 import { Directory } from 'expo-file-system';
 import type { File } from 'expo-file-system';
 import type { RecipeReport } from '../model/recipe-report';
@@ -14,20 +15,20 @@ export async function exportRecipeReport(report: RecipeReport): Promise<ReportEx
       return { status: 'cancelled', error: null };
     }
     if (!(error instanceof Error)) throw error;
-    return { status: 'failed', error: '无法打开保存目录，请重新选择并允许访问该目录。' };
+    return { status: 'failed', error: t('无法打开保存目录，请重新选择并允许访问该目录。') };
   }
   let file: File;
   try {
     file = directory.createFile(reportFileName(), 'application/json');
   } catch (error: unknown) {
     if (!(error instanceof Error)) throw error;
-    return { status: 'failed', error: '无法创建报告文件，请选择可写入的目录后重试。' };
+    return { status: 'failed', error: t('无法创建报告文件，请选择可写入的目录后重试。') };
   }
   try {
     file.write(content);
   } catch (error: unknown) {
     if (!(error instanceof Error)) throw error;
-    return { status: 'failed', error: '报告未能完整保存，请检查存储空间和目录权限后重试。' };
+    return { status: 'failed', error: t('报告未能完整保存，请检查存储空间和目录权限后重试。') };
   }
   return { status: 'saved', error: null };
 }

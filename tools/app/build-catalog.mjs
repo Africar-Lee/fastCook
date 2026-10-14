@@ -1,15 +1,18 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { loadCatalog } from '../data/load-catalog.mjs';
 import { validateCatalog } from '../data/validate-catalog.mjs';
 import { buildIngredientSearchTerms } from './build-search-index.mjs';
+import { localizeIngredients } from './localize-ingredients.mjs';
 
 const loaded = await loadCatalog();
 if (loaded.error) throw new Error(loaded.error.message);
-const validation = validateCatalog(loaded.data);
+const translations = JSON.parse(await readFile(new URL('../../data/locales/ingredients.en.json', import.meta.url), 'utf8'));
+const localized = { ...loaded.data, ingredients: localizeIngredients(loaded.data.ingredients, translations) };
+const validation = validateCatalog(localized);
 if (!validation.valid) throw new Error(JSON.stringify(validation.errors));
 const catalog = {
-  ...loaded.data,
-  ingredients: loaded.data.ingredients.map((ingredient) => ({
+  ...localized,
+  ingredients: localized.ingredients.map((ingredient) => ({
     ...ingredient,
     search_terms: buildIngredientSearchTerms(ingredient),
   })),

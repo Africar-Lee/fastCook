@@ -1,3 +1,5 @@
+import { formatList, t } from '../i18n/core';
+import { useI18n } from '../i18n/useI18n';
 import { useState } from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar, Button, Checkbox, Dialog, Divider, Portal, Snackbar, Surface, Text, useTheme } from 'react-native-paper';
@@ -23,6 +25,7 @@ type Props = Readonly<{
   onAddMeal: () => void;
   inMeal: boolean;
   mealFull: boolean;
+  onEdit?: () => void;
 }>;
 
 function matchLabel(match: RequirementMatch): string {
@@ -51,7 +54,7 @@ function matchExplanation(catalog: AppCatalog, match: RequirementMatch): string 
   if (match.presence !== 'uncertain') return '';
   const identity = uncertainIdentity(match);
   if (identity && match.used_ingredient_id) {
-    return `已选${nameOf(catalog, match.used_ingredient_id)}，需要${nameOf(catalog, identity)}`;
+    return t('已选{selected}，需要{required}', { selected: nameOf(catalog, match.used_ingredient_id), required: nameOf(catalog, identity) });
   }
   return '';
 }
@@ -59,6 +62,7 @@ function matchExplanation(catalog: AppCatalog, match: RequirementMatch): string 
 function RequirementActions({ catalog, requirement, match, update, onConfirmRule }: Readonly<{
   catalog: AppCatalog; requirement: Requirement; match: RequirementMatch; update: UpdateKitchen; onConfirmRule: Props['onConfirmRule'];
 }>) {
+  useI18n();
   const identity = uncertainIdentity(match);
   const add = (ingredientId: string, replacement?: string) => update(previous => {
     const location = locationFor(requirement, match);
@@ -74,24 +78,25 @@ function RequirementActions({ catalog, requirement, match, update, onConfirmRule
     ? match.reason_params.condition_ingredient_ids : undefined;
   return <View style={styles.actions}>
     {identity && <Button compact mode="outlined" onPress={() => add(identity, match.used_ingredient_id)}>
-      确认是{nameOf(catalog, identity)}
+      {t('确认是{ingredient}', { ingredient: nameOf(catalog, identity) })}
     </Button>}
     {match.presence === 'missing' && <Button compact mode="outlined" onPress={() => add(requirement.ingredient_id)}>
-      我有{nameOf(catalog, requirement.ingredient_id)}
+      {t('我有{ingredient}', { ingredient: nameOf(catalog, requirement.ingredient_id) })}
     </Button>}
     {Array.isArray(conditions) && conditions.map(id => <Button key={id} compact mode="outlined" onPress={() => add(id)}>
-      确认有{nameOf(catalog, id)}
+      {t('确认有{ingredient}', { ingredient: nameOf(catalog, id) })}
     </Button>)}
     {match.confirmation_key && <Button compact mode="outlined" onPress={() => onConfirmRule(match.confirmation_key!)}>
-      使用此替代
+      {t('使用此替代')}
     </Button>}
-    {!match.omitted && match.presence === 'present' && <Button compact onPress={remove}>我没有</Button>}
+    {!match.omitted && match.presence === 'present' && <Button compact onPress={remove}>{t('我没有')}</Button>}
   </View>;
 }
 
 function RequirementRow({ catalog, requirement, match, update, onConfirmRule }: Readonly<{
   catalog: AppCatalog; requirement: AppRequirement; match: RequirementMatch; update: UpdateKitchen; onConfirmRule: Props['onConfirmRule'];
 }>) {
+  useI18n();
   const theme = useTheme();
   const substitution = match.match_kind === 'substitution' && !match.omitted;
   const used = match.used_ingredient_id;
@@ -100,16 +105,16 @@ function RequirementRow({ catalog, requirement, match, update, onConfirmRule }: 
   return <View style={styles.requirement}>
     <View style={styles.row}>
       <Text variant="titleMedium" style={styles.grow}>{nameOf(catalog, requirement.ingredient_id)}</Text>
-      <Text variant="labelMedium" style={{ color }}>{matchLabel(match)}</Text>
+      <Text variant="labelMedium" style={{ color }}>{t(matchLabel(match))}</Text>
     </View>
     <Text style={{ color: theme.colors.onSurfaceVariant }}>
       {formatQuantity(requirement.quantity)} · {importanceLabels[requirement.importance]}
     </Text>
     {requirement.preparation && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(requirement.preparation)}</Text>}
     {substitution && used && <Text style={{ color: theme.colors.primary }}>
-      改用{nameOf(catalog, used)}{match.quantity ? ` · ${formatQuantity(match.quantity)}` : ''}
+      {t('改用{ingredient}', { ingredient: nameOf(catalog, used) })}{match.quantity ? ` · ${formatQuantity(match.quantity)}` : ''}
     </Text>}
-    {match.match_kind === 'approved_descendant' && used && <Text>使用{nameOf(catalog, used)}</Text>}
+    {match.match_kind === 'approved_descendant' && used && <Text>{t('使用{ingredient}', { ingredient: nameOf(catalog, used) })}</Text>}
     {explanation.length > 0 && <Text>{explanation}</Text>}
     {match.note && <Text style={styles.note}>{textOf(match.note)}</Text>}
     <RequirementActions catalog={catalog} requirement={requirement} match={match} update={update} onConfirmRule={onConfirmRule} />
@@ -117,25 +122,27 @@ function RequirementRow({ catalog, requirement, match, update, onConfirmRule }: 
 }
 
 function RecipeStatus({ catalog, evaluation, onOpenEquipment }: Pick<Props, 'catalog' | 'evaluation'> & Readonly<{ onOpenEquipment: () => void }>) {
+  useI18n();
   const theme = useTheme();
   return <Surface elevation={0} style={[styles.status, { backgroundColor: theme.colors.secondaryContainer }]}>
     <Text variant="titleMedium">{tierLabels[evaluation.tier]}</Text>
     {evaluation.missing_required_ingredient_ids.length > 0 && <Text>
-      缺少{evaluation.missing_required_ingredient_ids.map(id => nameOf(catalog, id)).join('、')}
+      {t('缺少{items}', { items: formatList(evaluation.missing_required_ingredient_ids.map(id => nameOf(catalog, id))) })}
     </Text>}
     {evaluation.missing_equipment.length > 0 && <Text>
-      缺少{evaluation.missing_equipment.map(id => equipmentLabels[id]).join('、')}
+      {t('缺少{items}', { items: formatList(evaluation.missing_equipment.map(id => equipmentLabels[id])) })}
     </Text>}
     {evaluation.uncertain_equipment.length > 0 && <Text>
-      确认厨具 {evaluation.uncertain_equipment.map(id => equipmentLabels[id]).join('、')}
+      {t('确认厨具 {equipment}', { equipment: formatList(evaluation.uncertain_equipment.map(id => equipmentLabels[id])) })}
     </Text>}
     {(evaluation.missing_equipment.length > 0 || evaluation.uncertain_equipment.length > 0) &&
-      <Button mode="outlined" onPress={onOpenEquipment} style={styles.selfStart}>设置厨具</Button>}
-    {!evaluation.plan_valid && <Text>用料调整冲突，请补齐原料</Text>}
+      <Button mode="outlined" onPress={onOpenEquipment} style={styles.selfStart}>{t('设置厨具')}</Button>}
+    {!evaluation.plan_valid && <Text>{t('用料调整冲突，请补齐原料')}</Text>}
   </Surface>;
 }
 
 function StepRow({ catalog, step, index }: Readonly<{ catalog: AppCatalog; step: Step | ExecutionStep; index: number }>) {
+  useI18n();
   const theme = useTheme();
   const substitutions = 'substitutions' in step ? step.substitutions : [];
   return <View style={styles.step}>
@@ -143,10 +150,10 @@ function StepRow({ catalog, step, index }: Readonly<{ catalog: AppCatalog; step:
     <View style={styles.grow}>
       {substitutions.map(substitution => <Surface key={substitution.requirement_id} elevation={0}
         style={[styles.substitution, { backgroundColor: theme.colors.tertiaryContainer }]}>
-        <Text variant="labelLarge">{nameOf(catalog, substitution.used_ingredient_id)}替代{nameOf(catalog, substitution.original_ingredient_id)}</Text>
+        <Text variant="labelLarge">{t('{used}替代{original}', { used: nameOf(catalog, substitution.used_ingredient_id), original: nameOf(catalog, substitution.original_ingredient_id) })}</Text>
         <Text>{textOf(substitution.usage_note)}</Text>
         {substitution.recipe_quantity && <Text variant="bodySmall">
-          总用量 {formatQuantity(substitution.recipe_quantity)}
+          {t('总用量 {quantity}', { quantity: formatQuantity(substitution.recipe_quantity) })}
         </Text>}
       </Surface>)}
       <Text variant="bodyLarge" style={styles.stepText}>{textOf(step.text)}</Text>
@@ -165,6 +172,7 @@ function consumedItems(state: KitchenState, evaluation: RecipeEvaluation): reado
 function ConsumedDialog({ catalog, items, onDismiss, onConfirm }: Readonly<{
   catalog: AppCatalog; items: readonly ConsumedItem[]; onDismiss: () => void; onConfirm: Props['onConsumed'];
 }>) {
+  useI18n();
   const [selected, setSelected] = useState(() => new Set(items.map(item => `${item.location}_${item.ingredientId}`)));
   const toggle = (key: string) => setSelected(previous => {
     const next = new Set(previous);
@@ -173,52 +181,54 @@ function ConsumedDialog({ catalog, items, onDismiss, onConfirm }: Readonly<{
     return next;
   });
   return <Portal><Dialog visible onDismiss={onDismiss} style={styles.dialog}>
-    <Dialog.Title>用完了哪些食材？</Dialog.Title>
+    <Dialog.Title>{t('用完了哪些食材？')}</Dialog.Title>
     <Dialog.ScrollArea style={styles.dialogScroll}><ScrollView>
       {items.map(item => {
         const key = `${item.location}_${item.ingredientId}`;
-        return <Checkbox.Item key={key} label={`${nameOf(catalog, item.ingredientId)} · ${item.location === 'current' ? '本次食材' : '调料柜'}`}
+        return <Checkbox.Item key={key} label={`${nameOf(catalog, item.ingredientId)} · ${t(item.location === 'current' ? '本次食材' : '调料柜')}`}
           status={selected.has(key) ? 'checked' : 'unchecked'} onPress={() => toggle(key)} />;
       })}
-      {items.length === 0 && <Text style={styles.empty}>没有需要移除的食材</Text>}
+      {items.length === 0 && <Text style={styles.empty}>{t('没有需要移除的食材')}</Text>}
     </ScrollView></Dialog.ScrollArea>
-    <Dialog.Actions><Button onPress={onDismiss}>取消</Button><Button onPress={() => {
+    <Dialog.Actions><Button onPress={onDismiss}>{t('取消')}</Button><Button onPress={() => {
       onDismiss();
       onConfirm(items.filter(item => selected.has(`${item.location}_${item.ingredientId}`)));
-    }}>移除所选</Button></Dialog.Actions>
+    }}>{t('移除所选')}</Button></Dialog.Actions>
   </Dialog></Portal>;
 }
 
 function RecipeSource({ source }: Readonly<{ source: AppSource }>) {
+  useI18n();
   const theme = useTheme();
   const [error, setError] = useState<string | null>(null);
   const links = sourceLinks(source);
   const open = async (value: string, label: string) => {
     const url = safeSourceUrl(value);
     if (!url) {
-      setError(`${label}地址不可用，请检查菜谱来源。`);
+      setError(t('{label}地址不可用，请检查菜谱来源。', { label: t(label) }));
       return;
     }
     setError(null);
     const result = await Linking.openURL(url).then(
       () => ({ error: null }),
-      () => ({ error: `无法打开${label}，请检查浏览器是否可用后重试。` }),
+      () => ({ error: t('无法打开{label}，请检查浏览器是否可用后重试。', { label: t(label) }) }),
     );
     setError(result.error);
   };
   return <View style={styles.source}>
     <Text variant="titleSmall">{source.provenance.origin}</Text>
-    <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>版本 {source.revision.identifier}</Text>
-    {source.license.identifier && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>许可 {source.license.identifier}</Text>}
+    <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{t('版本 {version}', { version: source.revision.identifier })}</Text>
+    {source.license.identifier && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{t('许可 {license}', { license: source.license.identifier })}</Text>}
     <View style={styles.actions}>
-      {links.original && <Button compact onPress={() => void open(links.original!, '菜谱原文')}>查看原文</Button>}
-      {links.license && <Button compact onPress={() => void open(links.license!, '许可原文')}>查看许可</Button>}
+      {links.original && <Button compact onPress={() => void open(links.original!, '菜谱原文')}>{t('查看原文')}</Button>}
+      {links.license && <Button compact onPress={() => void open(links.license!, '许可原文')}>{t('查看许可')}</Button>}
     </View>
-    {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{error}</Text>}
+    {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{t(error)}</Text>}
   </View>;
 }
 
 function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }>) {
+  useI18n();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const [consuming, setConsuming] = useState(false);
@@ -231,15 +241,17 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
   const sources = props.catalog.sources.filter(source => recipe.source_ids.includes(source.source_id));
   const upstream = sources.some(source => source.provenance.kind === 'upstream');
   return <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
-    <Appbar.Header elevated={false} statusBarHeight={0}><Appbar.BackAction onPress={props.onBack} accessibilityLabel="返回推荐" />
-      <Appbar.Content title="菜谱做法" /></Appbar.Header>
+    <Appbar.Header elevated={false} statusBarHeight={0}><Appbar.BackAction onPress={props.onBack} accessibilityLabel={t('返回推荐')} />
+      <Appbar.Content title={t(props.onEdit ? '我的菜谱' : '菜谱做法')} />
+      {props.onEdit && <Appbar.Action icon="pencil-outline" accessibilityLabel={t('编辑菜谱')} onPress={props.onEdit} />}
+    </Appbar.Header>
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.heading}>
         <Text variant="headlineLarge" style={styles.title}>{textOf(recipe.name)}</Text>
-        <Text style={{ color: theme.colors.onSurfaceVariant }}>{recipe.time_minutes} 分钟{!upstream && ` · ${recipe.servings} 人份`}</Text>
+        <Text style={{ color: theme.colors.onSurfaceVariant }}>{t('{minutes} 分钟', { minutes: recipe.time_minutes })}{!upstream && ` · ${t('{count} 人份', { count: recipe.servings })}`}</Text>
       </View>
       <RecipeStatus catalog={props.catalog} evaluation={props.evaluation} onOpenEquipment={() => setEquipmentVisible(true)} />
-      <Text variant="titleLarge" style={styles.sectionTitle}>食材用量</Text>
+      <Text variant="titleLarge" style={styles.sectionTitle}>{t('食材用量')}</Text>
       <Surface elevation={0} style={[styles.ingredients, { backgroundColor: theme.colors.surface }]}>
         {orderRequirements(recipe.requirements, props.evaluation.requirements).map(({ requirement, match }, index) =>
           <View key={requirement.requirement_id}>
@@ -247,13 +259,13 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
             <RequirementRow catalog={props.catalog} requirement={requirement} match={match} update={props.update} onConfirmRule={props.onConfirmRule} />
           </View>)}
       </Surface>
-      <Text variant="titleLarge" style={styles.sectionTitle}>下厨步骤</Text>
+      <Text variant="titleLarge" style={styles.sectionTitle}>{t('下厨步骤')}</Text>
       {steps.map((step, index) => <StepRow key={step.step_id} catalog={props.catalog} step={step} index={index} />)}
       <View>
         <View style={styles.actions}>
           {sources.length > 0 && <Button icon={sourcesVisible ? 'chevron-up' : 'chevron-down'} onPress={() => setSourcesVisible(previous => !previous)}
-            accessibilityState={{ expanded: sourcesVisible }}>菜谱来源</Button>}
-          <Button icon="flag-outline" onPress={() => setReportVisible(true)}>报告问题</Button>
+            accessibilityState={{ expanded: sourcesVisible }}>{t('菜谱来源')}</Button>}
+          {!props.onEdit && <Button icon="flag-outline" onPress={() => setReportVisible(true)}>{t('报告问题')}</Button>}
         </View>
         {sourcesVisible && <>
           {upstream && <Text style={{ color: theme.colors.onSurfaceVariant }}>{textOf(recipe.variant)}</Text>}
@@ -263,8 +275,8 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
     </ScrollView>
     <Surface elevation={1} style={[styles.footer, { paddingBottom: 12 + insets.bottom }]}>
       <Button mode="outlined" icon={props.inMeal ? 'check' : 'plus'} disabled={props.inMeal || props.mealFull}
-        onPress={props.onAddMeal}>{props.inMeal ? '已加入这顿' : '加入这顿'}</Button>
-      {feasible && <Button mode="contained" contentStyle={styles.mainButton} onPress={() => setConsuming(true)}>做了这道</Button>}
+        onPress={props.onAddMeal}>{t(props.inMeal ? '已加入这顿' : '加入这顿')}</Button>
+      {feasible && <Button mode="contained" contentStyle={styles.mainButton} onPress={() => setConsuming(true)}>{t('做了这道')}</Button>}
     </Surface>
     {consuming && <ConsumedDialog catalog={props.catalog} items={consumedItems(props.state, props.evaluation)}
       onDismiss={() => setConsuming(false)} onConfirm={props.onConsumed} />}
@@ -276,14 +288,15 @@ function RecipeBody({ recipe, ...props }: Props & Readonly<{ recipe: AppRecipe }
     {reportVisible && <RecipeReportDialog catalog={props.catalog} recipeId={recipe.recipe_id}
       onDismiss={() => setReportVisible(false)} onExported={message => { setReportVisible(false); setReportNotice(message); }} />}
     <Snackbar visible={reportNotice !== null} onDismiss={() => setReportNotice(null)} duration={4000}>
-      {reportNotice ?? ''}
+      {reportNotice ? t(reportNotice) : ''}
     </Snackbar>
   </View>;
 }
 
 export function RecipeScreen(props: Props) {
+  useI18n();
   const recipe = props.catalog.recipes.find(item => item.recipe_id === props.evaluation.recipe_id);
-  if (!recipe) return <View style={styles.empty}><Text>这份菜谱已不可用，请返回重新选择。</Text><Button onPress={props.onBack}>返回推荐</Button></View>;
+  if (!recipe) return <View style={styles.empty}><Text>{t('这份菜谱已不可用，请返回重新选择。')}</Text><Button onPress={props.onBack}>{t('返回推荐')}</Button></View>;
   return <RecipeBody key={recipe.recipe_id} {...props} recipe={recipe} />;
 }
 

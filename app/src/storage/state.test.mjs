@@ -3,6 +3,7 @@ import test from 'node:test';
 import { decodeKitchen, initialKitchen, validateKitchen } from './state.ts';
 import { createKitchenSession } from './session.ts';
 import { addIngredient } from '../model/inventory-actions.ts';
+import { MAX_STORAGE_BYTES } from './types.ts';
 
 const catalog = {
   dataset_version: 'test-2',
@@ -49,9 +50,10 @@ test('restores known ingredient selections and updates catalog marker without mu
 
 for (const [name, source] of [
   ['malformed JSON', '{'],
-  ['oversized JSON', ' '.repeat(65_537)],
+  ['oversized JSON', ' '.repeat(MAX_STORAGE_BYTES + 1)],
+  ['oversized UTF-8 JSON', '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3))],
   ['null record', 'null'],
-  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 3 })],
+  ['unsupported version', JSON.stringify({ ...valid(), schemaVersion: 4 })],
   ['missing field', JSON.stringify({ ...valid(), updatedAt: undefined })],
   ['unexpected field', JSON.stringify({ ...valid(), apiKey: 'not-stored' })],
   ['unknown ingredient', JSON.stringify({ ...valid(), currentIds: ['unknown'] })],
@@ -286,11 +288,11 @@ test('subscribers receive updates and unsubscribe stops notifications', async ()
 });
 
 test('migrates version one records while preserving all confirmed kitchen selections', () => {
-  const { defaultPeople, burnerCount, mealRecipeIds, mealPeople, sharedIngredientIds, ...original } = valid();
+  const { defaultPeople, burnerCount, mealRecipeIds, mealPeople, sharedIngredientIds, privateRecipes, ...original } = valid();
   const legacy = { ...original, schemaVersion: 1, currentIds: ['tomato'], pantryIds: ['egg'], equipment: ['wok'], equipmentConfigured: true, pantryConfigured: true };
   const result = decodeKitchen(JSON.stringify(legacy), catalog);
   assert.equal(result.error, null);
-  assert.equal(result.data.schemaVersion, 2);
+  assert.equal(result.data.schemaVersion, 3);
   assert.deepEqual(result.data.currentIds, legacy.currentIds);
   assert.deepEqual(result.data.pantryIds, legacy.pantryIds);
   assert.deepEqual(result.data.equipment, legacy.equipment);
@@ -301,6 +303,15 @@ test('migrates version one records while preserving all confirmed kitchen select
   assert.equal(result.data.burnerCount, 2);
   assert.deepEqual(result.data.mealRecipeIds, []);
   assert.deepEqual(result.data.sharedIngredientIds, []);
+  assert.deepEqual(result.data.privateRecipes, []);
+});
+
+test('migrates version two records while preserving the meal basket and all kitchen settings', () => {
+  const { privateRecipes, ...original } = valid();
+  const legacy = { ...original, schemaVersion: 2, currentIds: ['tomato'], pantryIds: ['egg'], mealRecipeIds: ['tomato-egg'], defaultPeople: 4, mealPeople: 3, burnerCount: 1, sharedIngredientIds: ['egg'] };
+  const result = decodeKitchen(JSON.stringify(legacy), catalog);
+  assert.equal(result.error, null);
+  assert.deepEqual(result.data, { ...legacy, schemaVersion: 3, privateRecipes: [] });
 });
 
 test('restores a kitchen only after its write succeeds and persists it across reopening', async () => {
@@ -335,6 +346,7 @@ test('failed restore keeps old inventory on screen and disk and can retry the sa
   await session.settled();
   const backup = { ...valid(), currentIds: ['tomato'] };
   assert.equal((await session.restore(backup)).error, '存储已满');
+  assert.equal(session.getSnapshot().error, '存储已满');
   assert.deepEqual(session.getSnapshot().state.currentIds, ['egg']);
   assert.deepEqual(JSON.parse((await storage.read()).data).currentIds, ['egg']);
   assert.equal((await session.restore(backup)).error, null);

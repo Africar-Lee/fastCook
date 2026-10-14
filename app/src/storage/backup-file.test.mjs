@@ -34,7 +34,7 @@ test('native backup import rejects oversized files and releases the handle', asy
   fileSystem.File.pickFileAsync = async () => ({ open: () => ({ readBytes: limit => new Uint8Array(limit), close: () => { closed = true; } }) });
   const result = await importKitchenBackup();
   assert.equal(result.status, 'failed');
-  assert.match(result.error, /128 KB/);
+  assert.match(result.error, /2 MiB/);
   assert.equal(closed, true);
 });
 
@@ -83,6 +83,15 @@ test('native backup export writes only into a user-selected directory with a saf
 test('native backup export cancellation does not claim success', async () => {
   fileSystem.Directory.pickDirectoryAsync = async () => { throw { code: 'ERR_PICKER_CANCELLED' }; };
   assert.equal((await exportKitchenBackup({})).status, 'cancelled');
+});
+
+test('native backup export rejects oversized UTF-8 content before opening a directory', async () => {
+  let opened = false;
+  fileSystem.Directory.pickDirectoryAsync = async () => { opened = true; };
+  const result = await exportKitchenBackup({ content: '中'.repeat(Math.ceil(MAX_BACKUP_BYTES / 3)) });
+  assert.equal(result.status, 'failed');
+  assert.match(result.error, /2 MiB/);
+  assert.equal(opened, false);
 });
 
 for (const stage of ['picker', 'create', 'write']) {

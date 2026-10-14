@@ -1,9 +1,11 @@
+import { localizedLabels, t } from '../i18n/core.ts';
 import type { AppIngredient } from './types';
 
-export const ingredientCategoryLabels: Readonly<Record<string, string>> = {
+const categoryLabels: Readonly<Record<string, string>> = {
   vegetable: '蔬菜', meat: '肉类', egg: '蛋类', seafood: '水产',
   soy: '豆制品', seasoning: '调料', grain: '主食', other: '其他',
 };
+export const ingredientCategoryLabels = localizedLabels(categoryLabels);
 
 type SearchEntry = Readonly<{ ingredient: AppIngredient; terms: readonly string[] }>;
 type IngredientSearchIndex = readonly SearchEntry[];
@@ -17,7 +19,8 @@ export function createIngredientSearchIndex(ingredients: readonly AppIngredient[
     ingredient,
     terms: [...new Set([
       ...ingredient.search_terms,
-      ingredientCategoryLabels[ingredient.category] ?? ingredient.category,
+      categoryLabels[ingredient.category] ?? ingredient.category,
+      t(categoryLabels[ingredient.category] ?? ingredient.category, {}, 'en'),
     ].map(normalizeIngredientQuery).filter(Boolean))],
   })).sort((left, right) => {
     const leftId = left.ingredient.ingredient_id;

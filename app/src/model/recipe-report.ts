@@ -1,9 +1,10 @@
+import { localizedLabels, t } from '../i18n/core.ts';
 import { textOf } from './presentation.ts';
 import type { AppCatalog } from './types';
 
-export const reportCategoryLabels = {
+export const reportCategoryLabels = localizedLabels({
   ingredients: '食材用量', steps: '做法步骤', matching: '匹配结果', other: '其他',
-} as const;
+} as const);
 
 export const MAX_REPORT_DESCRIPTION_LENGTH = 2000;
 
@@ -19,25 +20,25 @@ type ReportResult = Readonly<{ data: RecipeReport; error: null }> | Readonly<{ d
 
 export function createRecipeReport(catalog: AppCatalog, recipeId: string, appVersion: string, input: unknown): ReportResult {
   if (typeof recipeId !== 'string' || !recipeId || recipeId.length > 128) {
-    return { data: null, error: '菜谱编号无效，请返回重新选择菜谱。' };
+    return { data: null, error: t('菜谱编号无效，请返回重新选择菜谱。') };
   }
   const recipe = catalog.recipes.find(item => item.recipe_id === recipeId);
-  if (!recipe) return { data: null, error: '这份菜谱已不可用，请返回重新选择。' };
+  if (!recipe) return { data: null, error: t('这份菜谱已不可用，请返回重新选择。') };
   if (typeof appVersion !== 'string' || !appVersion.trim() || appVersion.length > 128) {
-    return { data: null, error: '应用版本无法读取，请重新打开应用后重试。' };
+    return { data: null, error: t('应用版本无法读取，请重新打开应用后重试。') };
   }
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
-    return { data: null, error: '问题内容无效，请重新填写。' };
+    return { data: null, error: t('问题内容无效，请重新填写。') };
   }
   const { category, description } = input as Record<string, unknown>;
   if (typeof category !== 'string' || !Object.hasOwn(reportCategoryLabels, category)) {
-    return { data: null, error: '请选择问题类型。' };
+    return { data: null, error: t('请选择问题类型。') };
   }
   if (typeof description !== 'string' || !description.trim()) {
-    return { data: null, error: '请填写问题描述。' };
+    return { data: null, error: t('请填写问题描述。') };
   }
   if (description.length > MAX_REPORT_DESCRIPTION_LENGTH) {
-    return { data: null, error: `问题描述最多 ${MAX_REPORT_DESCRIPTION_LENGTH} 字，请缩短后重试。` };
+    return { data: null, error: t('问题描述最多 {count} 字，请缩短后重试。', { count: MAX_REPORT_DESCRIPTION_LENGTH }) };
   }
   return { data: {
     schema_version: 1, app_version: appVersion, dataset_version: catalog.dataset_version,

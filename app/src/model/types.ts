@@ -1,4 +1,5 @@
 import type { Catalog, EngineInput, Equipment, Ingredient, LocalizedText, Recipe, Requirement } from '../../../packages/engine/src/types';
+import type { PrivateRecipe } from './private-recipes';
 
 export type AppIngredient = Ingredient & Readonly<{ category: string; search_terms: readonly string[] }>;
 export type AppRequirement = Requirement & Readonly<{ preparation?: LocalizedText }>;
@@ -22,7 +23,7 @@ export type AppCatalog = Omit<Catalog, 'ingredients' | 'recipes'> & Readonly<{
 }>;
 
 export type KitchenState = Readonly<{
-  schemaVersion: 2;
+  schemaVersion: 3;
   datasetVersion: string;
   currentIds: readonly string[];
   pantryIds: readonly string[];
@@ -35,6 +36,7 @@ export type KitchenState = Readonly<{
   mealRecipeIds: readonly string[];
   mealPeople: number;
   sharedIngredientIds: readonly string[];
+  privateRecipes: readonly PrivateRecipe[];
   updatedAt: string | null;
 }>;
 

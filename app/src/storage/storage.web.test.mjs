@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { kitchenStorage } from './storage.web.ts';
+import { MAX_STORAGE_BYTES } from './types.ts';
 
 function replaceStorage(context, storage) {
   const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
@@ -21,8 +22,17 @@ test('web persistence writes and restores a single bounded record', async (conte
   assert.equal((await kitchenStorage.write('{"version":1}')).error, null);
   assert.equal((await kitchenStorage.read()).data, '{"version":1}');
   assert.equal(entries.size, 1);
-  assert.notEqual((await kitchenStorage.write(' '.repeat(65_537))).error, null);
+  assert.notEqual((await kitchenStorage.write(' '.repeat(MAX_STORAGE_BYTES + 1))).error, null);
+  assert.notEqual((await kitchenStorage.write('中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3)))).error, null);
   assert.equal((await kitchenStorage.read()).data, '{"version":1}');
+});
+
+test('web persistence rejects an oversized UTF-8 record before returning its content', async context => {
+  const value = '中'.repeat(Math.ceil(MAX_STORAGE_BYTES / 3));
+  replaceStorage(context, { getItem: () => value });
+  const result = await kitchenStorage.read();
+  assert.equal(result.data, null);
+  assert.match(result.error, /2 MiB/);
 });
 
 test('web storage failures return actionable errors without exception details', async (context) => {

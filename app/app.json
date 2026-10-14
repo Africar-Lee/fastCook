@@ -13,7 +13,16 @@
       "permissions": [],
       "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"]
     },
-    "plugins": ["expo-sqlite", "expo-font"],
+    "plugins": ["expo-sqlite", "expo-font", "expo-secure-store", ["expo-image-picker", {
+      "cameraPermission": "允许 FastCook 拍照识别食材和扫描菜谱二维码。",
+      "photosPermission": "允许 FastCook 选择要识别的食材图片。",
+      "microphonePermission": false
+    }], ["expo-camera", {
+      "cameraPermission": "允许 FastCook 拍照识别食材和扫描菜谱二维码。",
+      "microphonePermission": false,
+      "recordAudioAndroid": false,
+      "barcodeScannerEnabled": true
+    }]],
     "web": { "bundler": "metro", "name": "FastCook", "shortName": "FastCook" }
   }
 }

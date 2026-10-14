@@ -11,5 +11,5 @@ export function useKitchen(catalog: AppCatalog) {
     session.load();
   }, [session]);
 
-  return { ...snapshot, update: session.update, retry: session.retry, reset: session.reset, restore: session.restore };
+  return { ...snapshot, update: session.update, retry: session.retry, reset: session.reset, restore: session.restore, commit: session.commit };
 }

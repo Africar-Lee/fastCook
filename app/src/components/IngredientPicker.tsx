@@ -1,8 +1,11 @@
+import { formatList, t } from '../i18n/core';
+import { useI18n } from '../i18n/useI18n';
 import { useMemo, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button, Chip, Dialog, Icon, Portal, Searchbar, Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { getCommonIngredients } from '../model/common-ingredients';
 import { createIngredientSearchIndex, ingredientCategoryLabels, searchIngredients } from '../model/ingredient-search';
+import { ingredientName } from '../model/presentation';
 import type { AppIngredient } from '../model/types';
 
 type Props = Readonly<{
@@ -25,21 +28,22 @@ type ChoiceProps = Readonly<{
 }>;
 
 function IngredientChoice({ ingredient, active, grid, moveLabel, onToggle }: ChoiceProps) {
+  const { locale } = useI18n();
   const theme = useTheme();
-  const name = ingredient.names['zh-CN'] ?? ingredient.ingredient_id;
-  const aliases = ingredient.aliases['zh-CN']?.map(alias => alias.text).slice(0, 2).join('、');
+  const name = ingredientName(ingredient);
+  const aliases = formatList(ingredient.aliases[locale]?.map(alias => alias.text).slice(0, 2) ?? []);
   return <TouchableRipple
     onPress={() => onToggle(ingredient.ingredient_id)}
     accessibilityRole="checkbox"
     accessibilityState={{ checked: active }}
     accessibilityLabel={name}
-    accessibilityHint={moveLabel ?? (active ? '点按取消选择' : '点按加入食材')}
+    accessibilityHint={moveLabel ?? t(active ? '点按取消选择' : '点按加入食材')}
     style={[styles.choice, grid && styles.gridChoice, { backgroundColor: active ? theme.colors.secondaryContainer : theme.colors.surface }]}
   >
     <View style={grid ? styles.gridContent : styles.rowContent}>
       <View style={grid ? styles.gridText : styles.rowText}>
         <Text variant={grid ? 'bodyMedium' : 'titleMedium'} style={grid && styles.centered}>{name}</Text>
-        {!grid && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{ingredientCategoryLabels[ingredient.category] ?? ingredient.category}{aliases ? ` · ${aliases}` : ''}</Text>}
+        {!grid && <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>{t(ingredientCategoryLabels[ingredient.category] ?? ingredient.category)}{aliases ? ` · ${aliases}` : ''}</Text>}
         {moveLabel && <Text variant="bodySmall" style={{ color: theme.colors.primary }}>{moveLabel}</Text>}
       </View>
       {grid && active && <View style={styles.gridSelected}><Icon source="check" size={16} color={theme.colors.onSecondaryContainer} /></View>}
@@ -49,6 +53,7 @@ function IngredientChoice({ ingredient, active, grid, moveLabel, onToggle }: Cho
 }
 
 export function IngredientPicker({ visible, title, location, ingredients, selectedIds, otherSelectedIds, onToggle, onDismiss }: Props) {
+  useI18n();
   const theme = useTheme();
   const { height } = useWindowDimensions();
   const [query, setQuery] = useState('');
@@ -61,7 +66,7 @@ export function IngredientPicker({ visible, title, location, ingredients, select
   const grid = category === 'common';
   const matches = grid ? common.filter(item => !otherSelected.has(item.ingredient_id)) : searchIngredients(index, query, category);
   const categoryStyle = (active: boolean) => ({ backgroundColor: active ? theme.colors.secondaryContainer : theme.colors.surfaceVariant });
-  const moveLabel = location === 'current' ? '移到当次食材' : '移到调料柜';
+  const moveLabel = t(location === 'current' ? '移到当次食材' : '移到调料柜');
   const dismiss = () => { onDismiss(); setQuery(''); setCategory('common'); };
   const changeQuery = (value: string) => {
     setQuery(value);
@@ -70,14 +75,15 @@ export function IngredientPicker({ visible, title, location, ingredients, select
 
   return <Portal>
     <Dialog visible={visible} onDismiss={dismiss} style={[styles.dialog, { maxHeight: height * 0.88 }]}>
-      <Dialog.Title>{title}</Dialog.Title>
+      <Dialog.Title>{t(title)}</Dialog.Title>
       <View style={styles.searchArea}>
-        <Searchbar placeholder="搜索食材 / 拼音" accessibilityLabel="搜索食材" value={query} onChangeText={changeQuery} maxLength={64}
+        <Searchbar placeholder={t('搜索食材 / 拼音')} accessibilityLabel={t('搜索食材')} searchAccessibilityLabel={t('搜索食材')}
+          clearAccessibilityLabel={t('清空搜索')} value={query} onChangeText={changeQuery} maxLength={64}
           autoCorrect={false} autoCapitalize="none" style={styles.search} inputStyle={styles.searchInput} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categories}>
-          <Chip selected={grid} style={categoryStyle(grid)} showSelectedCheck={false} onPress={() => { setCategory('common'); setQuery(''); }}>常用</Chip>
-          <Chip selected={category === null} style={categoryStyle(category === null)} showSelectedCheck={false} onPress={() => setCategory(null)}>全部</Chip>
-          {categories.map(value => <Chip key={value} selected={category === value} style={categoryStyle(category === value)} showSelectedCheck={false} onPress={() => setCategory(value)}>{ingredientCategoryLabels[value] ?? value}</Chip>)}
+          <Chip selected={grid} style={categoryStyle(grid)} showSelectedCheck={false} onPress={() => { setCategory('common'); setQuery(''); }}>{t('常用')}</Chip>
+          <Chip selected={category === null} style={categoryStyle(category === null)} showSelectedCheck={false} onPress={() => setCategory(null)}>{t('全部')}</Chip>
+          {categories.map(value => <Chip key={value} selected={category === value} style={categoryStyle(category === value)} showSelectedCheck={false} onPress={() => setCategory(value)}>{t(ingredientCategoryLabels[value] ?? value)}</Chip>)}
         </ScrollView>
       </View>
       <FlatList
@@ -90,14 +96,14 @@ export function IngredientPicker({ visible, title, location, ingredients, select
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={<View style={styles.empty}>
-          <Text style={styles.centered}>{grid ? '暂无常用食材' : '未找到食材'}</Text>
-          {category !== null && <Button onPress={() => setCategory(null)}>{grid ? '查看全部食材' : '搜索全部分类'}</Button>}
+          <Text style={styles.centered}>{t(grid ? '暂无常用食材' : '未找到食材')}</Text>
+          {category !== null && <Button onPress={() => setCategory(null)}>{t(grid ? '查看全部食材' : '搜索全部分类')}</Button>}
         </View>}
         renderItem={({ item }) => <IngredientChoice ingredient={item} active={selected.has(item.ingredient_id)} grid={grid}
           moveLabel={otherSelected.has(item.ingredient_id) ? moveLabel : null} onToggle={onToggle} />}
       />
       <Dialog.Actions>
-        <Button mode="contained" buttonColor={theme.colors.primaryContainer} textColor={theme.colors.onPrimaryContainer} onPress={dismiss}>完成 · 已选 {selectedIds.length} 种</Button>
+        <Button mode="contained" buttonColor={theme.colors.primaryContainer} textColor={theme.colors.onPrimaryContainer} onPress={dismiss}>{t('完成 · 已选 {count} 种', { count: selectedIds.length })}</Button>
       </Dialog.Actions>
     </Dialog>
   </Portal>;

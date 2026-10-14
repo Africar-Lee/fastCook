@@ -1,3 +1,5 @@
+import { t } from '../i18n/core';
+import { useI18n } from '../i18n/useI18n';
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Chip, Dialog, Portal, Text, TextInput, useTheme } from 'react-native-paper';
@@ -19,18 +21,20 @@ function ReportForm({ category, description, onCategoryChange, onDescriptionChan
   category: Category; description: string;
   onCategoryChange: (value: Category) => void; onDescriptionChange: (value: string) => void;
 }>) {
+  useI18n();
   return <View style={styles.form}>
     <View style={styles.categories}>{(Object.keys(reportCategoryLabels) as Category[]).map(value =>
       <Chip key={value} selected={category === value} showSelectedCheck mode="outlined"
-        accessibilityLabel={`${reportCategoryLabels[value]}，${category === value ? '已选' : '未选'}`}
-        onPress={() => onCategoryChange(value)}>{reportCategoryLabels[value]}</Chip>)}</View>
-    <TextInput label="问题描述" accessibilityLabel="问题描述" mode="outlined" multiline
+        accessibilityLabel={t(category === value ? '{label}，已选' : '{label}，未选', { label: t(reportCategoryLabels[value]) })}
+        onPress={() => onCategoryChange(value)}>{t(reportCategoryLabels[value])}</Chip>)}</View>
+    <TextInput label={t('问题描述')} accessibilityLabel={t('问题描述')} mode="outlined" multiline
       value={description} onChangeText={onDescriptionChange} maxLength={MAX_REPORT_DESCRIPTION_LENGTH}
       style={styles.input} contentStyle={styles.inputContent} />
   </View>;
 }
 
 export function RecipeReportDialog({ catalog, recipeId, onDismiss, onExported }: Props) {
+  useI18n();
   const theme = useTheme();
   const [category, setCategory] = useState<Category>('ingredients');
   const [description, setDescription] = useState('');
@@ -53,23 +57,23 @@ export function RecipeReportDialog({ catalog, recipeId, onDismiss, onExported }:
     setExporting(false);
     if (result.status === 'failed') { setError(result.error); return; }
     if (result.status === 'cancelled') return;
-    onExported(result.status === 'saved' ? '报告已保存到所选文件夹' : '已开始下载报告');
+    onExported(t(result.status === 'saved' ? '报告已保存到所选文件夹' : '已开始下载报告'));
   };
   return <Portal><Dialog visible onDismiss={() => { if (!inFlight.current) onDismiss(); }} style={styles.dialog}>
-    <Dialog.Title>{report ? '报告内容' : '报告问题'}</Dialog.Title>
+    <Dialog.Title>{t(report ? '报告内容' : '报告问题')}</Dialog.Title>
     <Dialog.ScrollArea style={styles.scroll}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
       {report ? <Text selectable variant="bodySmall" style={styles.json}>{JSON.stringify(report, null, 2)}</Text>
         : <ReportForm category={category} description={description}
           onCategoryChange={value => { setCategory(value); setError(null); }}
           onDescriptionChange={value => { setDescription(value); setError(null); }} />}
-      {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{error}</Text>}
+      {error && <Text accessibilityRole="alert" style={{ color: theme.colors.error }}>{t(error)}</Text>}
     </ScrollView></Dialog.ScrollArea>
     <Dialog.Actions>
       <Button disabled={exporting} onPress={report ? () => { setReport(null); setError(null); } : onDismiss}>
-        {report ? '返回修改' : '取消'}
+        {t(report ? '返回修改' : '取消')}
       </Button>
       <Button mode="contained" disabled={exporting} loading={exporting} onPress={report ? () => void save() : preview}>
-        {report ? '导出 JSON' : '预览报告'}
+        {t(report ? '导出 JSON' : '预览报告')}
       </Button>
     </Dialog.Actions>
   </Dialog></Portal>;
