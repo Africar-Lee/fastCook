@@ -3,12 +3,18 @@
     "name": "FastCook",
     "slug": "fastcook",
     "version": "0.1.0",
+    "icon": "../data/icon/brand/icon.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "platforms": ["android", "web"],
     "updates": { "enabled": false },
     "android": {
       "package": "com.fastcook.app",
+      "adaptiveIcon": {
+        "foregroundImage": "../data/icon/brand/adaptive-icon.png",
+        "monochromeImage": "../data/icon/brand/monochrome-icon.png",
+        "backgroundColor": "#FFD54F"
+      },
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"]
@@ -23,6 +29,6 @@
       "recordAudioAndroid": false,
       "barcodeScannerEnabled": true
     }]],
-    "web": { "bundler": "metro", "name": "FastCook", "shortName": "FastCook" }
+    "web": { "bundler": "metro", "name": "FastCook", "shortName": "FastCook", "favicon": "../data/icon/brand/icon.png" }
   }
 }
