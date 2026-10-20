@@ -108,7 +108,16 @@ jobs:
         working-directory: app
         run: npx --no-install expo prebuild --platform android --no-install
       - name: Install Android build tools
-        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
+        run: |
+          : "${ANDROID_HOME:?The runner must provide the Android SDK through ANDROID_HOME.}"
+          sdkmanager_path="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [[ ! -x "$sdkmanager_path" ]]; then
+            echo '::error::Android SDK command-line tools are missing. Check the runner Android SDK installation.'
+            exit 1
+          fi
+          "$sdkmanager_path" --sdk_root="$ANDROID_HOME" \
+            'platforms;android-36' 'build-tools;36.0.0' \
+            'ndk;27.1.12297006' 'cmake;3.22.1'
       - name: Build release APK
         working-directory: app/android
         run: ./gradlew :app:assembleRelease --no-daemon --max-workers=2
