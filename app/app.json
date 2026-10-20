@@ -10,6 +10,7 @@
     "updates": { "enabled": false },
     "android": {
       "package": "com.fastcook.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "../data/icon/brand/adaptive-icon.png",
         "monochromeImage": "../data/icon/brand/monochrome-icon.png",
