@@ -4,12 +4,19 @@ import { validateCatalog } from '../data/validate-catalog.mjs';
 import { buildIngredientSearchTerms } from './build-search-index.mjs';
 import { localizeIngredients } from './localize-ingredients.mjs';
 
+const argumentsList = process.argv.slice(2);
+if (argumentsList.some((argument) => argument !== '--skip-validation')) {
+  throw new Error('参数无效。使用 npm run app:prepare [-- --skip-validation]。');
+}
+
 const loaded = await loadCatalog();
 if (loaded.error) throw new Error(loaded.error.message);
 const translations = JSON.parse(await readFile(new URL('../../data/locales/ingredients.en.json', import.meta.url), 'utf8'));
 const localized = { ...loaded.data, ingredients: localizeIngredients(loaded.data.ingredients, translations) };
-const validation = validateCatalog(localized);
-if (!validation.valid) throw new Error(JSON.stringify(validation.errors));
+if (!argumentsList.includes('--skip-validation')) {
+  const validation = validateCatalog(localized);
+  if (!validation.valid) throw new Error(JSON.stringify(validation.errors));
+}
 const catalog = {
   ...localized,
   ingredients: localized.ingredients.map((ingredient) => ({

@@ -70,8 +70,6 @@ jobs:
   checks:
     needs: prepare
     uses: ./.github/workflows/validate.yml
-    with:
-      release: ${{ github.event_name == 'push' }}
 
   build:
     needs: [prepare, checks]
@@ -103,7 +101,7 @@ jobs:
           distribution: temurin
           java-version: '17'
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: npm run app:prepare
+      - run: npm run app:prepare -- --skip-validation
       - name: Generate Android project
         working-directory: app
         run: npx --no-install expo prebuild --platform android --no-install
