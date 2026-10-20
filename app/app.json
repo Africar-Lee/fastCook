@@ -2,7 +2,7 @@
   "expo": {
     "name": "FastCook",
     "slug": "fastcook",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "icon": "../data/icon/brand/icon.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
